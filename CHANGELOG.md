@@ -1,9 +1,10 @@
 # Changelog
 
-## v4.2.0-rc.1 (not released yet)
+## v4.2.0-rc.1
 
 ### IMPORTANT NOTES
 
+ * **Important** SQL migrations (in particular `0685-multiple-actor-images`) can take several minutes to complete
  * **Important** You need to execute manually a migration script (can be executed after your upgrade, while your PeerTube instance is running) to generate smaller avatar miniatures:
    * Classic installation: `cd /var/www/peertube/peertube-latest && sudo -u peertube NODE_CONFIG_DIR=/var/www/peertube/config NODE_ENV=production node dist/scripts/migrations/peertube-4.2.js`
    * Docker installation: `cd /var/www/peertube-docker && docker-compose exec -u peertube peertube node dist/scripts/migrations/peertube-4.2.js`
@@ -49,7 +50,7 @@
    * :sparkles: *Funded by HowlRound Theatre Commons at Emerson College* :sparkles:
  * Add simple subtitle edition from video captions tab in video edition form [#4666](https://github.com/Chocobozzz/PeerTube/pull/4666)
  * Display live streaming sessions details in permanent live information modal
- * Add ability to also mute users when banning them [#4650](https://github.com/Chocobozzz/PeerTube/pull/4650)
+ * Add ability to also mute users when banning them [#4660](https://github.com/Chocobozzz/PeerTube/pull/4660)
  * UI improvements:
    * Add ability for admins to display author avatar in video miniatures [#4639](https://github.com/Chocobozzz/PeerTube/pull/4639) [#4823](https://github.com/Chocobozzz/PeerTube/pull/4823)
    * Display author avatar in embed
