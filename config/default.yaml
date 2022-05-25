@@ -297,6 +297,16 @@ webadmin:
       # Set this to false if you don't want to allow config edition in the web interface by instance admins
       allowed: true
 
+# XML, Atom or JSON feeds
+feeds:
+  videos:
+    # Default number of videos displayed in feeds
+    count: 20
+
+  comments:
+    # Default number of comments displayed in feeds
+    count: 20
+
 cache:
   previews:
     size: 500 # Max number of previews you want to cache
@@ -469,6 +479,9 @@ import:
   videos:
     # Amount of import jobs to execute in parallel
     concurrency: 1
+
+    # Set a custom video import timeout to not block import queue
+    timeout: '2 hours'
 
     # Classic HTTP or all sites supported by youtube-dl https://rg3.github.io/youtube-dl/supportedsites.html
     http:

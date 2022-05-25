@@ -247,6 +247,14 @@ const CONFIG = {
       }
     }
   },
+  FEEDS: {
+    VIDEOS: {
+      COUNT: config.get<number>('feeds.videos.count')
+    },
+    COMMENTS: {
+      COUNT: config.get<number>('feeds.comments.count')
+    }
+  },
   ADMIN: {
     get EMAIL () { return config.get<string>('admin.email') }
   },
@@ -349,6 +357,7 @@ const CONFIG = {
   IMPORT: {
     VIDEOS: {
       get CONCURRENCY () { return config.get<number>('import.videos.concurrency') },
+      get TIMEOUT () { return parseDurationToMs(config.get<string>('import.videos.timeout')) },
 
       HTTP: {
         get ENABLED () { return config.get<boolean>('import.videos.http.enabled') },

@@ -58,7 +58,7 @@ const WEBSERVER = {
 
 // Sortable columns per schema
 const SORTABLE_COLUMNS = {
-  USERS: [ 'id', 'username', 'videoQuotaUsed', 'createdAt', 'lastLoginDate', 'role' ],
+  ADMIN_USERS: [ 'id', 'username', 'videoQuotaUsed', 'createdAt', 'lastLoginDate', 'role' ],
   USER_SUBSCRIPTIONS: [ 'id', 'createdAt' ],
   ACCOUNTS: [ 'createdAt' ],
   JOBS: [ 'createdAt' ],
@@ -183,7 +183,7 @@ const JOB_TTL: { [id in JobType]: number } = {
   'video-file-import': 1000 * 3600, // 1 hour
   'video-transcoding': 1000 * 3600 * 48, // 2 days, transcoding could be long
   'video-studio-edition': 1000 * 3600 * 10, // 10 hours
-  'video-import': 1000 * 3600 * 2, // 2 hours
+  'video-import': CONFIG.IMPORT.VIDEOS.TIMEOUT,
   'email': 60000 * 10, // 10 minutes
   'actor-keys': 60000 * 20, // 20 minutes
   'videos-views-stats': undefined, // Unlimited
@@ -766,12 +766,6 @@ const CUSTOM_HTML_TAG_COMMENTS = {
   SERVER_CONFIG: '<!-- server config -->'
 }
 
-// ---------------------------------------------------------------------------
-
-const FEEDS = {
-  COUNT: 20
-}
-
 const MAX_LOGS_OUTPUT_CHARACTERS = 10 * 1000 * 1000
 const LOG_FILENAME = 'peertube.log'
 const AUDIT_LOG_FILENAME = 'peertube-audit.log'
@@ -939,7 +933,6 @@ export {
   ROUTE_CACHE_LIFETIME,
   SORTABLE_COLUMNS,
   HLS_STREAMING_PLAYLIST_DIRECTORY,
-  FEEDS,
   JOB_TTL,
   DEFAULT_THEME_NAME,
   NSFW_POLICY_TYPES,
