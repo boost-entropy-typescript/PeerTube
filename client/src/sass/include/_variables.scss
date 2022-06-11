@@ -23,8 +23,6 @@ $main-color-lightest: lighten($main-color, 40%);
 $main-hover-color: lighten($main-color, 5%);
 $main-background-hover-color: #e9ecef;
 
-$secondary-color: hsl(187, 77%, 34%);
-
 $support-button: inherit;
 $support-button-heart: #e83e8c;
 
@@ -118,8 +116,6 @@ $variables: (
   --mainBackgroundColor: var(--mainBackgroundColor),
   --mainForegroundColor: var(--mainForegroundColor),
 
-  --secondaryColor: var(--secondaryColor),
-
   --greyForegroundColor: var(--greyForegroundColor),
   --greyBackgroundColor: var(--greyBackgroundColor),
   --greySecondaryBackgroundColor: var(--greySecondaryBackgroundColor),
@@ -177,9 +173,9 @@ $zindex: (
   help-popover    : 17000,
   privacymsg      : 17500,
   header          : 17500,
-  notification    : 18000,
   modal           : 19000,
-  hotkeys         : 19000
+  hotkeys         : 19000,
+  notification    : 20000
 );
 
 @function z($label) {

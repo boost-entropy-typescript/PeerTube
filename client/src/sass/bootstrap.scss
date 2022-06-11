@@ -26,16 +26,12 @@ $icon-font-path: '~@neos21/bootstrap3-glyphicons/assets/fonts/';
 @import '~bootstrap/scss/modal';
 @import '~bootstrap/scss/tooltip';
 @import '~bootstrap/scss/popover';
+@import '~bootstrap/scss/spinners';
 
 @import '~bootstrap/scss/helpers';
 @import '~bootstrap/scss/utilities/api';
 
 @import '~@neos21/bootstrap3-glyphicons/assets/stylesheets/bootstrap3-glyphicons';
-
-// Thanks https://gist.github.com/alexandrevicenzi/680147013e902a4eaa5d
-.glyphicon-refresh-animate {
-  animation: spin 0.7s infinite linear;
-}
 
 .flex-auto {
   flex: auto;
@@ -45,15 +41,9 @@ $icon-font-path: '~@neos21/bootstrap3-glyphicons/assets/fonts/';
   cursor: pointer !important;
 }
 
-@keyframes spin {
-  from {
-    transform: scale(1) rotate(0deg);
-  }
-
-  to {
-    transform: scale(1) rotate(360deg);
-  }
-}
+// ---------------------------------------------------------------------------
+// Dropdown
+// ---------------------------------------------------------------------------
 
 .dropdown-menu {
   font-size: 15px;
@@ -82,6 +72,14 @@ $icon-font-path: '~@neos21/bootstrap3-glyphicons/assets/fonts/';
     @include disable-default-a-behaviour;
   }
 }
+
+.dropdown-divider {
+  margin: 0.3rem 0;
+}
+
+// ---------------------------------------------------------------------------
+// Modal
+// ---------------------------------------------------------------------------
 
 @media screen and (min-width: #{breakpoint(md)}) {
   .modal::before {
@@ -178,7 +176,10 @@ $icon-font-path: '~@neos21/bootstrap3-glyphicons/assets/fonts/';
   }
 }
 
-// Nav customizations
+// ---------------------------------------------------------------------------
+// Nav
+// ---------------------------------------------------------------------------
+
 .nav .nav-link {
   display: flex !important;
   align-items: center;
@@ -231,6 +232,10 @@ $icon-font-path: '~@neos21/bootstrap3-glyphicons/assets/fonts/';
   }
 }
 
+// ---------------------------------------------------------------------------
+// Card, collapse and accordion
+// ---------------------------------------------------------------------------
+
 .card {
   background-color: pvar(--mainBackgroundColor);
   border-color: #dee2e6;
@@ -249,9 +254,9 @@ $icon-font-path: '~@neos21/bootstrap3-glyphicons/assets/fonts/';
   }
 }
 
-.dropdown-divider {
-  margin: 0.3rem 0;
-}
+// ---------------------------------------------------------------------------
+// Buttons & form controls
+// ---------------------------------------------------------------------------
 
 .btn-outline-secondary {
   border-color: $input-border-color;
@@ -261,18 +266,6 @@ $icon-font-path: '~@neos21/bootstrap3-glyphicons/assets/fonts/';
   &:hover {
     color: #fff;
     background-color: #6c757d;
-  }
-}
-
-.btn-outline-tertiary {
-  color: pvar(--secondaryColor);
-  border-color: pvar(--secondaryColor);
-
-  &:focus-within,
-  &:focus,
-  &:hover {
-    color: pvar(--mainBackgroundColor);
-    background-color: pvar(--secondaryColor);
   }
 }
 
@@ -304,13 +297,13 @@ $icon-font-path: '~@neos21/bootstrap3-glyphicons/assets/fonts/';
   }
 }
 
-// input box-shadow on focus
 .form-control {
   font-size: 15px;
   color: pvar(--mainForegroundColor);
   background-color: pvar(--inputBackgroundColor);
   outline: none;
 
+  // Input box-shadow on focus
   &:focus-within,
   &:focus {
     box-shadow: #{$focus-box-shadow-form} pvar(--mainColorLightest);
