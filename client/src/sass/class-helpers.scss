@@ -3,6 +3,26 @@
 @use '_badges' as *;
 @use '_icons' as *;
 
+.link-orange {
+  color: pvar(--mainForegroundColor);
+  font-weight: $font-bold;
+  border-bottom: 0.19em solid pvar(--mainColor);
+  display: inline-block;
+  line-height: 1.2;
+
+  &:hover {
+    color: pvar(--mainForegroundColor);
+    opacity: 0.8;
+  }
+}
+
+.underline-orange {
+  display: inline-block;
+  border-bottom: 0.19em solid pvar(--mainColor);
+}
+
+// ---------------------------------------------------------------------------
+
 .peertube-button {
   @include peertube-button;
 }
@@ -66,35 +86,32 @@
 .form-group-description {
   @extend .muted !optional;
 
-  font-size: 90%;
+  font-size: 14px;
   margin-top: 10px;
+}
+
+label + .form-group-description {
+  margin-bottom: 10px;
+  margin-top: 0;
 }
 
 // ---------------------------------------------------------------------------
 
 
-.title-page {
+.sub-menu-entry {
   @include disable-default-a-behaviour;
   @include margin-right(55px);
 
-  opacity: 0.6;
+  opacity: 0.7;
   color: pvar(--mainForegroundColor);
-  font-size: 16px;
   display: inline-block;
   font-weight: $font-semibold;
   border-bottom: 2px solid transparent;
-
-  &.title-page-single {
-    margin-top: 30px;
-    margin-bottom: 25px;
-  }
+  white-space: nowrap;
+  font-size: 1rem;
 
   &.active {
     border-bottom-color: pvar(--mainColor);
-  }
-
-  &.title-page-single {
-    font-size: 125%;
   }
 
   &:hover,
@@ -106,8 +123,7 @@
   &.active,
   &:hover,
   &:active,
-  &:focus,
-  &.title-page-single {
+  &:focus {
     opacity: 1;
     outline: 0 hidden !important;
   }
@@ -117,10 +133,37 @@
   }
 }
 
-.title-page-about,
-.title-page-settings {
-  white-space: nowrap;
-  font-size: 115%;
+.title-page-v2 {
+  font-weight: normal;
+  font-size: 15px;
+  padding: 35px 25px;
+}
+
+.title-page {
+  @include margin-right(55px);
+
+  margin-top: 30px;
+  margin-bottom: 25px;
+
+  color: pvar(--mainForegroundColor);
+  display: inline-block;
+  font-weight: $font-semibold;
+  font-size: 1.25rem;
+
+  a {
+    @include disable-default-a-behaviour;
+
+    color: inherit;
+
+    &:hover {
+      color: inherit;
+      opacity: 0.8;
+    }
+  }
+
+  @media screen and (max-width: $mobile-view) {
+    @include margin-left(15px);
+  }
 }
 
 .admin-sub-header {
@@ -143,7 +186,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
   font-weight: $font-semibold;
 }
 
@@ -192,9 +234,12 @@
     border-left-width: .25rem;
   }
 
-  &.callout-info {
+  &.callout-orange {
     border-color: pvar(--mainColorLightest);
-    border-left-color: pvar(--mainColor);
+
+    &:not(.callout-light) {
+      border-left-color: pvar(--mainColor);
+    }
   }
 }
 
@@ -208,5 +253,14 @@
 .offset-content { // if sub-menu fixed
   .anchor {
     top: #{-($header-height + $sub-menu-height + 20px)};
+  }
+}
+
+// ---------------------------------------------------------------------------
+
+.alert {
+  &.pt-alert-primary {
+    background-color: pvar(--mainColorVeryLight);
+    border: 2px solid pvar(--mainColorLightest);
   }
 }
