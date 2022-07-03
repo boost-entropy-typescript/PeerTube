@@ -744,8 +744,15 @@ const MEMOIZE_LENGTH = {
   VIDEO_DURATION: 200
 }
 
-const QUEUE_CONCURRENCY = {
-  ACTOR_PROCESS_IMAGE: 3
+const WORKER_THREADS = {
+  DOWNLOAD_IMAGE: {
+    CONCURRENCY: 3,
+    MAX_THREADS: 1
+  },
+  PROCESS_IMAGE: {
+    CONCURRENCY: 1,
+    MAX_THREADS: 5
+  }
 }
 
 const REDUNDANCY = {
@@ -861,7 +868,7 @@ if (isTestInstance() === true && process.env.PRODUCTION_CONSTANTS !== 'true') {
 
   PLUGIN_EXTERNAL_AUTH_TOKEN_LIFETIME = 5000
 
-  VIDEO_LIVE.CLEANUP_DELAY = getIntEnv('PEERTUBE_TEST_CONSTANTS.VIDEO_LIVE.CLEANUP_DELAY') ?? 5000
+  VIDEO_LIVE.CLEANUP_DELAY = getIntEnv('PEERTUBE_TEST_CONSTANTS_VIDEO_LIVE_CLEANUP_DELAY') ?? 5000
   VIDEO_LIVE.SEGMENT_TIME_SECONDS.DEFAULT_LATENCY = 2
   VIDEO_LIVE.SEGMENT_TIME_SECONDS.SMALL_LATENCY = 1
   VIDEO_LIVE.EDGE_LIVE_DELAY_SEGMENTS_NOTIFICATION = 1
@@ -955,7 +962,7 @@ export {
   VIDEO_PRIVACIES,
   VIDEO_LICENCES,
   VIDEO_STATES,
-  QUEUE_CONCURRENCY,
+  WORKER_THREADS,
   VIDEO_RATE_TYPES,
   JOB_PRIORITY,
   VIDEO_TRANSCODING_FPS,
@@ -1158,6 +1165,7 @@ function buildLanguages () {
   // Override Occitan label
   languages['oc'] = 'Occitan'
   languages['el'] = 'Greek'
+  languages['tok'] = 'Toki Pona'
 
   // Chinese languages
   languages['zh-Hans'] = 'Simplified Chinese'
