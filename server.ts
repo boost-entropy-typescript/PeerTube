@@ -95,9 +95,11 @@ import { VideosPreviewCache, VideosCaptionCache } from './server/lib/files-cache
 import {
   activityPubRouter,
   apiRouter,
+  miscRouter,
   clientsRouter,
   feedsRouter,
   staticRouter,
+  wellKnownRouter,
   lazyStaticRouter,
   servicesRouter,
   liveRouter,
@@ -231,6 +233,8 @@ app.use('/', botsRouter)
 
 // Static files
 app.use('/', staticRouter)
+app.use('/', wellKnownRouter)
+app.use('/', miscRouter)
 app.use('/', downloadRouter)
 app.use('/', lazyStaticRouter)
 
@@ -283,7 +287,7 @@ async function startApplication () {
   checkFFmpegVersion()
     .catch(err => logger.error('Cannot check ffmpeg version', { err }))
 
-  // Email initialization
+  Redis.Instance.init()
   Emailer.Instance.init()
 
   await Promise.all([
@@ -313,7 +317,6 @@ async function startApplication () {
   GeoIPUpdateScheduler.Instance.enable()
   OpenTelemetryMetrics.Instance.registerMetrics()
 
-  Redis.Instance.init()
   PeerTubeSocket.Instance.init(server)
   VideoViewsManager.Instance.init()
 
