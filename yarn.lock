@@ -1732,7 +1732,7 @@
     semver "^7.3.2"
     shimmer "^1.2.1"
 
-"@opentelemetry/instrumentation@^0.29.2":
+"@opentelemetry/instrumentation@^0.29.0", "@opentelemetry/instrumentation@^0.29.2":
   version "0.29.2"
   resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation/-/instrumentation-0.29.2.tgz#70e6d4e1a84508f5e9d8c7c426adcd7b0dba6c95"
   integrity sha512-LXx5V0ONNATQFCE8C5uqnxWSm4rcXLssdLHdXjtGdxRmURqj/JO8jYefqXCD0LzsqEQ6yxOx2GZ0dgXvhBVdTw==
@@ -4635,6 +4635,11 @@ eventemitter-asyncresource@^1.0.0:
   resolved "https://registry.yarnpkg.com/eventemitter-asyncresource/-/eventemitter-asyncresource-1.0.0.tgz#734ff2e44bf448e627f7748f905d6bdd57bdb65b"
   integrity sha512-39F7TBIV0G7gTelxwbEqnwhp90eqCPON1k0NwNfwhgKn4Co4ybUbj2pECcXT0B3ztRKZ7Pw1JujUUgmQJHcVAQ==
 
+eventemitter3@^4.0.4:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
+  integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
+
 events@3.3.0, events@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
@@ -7027,6 +7032,15 @@ open@7:
     is-docker "^2.0.0"
     is-wsl "^2.1.1"
 
+opentelemetry-instrumentation-sequelize@^0.29.0:
+  version "0.29.0"
+  resolved "https://registry.yarnpkg.com/opentelemetry-instrumentation-sequelize/-/opentelemetry-instrumentation-sequelize-0.29.0.tgz#d8355b7c845473b3d66978b80620dba6f686e257"
+  integrity sha512-nBhWMhpOtFxR0+W9WwTC+g49UMPqDMusbceGycDJOaq9l7B/IGo8a15UHKm4N4uU/Cr1NTrvyJ0cFXUtSh7i3g==
+  dependencies:
+    "@opentelemetry/core" "^1.0.0"
+    "@opentelemetry/instrumentation" "^0.29.0"
+    "@opentelemetry/semantic-conventions" "^1.0.0"
+
 opentracing@^0.14.4:
   version "0.14.7"
   resolved "https://registry.yarnpkg.com/opentracing/-/opentracing-0.14.7.tgz#25d472bd0296dc0b64d7b94cbc995219031428f5"
@@ -7112,6 +7126,14 @@ p-map@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/p-map/-/p-map-2.1.0.tgz#310928feef9c9ecc65b68b17693018a665cea175"
   integrity sha512-y3b8Kpd8OAN444hxfBbFfj1FY/RjtTd8tzYwhUqNYXx0fXx2iX4maP4Qr6qhIKbQXI02wTLAda4fYUbDagTUFw==
+
+p-queue@^6:
+  version "6.6.2"
+  resolved "https://registry.yarnpkg.com/p-queue/-/p-queue-6.6.2.tgz#2068a9dcf8e67dd0ec3e7a2bcb76810faa85e426"
+  integrity sha512-RwFpb72c/BhQLEXIZ5K2e+AhgNVmIejGlTgiB9MzZ0e93GRvqZ7uSi0dvRF7/XIXDeNkra2fNHBxTyPDGySpjQ==
+  dependencies:
+    eventemitter3 "^4.0.4"
+    p-timeout "^3.2.0"
 
 p-timeout@^3.0.0, p-timeout@^3.1.0, p-timeout@^3.2.0:
   version "3.2.0"
