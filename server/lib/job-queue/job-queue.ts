@@ -284,16 +284,16 @@ class JobQueue {
   }
 
   async pause () {
-    for (const handler of Object.keys(this.workers)) {
-      const worker: Worker = this.workers[handler]
+    for (const handlerName of Object.keys(this.workers)) {
+      const worker: Worker = this.workers[handlerName]
 
       await worker.pause()
     }
   }
 
   resume () {
-    for (const handler of Object.keys(this.workers)) {
-      const worker: Worker = this.workers[handler]
+    for (const handlerName of Object.keys(this.workers)) {
+      const worker: Worker = this.workers[handlerName]
 
       worker.resume()
     }
@@ -373,10 +373,10 @@ class JobQueue {
   }): Promise<Job[]> {
     const { state, start, count, asc, jobType } = options
 
-    const states = state ? [ state ] : jobStates
-    let results: Job[] = []
+    const states = this.buildStateFilter(state)
+    const filteredJobTypes = this.buildTypeFilter(jobType)
 
-    const filteredJobTypes = this.filterJobTypes(jobType)
+    let results: Job[] = []
 
     for (const jobType of filteredJobTypes) {
       const queue: Queue = this.queues[jobType]
@@ -404,9 +404,9 @@ class JobQueue {
 
   async count (state: JobState, jobType?: JobType): Promise<number> {
     const states = state ? [ state ] : jobStates
-    let total = 0
+    const filteredJobTypes = this.buildTypeFilter(jobType)
 
-    const filteredJobTypes = this.filterJobTypes(jobType)
+    let total = 0
 
     for (const type of filteredJobTypes) {
       const queue = this.queues[type]
@@ -423,6 +423,23 @@ class JobQueue {
     }
 
     return total
+  }
+
+  private buildStateFilter (state?: JobState) {
+    if (!state) return jobStates
+
+    const states = [ state ]
+
+    // Include parent if filtering on waiting
+    if (state === 'waiting') states.push('waiting-children')
+
+    return states
+  }
+
+  private buildTypeFilter (jobType?: JobType) {
+    if (!jobType) return jobTypes
+
+    return jobTypes.filter(t => t === jobType)
   }
 
   async getStats () {
@@ -450,12 +467,6 @@ class JobQueue {
         repeat: REPEAT_JOBS['activitypub-cleaner']
       }).catch(err => logger.error('Cannot add repeatable job.', { err }))
     }
-  }
-
-  private filterJobTypes (jobType?: JobType) {
-    if (!jobType) return jobTypes
-
-    return jobTypes.filter(t => t === jobType)
   }
 
   private getJobConcurrency (jobType: JobType) {
