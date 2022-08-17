@@ -19,32 +19,30 @@ import {
 
 const listVideoCommentsValidator = [
   query('isLocal')
-  .optional()
-  .customSanitizer(toBooleanOrNull)
-  .custom(isBooleanValid)
-  .withMessage('Should have a valid is local boolean'),
+    .optional()
+    .customSanitizer(toBooleanOrNull)
+    .custom(isBooleanValid)
+    .withMessage('Should have a valid isLocal boolean'),
 
   query('onLocalVideo')
-  .optional()
-  .customSanitizer(toBooleanOrNull)
-  .custom(isBooleanValid)
-  .withMessage('Should have a valid is on local video boolean'),
+    .optional()
+    .customSanitizer(toBooleanOrNull)
+    .custom(isBooleanValid)
+    .withMessage('Should have a valid onLocalVideo boolean'),
 
   query('search')
     .optional()
-    .custom(exists).withMessage('Should have a valid search'),
+    .custom(exists),
 
   query('searchAccount')
     .optional()
-    .custom(exists).withMessage('Should have a valid account search'),
+    .custom(exists),
 
   query('searchVideo')
     .optional()
-    .custom(exists).withMessage('Should have a valid video search'),
+    .custom(exists),
 
   (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    logger.debug('Checking listVideoCommentsValidator parameters.', { parameters: req.query })
-
     if (areValidationErrors(req, res)) return
 
     return next()
@@ -55,8 +53,6 @@ const listVideoCommentThreadsValidator = [
   isValidVideoIdParam('videoId'),
 
   async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    logger.debug('Checking listVideoCommentThreads parameters.', { parameters: req.params })
-
     if (areValidationErrors(req, res)) return
     if (!await doesVideoExist(req.params.videoId, res, 'only-video')) return
 
@@ -70,11 +66,9 @@ const listVideoThreadCommentsValidator = [
   isValidVideoIdParam('videoId'),
 
   param('threadId')
-    .custom(isIdValid).not().isEmpty().withMessage('Should have a valid threadId'),
+    .custom(isIdValid),
 
   async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    logger.debug('Checking listVideoThreadComments parameters.', { parameters: req.params })
-
     if (areValidationErrors(req, res)) return
     if (!await doesVideoExist(req.params.videoId, res, 'only-video')) return
     if (!await doesVideoCommentThreadExist(req.params.threadId, res.locals.onlyVideo, res)) return
@@ -89,11 +83,9 @@ const addVideoCommentThreadValidator = [
   isValidVideoIdParam('videoId'),
 
   body('text')
-    .custom(isValidVideoCommentText).not().isEmpty().withMessage('Should have a valid comment text'),
+    .custom(isValidVideoCommentText),
 
   async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    logger.debug('Checking addVideoCommentThread parameters.', { parameters: req.params, body: req.body })
-
     if (areValidationErrors(req, res)) return
     if (!await doesVideoExist(req.params.videoId, res)) return
 
@@ -109,13 +101,11 @@ const addVideoCommentThreadValidator = [
 const addVideoCommentReplyValidator = [
   isValidVideoIdParam('videoId'),
 
-  param('commentId').custom(isIdValid).not().isEmpty().withMessage('Should have a valid commentId'),
+  param('commentId').custom(isIdValid),
 
-  body('text').custom(isValidVideoCommentText).not().isEmpty().withMessage('Should have a valid comment text'),
+  body('text').custom(isValidVideoCommentText),
 
   async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    logger.debug('Checking addVideoCommentReply parameters.', { parameters: req.params, body: req.body })
-
     if (areValidationErrors(req, res)) return
     if (!await doesVideoExist(req.params.videoId, res)) return
 
@@ -133,11 +123,9 @@ const videoCommentGetValidator = [
   isValidVideoIdParam('videoId'),
 
   param('commentId')
-    .custom(isIdValid).not().isEmpty().withMessage('Should have a valid commentId'),
+    .custom(isIdValid),
 
   async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    logger.debug('Checking videoCommentGetValidator parameters.', { parameters: req.params })
-
     if (areValidationErrors(req, res)) return
     if (!await doesVideoExist(req.params.videoId, res, 'id')) return
     if (!await doesVideoCommentExist(req.params.commentId, res.locals.videoId, res)) return
@@ -149,11 +137,10 @@ const videoCommentGetValidator = [
 const removeVideoCommentValidator = [
   isValidVideoIdParam('videoId'),
 
-  param('commentId').custom(isIdValid).not().isEmpty().withMessage('Should have a valid commentId'),
+  param('commentId')
+    .custom(isIdValid),
 
   async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    logger.debug('Checking removeVideoCommentValidator parameters.', { parameters: req.params })
-
     if (areValidationErrors(req, res)) return
     if (!await doesVideoExist(req.params.videoId, res)) return
     if (!await doesVideoCommentExist(req.params.commentId, res.locals.videoAll, res)) return

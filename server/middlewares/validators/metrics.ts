@@ -4,40 +4,36 @@ import { isValidPlayerMode } from '@server/helpers/custom-validators/metrics'
 import { isIdOrUUIDValid, toCompleteUUID } from '@server/helpers/custom-validators/misc'
 import { CONFIG } from '@server/initializers/config'
 import { HttpStatusCode, PlaybackMetricCreate } from '@shared/models'
-import { logger } from '../../helpers/logger'
 import { areValidationErrors, doesVideoExist } from './shared'
 
 const addPlaybackMetricValidator = [
   body('resolution')
-    .isInt({ min: 0 }).withMessage('Invalid resolution'),
+    .isInt({ min: 0 }),
   body('fps')
     .optional()
-    .isInt({ min: 0 }).withMessage('Invalid fps'),
+    .isInt({ min: 0 }),
   body('playerMode')
-    .custom(isValidPlayerMode).withMessage('Invalid playerMode'),
+    .custom(isValidPlayerMode),
 
   body('resolutionChanges')
-    .isInt({ min: 0 }).withMessage('Invalid resolutionChanges'),
+    .isInt({ min: 0 }),
 
   body('errors')
-    .isInt({ min: 0 }).withMessage('Invalid errors'),
+    .isInt({ min: 0 }),
 
   body('downloadedBytesP2P')
-    .isInt({ min: 0 }).withMessage('Invalid downloadedBytesP2P'),
+    .isInt({ min: 0 }),
   body('downloadedBytesHTTP')
-    .isInt({ min: 0 }).withMessage('Invalid downloadedBytesHTTP'),
+    .isInt({ min: 0 }),
 
   body('uploadedBytesP2P')
-    .isInt({ min: 0 }).withMessage('Invalid uploadedBytesP2P'),
+    .isInt({ min: 0 }),
 
   body('videoId')
     .customSanitizer(toCompleteUUID)
-    .optional()
     .custom(isIdOrUUIDValid),
 
   async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    logger.debug('Checking addPlaybackMetricValidator parameters.', { parameters: req.query })
-
     if (!CONFIG.OPEN_TELEMETRY.METRICS.ENABLED) return res.sendStatus(HttpStatusCode.NO_CONTENT_204)
 
     const body: PlaybackMetricCreate = req.body

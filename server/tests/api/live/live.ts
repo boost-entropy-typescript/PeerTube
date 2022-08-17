@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions,@typescript-eslint/require-await */
 
-import 'mocha'
-import * as chai from 'chai'
+import { expect } from 'chai'
 import { basename, join } from 'path'
 import { ffprobePromise, getVideoStream } from '@server/helpers/ffmpeg'
 import { checkLiveSegmentHash, checkResolutionsInMasterPlaylist, getAllFiles, testImage } from '@server/tests/shared'
@@ -32,8 +31,6 @@ import {
   waitJobs,
   waitUntilLivePublishedOnAllServers
 } from '@shared/server-commands'
-
-const expect = chai.expect
 
 describe('Test live', function () {
   let servers: PeerTubeServer[] = []

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions,@typescript-eslint/require-await */
 
-import 'mocha'
-import * as chai from 'chai'
+import { expect } from 'chai'
 import request from 'supertest'
 import {
   checkTmpIsEmpty,
@@ -25,8 +24,6 @@ import {
   waitJobs,
   webtorrentAdd
 } from '@shared/server-commands'
-
-const expect = chai.expect
 
 describe('Test multiple servers', function () {
   let servers: PeerTubeServer[] = []

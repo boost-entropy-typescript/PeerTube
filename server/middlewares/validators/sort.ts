@@ -1,6 +1,6 @@
 import express from 'express'
 import { query } from 'express-validator'
-import { logger } from '@server/helpers/logger'
+
 import { SORTABLE_COLUMNS } from '../../initializers/constants'
 import { areValidationErrors } from './shared'
 
@@ -10,12 +10,12 @@ function checkSortFactory (columns: string[], tags: string[] = []) {
 
 function checkSort (sortableColumns: string[], tags: string[] = []) {
   return [
-    query('sort').optional().isIn(sortableColumns).withMessage('Should have correct sortable column'),
+    query('sort')
+      .optional()
+      .isIn(sortableColumns),
 
     (req: express.Request, res: express.Response, next: express.NextFunction) => {
-      logger.debug('Checking sort parameters', { parameters: req.query, tags })
-
-      if (areValidationErrors(req, res)) return
+      if (areValidationErrors(req, res, { tags })) return
 
       return next()
     }

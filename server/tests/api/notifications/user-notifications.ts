@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions,@typescript-eslint/require-await */
 
-import 'mocha'
-import * as chai from 'chai'
+import { expect } from 'chai'
 import {
   CheckerBaseParams,
   checkMyVideoImportIsFinished,
@@ -18,8 +17,6 @@ import { wait } from '@shared/core-utils'
 import { buildUUID } from '@shared/extra-utils'
 import { UserNotification, UserNotificationType, VideoPrivacy, VideoStudioTask } from '@shared/models'
 import { cleanupTests, findExternalSavedVideo, PeerTubeServer, stopFfmpeg, waitJobs } from '@shared/server-commands'
-
-const expect = chai.expect
 
 describe('Test user notifications', function () {
   let servers: PeerTubeServer[] = []
