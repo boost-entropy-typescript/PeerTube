@@ -1,6 +1,6 @@
 {
   "name": "peertube-client",
-  "version": "4.2.2",
+  "version": "4.3.0-rc.1",
   "private": true,
   "license": "AGPL-3.0",
   "author": {
@@ -96,7 +96,7 @@
     "expect-webdriverio": "^3.4.0",
     "focus-visible": "^5.0.2",
     "geckodriver": "^3.0.1",
-    "hls.js": "1.2.1",
+    "hls.js": "1.2.2",
     "html-loader": "^4.1.0",
     "html-webpack-plugin": "^5.3.1",
     "https-browserify": "^1.0.0",
@@ -137,7 +137,7 @@
     "webpack": "^5.73.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.10.0",
-    "webtorrent": "^1.8.22",
+    "webtorrent": "1.8.26",
     "whatwg-fetch": "^3.0.0",
     "zone.js": "~0.11.4"
   },
