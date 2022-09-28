@@ -60,6 +60,10 @@ export class EditBasicConfigurationComponent implements OnInit, OnChanges {
     return !!enabled.find((e: string) => e === algorithm)
   }
 
+  getUserVideoQuota () {
+    return this.form.value['user']['videoQuota']
+  }
+
   isSignupEnabled () {
     return this.form.value['signup']['enabled'] === true
   }

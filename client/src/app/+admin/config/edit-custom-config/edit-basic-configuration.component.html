@@ -218,6 +218,8 @@
             [clearable]="false"
           ></my-select-custom-value>
 
+          <my-user-real-quota-info [videoQuota]="getUserVideoQuota()"></my-user-real-quota-info>
+
           <div *ngIf="formErrors.user.videoQuota" class="form-error">{{ formErrors.user.videoQuota }}</div>
         </div>
 
