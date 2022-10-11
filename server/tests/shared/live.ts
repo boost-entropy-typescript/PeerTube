@@ -3,7 +3,6 @@
 import { expect } from 'chai'
 import { pathExists, readdir } from 'fs-extra'
 import { join } from 'path'
-import { wait } from '@shared/core-utils'
 import { LiveVideo, VideoStreamingPlaylistType } from '@shared/models'
 import { ObjectStorageCommand, PeerTubeServer } from '@shared/server-commands'
 import { checkLiveSegmentHash, checkResolutionsInMasterPlaylist } from './streaming-playlists'
@@ -42,7 +41,13 @@ async function testVideoResolutions (options: {
     expect(hlsPlaylist).to.exist
     expect(hlsPlaylist.files).to.have.lengthOf(0) // Only fragmented mp4 files are displayed
 
-    await checkResolutionsInMasterPlaylist({ server, playlistUrl: hlsPlaylist.playlistUrl, resolutions, transcoded })
+    await checkResolutionsInMasterPlaylist({
+      server,
+      playlistUrl: hlsPlaylist.playlistUrl,
+      resolutions,
+      transcoded,
+      withRetry: objectStorage
+    })
 
     if (objectStorage) {
       expect(hlsPlaylist.playlistUrl).to.contain(ObjectStorageCommand.getPlaylistBaseUrl())
@@ -51,20 +56,26 @@ async function testVideoResolutions (options: {
     for (let i = 0; i < resolutions.length; i++) {
       const segmentNum = 3
       const segmentName = `${i}-00000${segmentNum}.ts`
-      await originServer.live.waitUntilSegmentGeneration({ videoUUID: video.uuid, playlistNumber: i, segment: segmentNum })
+      await originServer.live.waitUntilSegmentGeneration({
+        server: originServer,
+        videoUUID: video.uuid,
+        playlistNumber: i,
+        segment: segmentNum,
+        objectStorage
+      })
 
       const baseUrl = objectStorage
         ? ObjectStorageCommand.getPlaylistBaseUrl() + 'hls'
         : originServer.url + '/static/streaming-playlists/hls'
 
       if (objectStorage) {
-        // Playlist file upload
-        await wait(500)
-
         expect(hlsPlaylist.segmentsSha256Url).to.contain(ObjectStorageCommand.getPlaylistBaseUrl())
       }
 
-      const subPlaylist = await originServer.streamingPlaylists.get({ url: `${baseUrl}/${video.uuid}/${i}.m3u8` })
+      const subPlaylist = await originServer.streamingPlaylists.get({
+        url: `${baseUrl}/${video.uuid}/${i}.m3u8`,
+        withRetry: objectStorage // With object storage, the request may fail because of inconsistent data in S3
+      })
 
       expect(subPlaylist).to.contain(segmentName)
 

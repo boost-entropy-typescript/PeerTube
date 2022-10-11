@@ -519,7 +519,7 @@ describe('Test live', function () {
       }
 
       const minBitrateLimits = {
-        720: 5000 * 1000,
+        720: 4800 * 1000,
         360: 1000 * 1000,
         240: 550 * 1000
       }
@@ -695,9 +695,15 @@ describe('Test live', function () {
         commands[0].waitUntilPublished({ videoId: liveVideoReplayId })
       ])
 
-      await commands[0].waitUntilSegmentGeneration({ videoUUID: liveVideoId, playlistNumber: 0, segment: 2 })
-      await commands[0].waitUntilSegmentGeneration({ videoUUID: liveVideoReplayId, playlistNumber: 0, segment: 2 })
-      await commands[0].waitUntilSegmentGeneration({ videoUUID: permanentLiveVideoReplayId, playlistNumber: 0, segment: 2 })
+      for (const videoUUID of [ liveVideoId, liveVideoReplayId, permanentLiveVideoReplayId ]) {
+        await commands[0].waitUntilSegmentGeneration({
+          server: servers[0],
+          videoUUID,
+          playlistNumber: 0,
+          segment: 2,
+          objectStorage: false
+        })
+      }
 
       {
         const video = await servers[0].videos.get({ id: permanentLiveVideoReplayId })

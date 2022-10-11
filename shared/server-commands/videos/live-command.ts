@@ -15,7 +15,7 @@ import {
   VideoState
 } from '@shared/models'
 import { unwrapBody } from '../requests'
-import { ObjectStorageCommand } from '../server'
+import { ObjectStorageCommand, PeerTubeServer } from '../server'
 import { AbstractCommand, OverrideCommandOptions } from '../shared'
 import { sendRTMPStream, testFfmpegStreamError } from './live'
 
@@ -160,16 +160,47 @@ export class LiveCommand extends AbstractCommand {
     return this.waitUntilState({ videoId, state: VideoState.LIVE_ENDED })
   }
 
-  waitUntilSegmentGeneration (options: OverrideCommandOptions & {
+  async waitUntilSegmentGeneration (options: OverrideCommandOptions & {
+    server: PeerTubeServer
     videoUUID: string
     playlistNumber: number
     segment: number
-    totalSessions?: number
+    objectStorage: boolean
   }) {
-    const { playlistNumber, segment, videoUUID, totalSessions = 1 } = options
-    const segmentName = `${playlistNumber}-00000${segment}.ts`
+    const { server, objectStorage, playlistNumber, segment, videoUUID } = options
 
-    return this.server.servers.waitUntilLog(`${videoUUID}/${segmentName}`, totalSessions * 2, false)
+    const segmentName = `${playlistNumber}-00000${segment}.ts`
+    const baseUrl = objectStorage
+      ? ObjectStorageCommand.getPlaylistBaseUrl() + 'hls'
+      : server.url + '/static/streaming-playlists/hls'
+
+    let error = true
+
+    while (error) {
+      try {
+        await this.getRawRequest({
+          ...options,
+
+          url: `${baseUrl}/${videoUUID}/${segmentName}`,
+          implicitToken: false,
+          defaultExpectedStatus: HttpStatusCode.OK_200
+        })
+
+        const video = await server.videos.get({ id: videoUUID })
+        const hlsPlaylist = video.streamingPlaylists[0]
+
+        const shaBody = await server.streamingPlaylists.getSegmentSha256({ url: hlsPlaylist.segmentsSha256Url })
+
+        if (!shaBody[segmentName]) {
+          throw new Error('Segment SHA does not exist')
+        }
+
+        error = false
+      } catch {
+        error = true
+        await wait(100)
+      }
+    }
   }
 
   async waitUntilReplacedByReplay (options: OverrideCommandOptions & {

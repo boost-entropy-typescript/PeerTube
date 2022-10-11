@@ -45,7 +45,12 @@ try {
 
 import { checkConfig, checkActivityPubUrls, checkFFmpegVersion } from './server/initializers/checker-after-init'
 
-checkConfig()
+try {
+  checkConfig()
+} catch (err) {
+  logger.error('Config error.', { err })
+  process.exit(-1)
+}
 
 // Trust our proxy (IP forwarding...)
 app.set('trust proxy', CONFIG.TRUST_PROXY)
@@ -322,6 +327,10 @@ async function startApplication () {
   VideoViewsBufferScheduler.Instance.enable()
   GeoIPUpdateScheduler.Instance.enable()
   OpenTelemetryMetrics.Instance.registerMetrics()
+
+  PluginManager.Instance.init(server)
+  // Before PeerTubeSocket init
+  PluginManager.Instance.registerWebSocketRouter()
 
   PeerTubeSocket.Instance.init(server)
   VideoViewsManager.Instance.init()
