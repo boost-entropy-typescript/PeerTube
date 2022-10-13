@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core'
+import { Params } from '@angular/router'
 import { GlobalIconName } from '@app/shared/shared-icons'
 
 export type DropdownAction<T> = {
@@ -7,7 +8,10 @@ export type DropdownAction<T> = {
   description?: string
   title?: string
   handler?: (a: T) => any
+
   linkBuilder?: (a: T) => (string | number)[]
+  queryParamsBuilder?: (a: T) => Params
+
   isDisplayed?: (a: T) => boolean
 
   class?: string[]
@@ -42,6 +46,12 @@ export class ActionDropdownComponent<T> {
     if (this.actions.length !== 0 && Array.isArray(this.actions[0])) return this.actions as DropdownAction<T>[][]
 
     return [ this.actions as DropdownAction<T>[] ]
+  }
+
+  getQueryParams (action: DropdownAction<T>, entry: T) {
+    if (action.queryParamsBuilder) return action.queryParamsBuilder(entry)
+
+    return {}
   }
 
   areActionsDisplayed (actions: Array<DropdownAction<T> | DropdownAction<T>[]>, entry: T): boolean {

@@ -1,10 +1,10 @@
+import { SortMeta } from 'primeng/api'
+import { mergeMap } from 'rxjs'
 import { Component, OnInit } from '@angular/core'
 import { AuthService, Notifier, RestPagination, RestTable, ServerService } from '@app/core'
 import { DropdownAction, VideoChannelService, VideoChannelSyncService } from '@app/shared/shared-main'
 import { HTMLServerConfig } from '@shared/models/server'
 import { VideoChannelSync, VideoChannelSyncState } from '@shared/models/videos'
-import { SortMeta } from 'primeng/api'
-import { mergeMap } from 'rxjs'
 
 @Component({
   templateUrl: './my-video-channel-syncs.component.html',
@@ -44,6 +44,14 @@ export class MyVideoChannelSyncsComponent extends RestTable implements OnInit {
     this.initialize()
 
     this.videoChannelSyncActions = [
+      [
+        {
+          label: $localize`List imports`,
+          linkBuilder: () => [ '/my-library/video-imports' ],
+          queryParamsBuilder: sync => ({ search: `videoChannelSyncId:${sync.id}` }),
+          iconName: 'cloud-download'
+        }
+      ],
       [
         {
           label: $localize`Delete`,
