@@ -711,7 +711,7 @@ const PREVIEWS_SIZE = {
   height: 480,
   minWidth: 400
 }
-const ACTOR_IMAGES_SIZE: { [key in ActorImageType]: { width: number, height: number }[]} = {
+const ACTOR_IMAGES_SIZE: { [key in ActorImageType]: { width: number, height: number }[] } = {
   [ActorImageType.AVATAR]: [
     {
       width: 120,
@@ -828,14 +828,6 @@ const WORKER_THREADS = {
   PROCESS_IMAGE: {
     CONCURRENCY: 1,
     MAX_THREADS: 5
-  },
-  SEQUENTIAL_HTTP_BROADCAST: {
-    CONCURRENCY: 1,
-    MAX_THREADS: 1
-  },
-  PARALLEL_HTTP_BROADCAST: {
-    CONCURRENCY: JOB_CONCURRENCY['activitypub-http-broadcast-parallel'],
-    MAX_THREADS: 1
   }
 }
 

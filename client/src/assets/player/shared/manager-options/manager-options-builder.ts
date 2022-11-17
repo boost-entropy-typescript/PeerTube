@@ -108,7 +108,7 @@ export class ManagerOptionsBuilder {
     return videojsOptions
   }
 
-  private getAutoPlayValue (autoplay: any, alreadyPlayed: boolean) {
+  private getAutoPlayValue (autoplay: videojs.Autoplay, alreadyPlayed: boolean) {
     if (autoplay !== true) return autoplay
 
     // On first play, disable autoplay to avoid issues
@@ -117,7 +117,9 @@ export class ManagerOptionsBuilder {
       return alreadyPlayed ? 'play' : false
     }
 
-    return 'play'
+    return this.options.common.forceAutoplay
+      ? 'any'
+      : 'play'
   }
 
   getContextMenuOptions (player: videojs.Player, commonOptions: CommonOptions) {
