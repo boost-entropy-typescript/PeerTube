@@ -239,7 +239,23 @@ const REQUEST_TIMEOUTS = {
   REDUNDANCY: JOB_TTL['video-redundancy']
 }
 
-const JOB_COMPLETED_LIFETIME = 60000 * 60 * 24 * 2 // 2 days
+const JOB_REMOVAL_OPTIONS = {
+  COUNT: 10000, // Max jobs to store
+
+  SUCCESS: { // Success jobs
+    'DEFAULT': parseDurationToMs('2 days'),
+
+    'activitypub-http-broadcast-parallel': parseDurationToMs('10 minutes'),
+    'activitypub-http-unicast': parseDurationToMs('1 hour'),
+    'videos-views-stats': parseDurationToMs('3 hours'),
+    'activitypub-refresher': parseDurationToMs('10 hours')
+  },
+
+  FAILURE: { // Failed job
+    DEFAULT: parseDurationToMs('7 days')
+  }
+}
+
 const VIDEO_IMPORT_TIMEOUT = Math.floor(JOB_TTL['video-import'] * 0.9)
 
 const SCHEDULER_INTERVALS_MS = {
@@ -808,7 +824,7 @@ const VIDEO_LIVE = {
 
 const MEMOIZE_TTL = {
   OVERVIEWS_SAMPLE: 1000 * 3600 * 4, // 4 hours
-  INFO_HASH_EXISTS: 1000 * 3600 * 12, // 12 hours
+  INFO_HASH_EXISTS: 1000 * 60, // 1 minute
   VIDEO_DURATION: 1000 * 10, // 10 seconds
   LIVE_ABLE_TO_UPLOAD: 1000 * 60, // 1 minute
   LIVE_CHECK_SOCKET_HEALTH: 1000 * 60, // 1 minute
@@ -938,6 +954,8 @@ if (process.env.PRODUCTION_CONSTANTS !== 'true') {
     OVERVIEWS.VIDEOS.SAMPLE_THRESHOLD = 2
 
     PLUGIN_EXTERNAL_AUTH_TOKEN_LIFETIME = 5000
+
+    JOB_REMOVAL_OPTIONS.SUCCESS['videos-views-stats'] = 10000
   }
 
   if (isTestInstance()) {
@@ -1069,7 +1087,7 @@ export {
   CRAWL_REQUEST_CONCURRENCY,
   DEFAULT_AUDIO_RESOLUTION,
   BINARY_CONTENT_TYPES,
-  JOB_COMPLETED_LIFETIME,
+  JOB_REMOVAL_OPTIONS,
   HTTP_SIGNATURE,
   VIDEO_IMPORT_STATES,
   VIDEO_CHANNEL_SYNC_STATE,
