@@ -935,7 +935,7 @@
       </trans-unit>
       <trans-unit id="7417677567611860270" datatype="html">
         <source>Channel synchronization with other platforms (YouTube, Vimeo, ...)</source>
-        <target state="translated">Synchronisierung der Kanäle mit anderen Plattformen (YouTube, Vimeo, ...)</target>
+        <target state="translated">Synchronisation des Kanals mit anderen Plattformen (YouTube, Vimeo, ...)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-instance/instance-features-table.component.html</context>
           <context context-type="linenumber">110</context>
@@ -2485,7 +2485,7 @@ Hilf mit PeerTube zu übersetzen!</target>
       </trans-unit>
       <trans-unit id="1124038634267013139" datatype="html">
         <source>The video may be unplayable during the transcoding process. It's the reason why we prefer to publish publicly the video after transcoding.</source>
-        <target state="translated">Das Video kann während des Transkodierungsvorgangs nicht abgespielt werden. Das ist der Grund, warum wir es vorziehen, das Video nach der Transkodierung zu veröffentlichen.</target>
+        <target state="translated">Das Video ist während der Umwandlung möglicherweise nicht abspielbar. Wir empfehlen deshalb eine Veröffentlichung des Videos nach abgeschlossener Transkodierung.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+videos/+video-edit/shared/video-edit.component.html</context>
           <context context-type="linenumber">150</context>
@@ -2692,7 +2692,7 @@ Hilf mit PeerTube zu übersetzen!</target>
       </trans-unit>
       <trans-unit id="5407145687662795944" datatype="html">
         <source>Video thumbnail</source>
-        <target state="translated">Video-Miniaturansicht</target>
+        <target state="translated">Vorschaubild des Videos</target>
         <context-group purpose="location"><context context-type="sourcefile">src/app/+videos/+video-edit/shared/video-edit.component.html</context><context context-type="linenumber">310</context></context-group>
       </trans-unit>
       <trans-unit id="2375260419993138758">
@@ -4063,7 +4063,7 @@ Hilf mit PeerTube zu übersetzen!</target>
       </trans-unit>
       <trans-unit id="7483158147658382515" datatype="html">
         <source>Comments on local videos</source>
-        <target state="translated">Kommentare bei internen Videos</target>
+        <target state="translated">Kommentare von Instanz-internen Videos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/overview/comments/video-comment-list.component.ts</context>
           <context context-type="linenumber">60</context>
