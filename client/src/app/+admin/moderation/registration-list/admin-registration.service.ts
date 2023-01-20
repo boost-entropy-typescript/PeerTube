@@ -1,9 +1,11 @@
 import { SortMeta } from 'primeng/api'
-import { catchError } from 'rxjs/operators'
+import { from } from 'rxjs'
+import { catchError, concatMap, toArray } from 'rxjs/operators'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { RestExtractor, RestPagination, RestService } from '@app/core'
-import { ResultList, UserRegistration } from '@shared/models'
+import { arrayify } from '@shared/core-utils'
+import { ResultList, UserRegistration, UserRegistrationUpdateState } from '@shared/models'
 import { environment } from '../../../../environments/environment'
 
 @Injectable()
@@ -38,26 +40,42 @@ export class AdminRegistrationService {
       )
   }
 
-  acceptRegistration (registration: UserRegistration, moderationResponse: string) {
+  acceptRegistration (options: {
+    registration: UserRegistration
+    moderationResponse: string
+    preventEmailDelivery: boolean
+  }) {
+    const { registration, moderationResponse, preventEmailDelivery } = options
+
     const url = AdminRegistrationService.BASE_REGISTRATION_URL + '/' + registration.id + '/accept'
-    const body = { moderationResponse }
+    const body: UserRegistrationUpdateState = { moderationResponse, preventEmailDelivery }
 
     return this.authHttp.post(url, body)
       .pipe(catchError(res => this.restExtractor.handleError(res)))
   }
 
-  rejectRegistration (registration: UserRegistration, moderationResponse: string) {
+  rejectRegistration (options: {
+    registration: UserRegistration
+    moderationResponse: string
+    preventEmailDelivery: boolean
+  }) {
+    const { registration, moderationResponse, preventEmailDelivery } = options
+
     const url = AdminRegistrationService.BASE_REGISTRATION_URL + '/' + registration.id + '/reject'
-    const body = { moderationResponse }
+    const body: UserRegistrationUpdateState = { moderationResponse, preventEmailDelivery }
 
     return this.authHttp.post(url, body)
       .pipe(catchError(res => this.restExtractor.handleError(res)))
   }
 
-  removeRegistration (registration: UserRegistration) {
-    const url = AdminRegistrationService.BASE_REGISTRATION_URL + '/' + registration.id
+  removeRegistrations (registrationsArg: UserRegistration | UserRegistration[]) {
+    const registrations = arrayify(registrationsArg)
 
-    return this.authHttp.delete(url)
-      .pipe(catchError(res => this.restExtractor.handleError(res)))
+    return from(registrations)
+      .pipe(
+        concatMap(r => this.authHttp.delete(AdminRegistrationService.BASE_REGISTRATION_URL + '/' + r.id)),
+        toArray(),
+        catchError(err => this.restExtractor.handleError(err))
+      )
   }
 }
