@@ -144,6 +144,14 @@
           "nn": {
             "translation": "src/locale/angular.nn.xlf",
             "baseHref": "/client/nn/"
+          },
+          "is": {
+            "translation": "src/locale/angular.is.xlf",
+            "baseHref": "/client/is/"
+          },
+          "uk": {
+            "translation": "src/locale/angular.uk-UA.xlf",
+            "baseHref": "/client/uk-UA/"
           }
         }
       },
