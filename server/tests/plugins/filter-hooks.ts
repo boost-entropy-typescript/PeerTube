@@ -14,6 +14,7 @@ import {
   cleanupTests,
   createMultipleServers,
   doubleFollow,
+  makeActivityPubGetRequest,
   makeGetRequest,
   makeRawRequest,
   PeerTubeServer,
@@ -843,6 +844,24 @@ describe('Test plugin filter hooks', function () {
     it('Should run filter:api.video-channel.get.result', async function () {
       const channel = await servers[0].channels.get({ channelName: 'root_channel' })
       expect(channel.displayName).to.equal('Main root channel <3')
+    })
+  })
+
+  describe('Activity Pub', function () {
+
+    it('Should run filter:activity-pub.activity.context.build.result', async function () {
+      const { body } = await makeActivityPubGetRequest(servers[0].url, '/w/' + videoUUID)
+      expect(body.type).to.equal('Video')
+
+      expect(body['@context'].some(c => {
+        return typeof c === 'object' && c.recordedAt === 'https://schema.org/recordedAt'
+      })).to.be.true
+    })
+
+    it('Should run filter:activity-pub.video.json-ld.build.result', async function () {
+      const { body } = await makeActivityPubGetRequest(servers[0].url, '/w/' + videoUUID)
+      expect(body.name).to.equal('default video 0')
+      expect(body.videoName).to.equal('default video 0')
     })
   })
 
