@@ -144,7 +144,7 @@ function runTestSuite (options: {
   let baseMockUrl: string
 
   let servers: PeerTubeServer[]
-  let sqlCommands: SQLCommand[]
+  let sqlCommands: SQLCommand[] = []
 
   let keptUrls: string[] = []
 
@@ -389,7 +389,7 @@ describe('Object storage for videos', function () {
     })
 
     after(async function () {
-      await killallServers([ server ])
+      await cleanupTests([ server ])
     })
   })
 
