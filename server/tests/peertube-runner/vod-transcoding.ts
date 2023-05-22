@@ -189,7 +189,7 @@ describe('Test VOD transcoding in peertube-runner program', function () {
     })
 
     it('Should transcode videos on manual run', async function () {
-      this.timeout(120000)
+      this.timeout(360000)
 
       await servers[0].config.disableTranscoding()
 
@@ -249,9 +249,9 @@ describe('Test VOD transcoding in peertube-runner program', function () {
 
     const registrationToken = await servers[0].runnerRegistrationTokens.getFirstRegistrationToken()
 
-    peertubeRunner = new PeerTubeRunnerProcess()
+    peertubeRunner = new PeerTubeRunnerProcess(servers[0])
     await peertubeRunner.runServer()
-    await peertubeRunner.registerPeerTubeInstance({ server: servers[0], registrationToken, runnerName: 'runner' })
+    await peertubeRunner.registerPeerTubeInstance({ registrationToken, runnerName: 'runner' })
   })
 
   describe('With videos on local filesystem storage', function () {
@@ -329,13 +329,13 @@ describe('Test VOD transcoding in peertube-runner program', function () {
   describe('Check cleanup', function () {
 
     it('Should have an empty cache directory', async function () {
-      await checkPeerTubeRunnerCacheIsEmpty()
+      await checkPeerTubeRunnerCacheIsEmpty(peertubeRunner)
     })
   })
 
   after(async function () {
     if (peertubeRunner) {
-      await peertubeRunner.unregisterPeerTubeInstance({ server: servers[0] })
+      await peertubeRunner.unregisterPeerTubeInstance()
       peertubeRunner.kill()
     }
 

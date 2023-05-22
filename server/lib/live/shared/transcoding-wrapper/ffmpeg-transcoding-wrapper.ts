@@ -45,8 +45,6 @@ export class FFmpegTranscodingWrapper extends AbstractTranscodingWrapper {
 
     logger.info('Running local live muxing/transcoding for %s.', this.videoUUID, this.lTags())
 
-    this.ffmpegCommand.run()
-
     let ffmpegShellCommand: string
     this.ffmpegCommand.on('start', cmdline => {
       ffmpegShellCommand = cmdline
@@ -67,6 +65,8 @@ export class FFmpegTranscodingWrapper extends AbstractTranscodingWrapper {
 
   abort () {
     if (this.ended || this.errored || this.aborted) return
+
+    logger.debug('Killing ffmpeg after live abort of ' + this.videoUUID, this.lTags())
 
     this.ffmpegCommand.kill('SIGINT')
 
@@ -94,6 +94,8 @@ export class FFmpegTranscodingWrapper extends AbstractTranscodingWrapper {
 
   private onFFmpegEnded () {
     if (this.ended || this.errored || this.aborted) return
+
+    logger.debug('Live ffmpeg transcoding ended for ' + this.videoUUID, this.lTags())
 
     this.ended = true
     this.emit('end')
