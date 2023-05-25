@@ -34,6 +34,8 @@ export class ProcessLiveRTMPHLSTranscoding {
 
   constructor (private readonly options: ProcessOptions<RunnerJobLiveRTMPHLSTranscodingPayload>) {
     this.outputPath = join(ConfigManager.Instance.getTranscodingDirectory(), buildUUID())
+
+    logger.debug(`Using ${this.outputPath} to process live rtmp hls transcoding job ${options.job.uuid}`)
   }
 
   process () {
@@ -75,7 +77,7 @@ export class ProcessLiveRTMPHLSTranscoding {
           try {
             await this.sendPendingChunks()
           } catch (err) {
-            this.onUpdateError(err, rej)
+            this.onUpdateError({ err, rej, res })
           }
 
           const playlistName = this.getPlaylistIdFromTS(p)
@@ -88,7 +90,7 @@ export class ProcessLiveRTMPHLSTranscoding {
 
         tsWatcher.on('unlink', p => {
           this.sendDeletedChunkUpdate(p)
-            .catch(err => this.onUpdateError(err, rej))
+            .catch(err => this.onUpdateError({ err, rej, res }))
         })
 
         this.ffmpegCommand = await buildFFmpegLive().getLiveTranscodingCommand({
@@ -132,23 +134,32 @@ export class ProcessLiveRTMPHLSTranscoding {
 
   // ---------------------------------------------------------------------------
 
-  private onUpdateError (err: Error, reject: (reason?: any) => void) {
+  private onUpdateError (options: {
+    err: Error
+    res: () => void
+    rej: (reason?: any) => void
+  }) {
+    const { err, res, rej } = options
+
     if (this.errored) return
     if (this.ended) return
 
     this.errored = true
 
-    reject(err)
     this.ffmpegCommand.kill('SIGINT')
 
     const type = ((err as any).res?.body as PeerTubeProblemDocument)?.code
     if (type === ServerErrorCode.RUNNER_JOB_NOT_IN_PROCESSING_STATE) {
       logger.info({ err }, 'Stopping transcoding as the job is not in processing state anymore')
+
+      res()
     } else {
       logger.error({ err }, 'Cannot send update after added/deleted chunk, stopping live transcoding')
 
       this.sendError(err)
         .catch(subErr => logger.error({ err: subErr }, 'Cannot send error'))
+
+      rej(err)
     }
 
     this.cleanup()
@@ -246,6 +257,8 @@ export class ProcessLiveRTMPHLSTranscoding {
   private async sendPendingChunks (): Promise<any> {
     if (this.ended) return Promise.resolve()
 
+    const promises: Promise<any>[] = []
+
     for (const playlist of this.pendingChunksPerPlaylist.keys()) {
       for (const chunk of this.pendingChunksPerPlaylist.get(playlist)) {
         logger.debug(`Sending added live chunk ${chunk} update`)
@@ -269,12 +282,13 @@ export class ProcessLiveRTMPHLSTranscoding {
           }
         }
 
-        this.updateWithRetry(payload)
-          .catch(err => logger.error({ err }, 'Cannot update with retry'))
+        promises.push(this.updateWithRetry(payload))
       }
 
       this.pendingChunksPerPlaylist.set(playlist, [])
     }
+
+    await Promise.all(promises)
   }
 
   private async updateWithRetry (payload: LiveRTMPHLSTranscodingUpdatePayload, currentTry = 1): Promise<any> {
@@ -289,6 +303,7 @@ export class ProcessLiveRTMPHLSTranscoding {
       })
     } catch (err) {
       if (currentTry >= 3) throw err
+      if ((err.res?.body as PeerTubeProblemDocument)?.code === ServerErrorCode.RUNNER_JOB_NOT_IN_PROCESSING_STATE) throw err
 
       logger.warn({ err }, 'Will retry update after error')
       await wait(250)
@@ -310,6 +325,8 @@ export class ProcessLiveRTMPHLSTranscoding {
   // ---------------------------------------------------------------------------
 
   private cleanup () {
+    logger.debug(`Cleaning up job ${this.options.job.uuid}`)
+
     for (const fsWatcher of this.fsWatchers) {
       fsWatcher.close()
         .catch(err => logger.error({ err }, 'Cannot close watcher'))

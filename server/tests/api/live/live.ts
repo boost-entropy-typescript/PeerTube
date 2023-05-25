@@ -181,8 +181,6 @@ describe('Test live', function () {
     })
 
     it('Should update the live', async function () {
-      this.timeout(10000)
-
       await commands[0].update({ videoId: liveVideoUUID, fields: { saveReplay: false, latencyMode: LiveVideoLatencyMode.DEFAULT } })
       await waitJobs(servers)
     })
@@ -206,8 +204,6 @@ describe('Test live', function () {
     })
 
     it('Delete the live', async function () {
-      this.timeout(10000)
-
       await servers[0].videos.remove({ id: liveVideoUUID })
       await waitJobs(servers)
     })
@@ -427,7 +423,6 @@ describe('Test live', function () {
         servers,
         liveVideoId,
         resolutions: [ 720 ],
-        objectStorage: false,
         transcoded: true
       })
 
@@ -463,7 +458,6 @@ describe('Test live', function () {
         servers,
         liveVideoId,
         resolutions: resolutions.concat([ 720 ]),
-        objectStorage: false,
         transcoded: true
       })
 
@@ -516,7 +510,6 @@ describe('Test live', function () {
         servers,
         liveVideoId,
         resolutions,
-        objectStorage: false,
         transcoded: true
       })
 
@@ -613,7 +606,6 @@ describe('Test live', function () {
         servers,
         liveVideoId,
         resolutions,
-        objectStorage: false,
         transcoded: true
       })
 
@@ -650,7 +642,6 @@ describe('Test live', function () {
         servers,
         liveVideoId,
         resolutions: [ 720 ],
-        objectStorage: false,
         transcoded: true
       })
 
@@ -724,8 +715,7 @@ describe('Test live', function () {
           server: servers[0],
           videoUUID,
           playlistNumber: 0,
-          segment: 2,
-          objectStorage: false
+          segment: 2
         })
       }
 

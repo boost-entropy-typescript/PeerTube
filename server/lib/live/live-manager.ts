@@ -178,6 +178,10 @@ class LiveManager {
     return !!this.rtmpServer
   }
 
+  hasSession (sessionId: string) {
+    return this.getContext().sessions.has(sessionId)
+  }
+
   stopSessionOf (videoUUID: string, error: LiveVideoError | null) {
     const sessionId = this.videoSessions.get(videoUUID)
     if (!sessionId) {
@@ -309,7 +313,7 @@ class LiveManager {
     const liveSession = await this.saveStartingSession(videoLive)
 
     const user = await UserModel.loadByLiveId(videoLive.id)
-    LiveQuotaStore.Instance.addNewLive(user.id, videoLive.id)
+    LiveQuotaStore.Instance.addNewLive(user.id, sessionId)
 
     const muxingSession = new MuxingSession({
       context: this.getContext(),
@@ -355,7 +359,7 @@ class LiveManager {
     muxingSession.on('after-cleanup', ({ videoUUID }) => {
       this.muxingSessions.delete(sessionId)
 
-      LiveQuotaStore.Instance.removeLive(user.id, videoLive.id)
+      LiveQuotaStore.Instance.removeLive(user.id, sessionId)
 
       muxingSession.destroy()
 
@@ -395,6 +399,8 @@ class LiveManager {
       }
 
       PeerTubeSocket.Instance.sendVideoLiveNewState(video)
+
+      Hooks.runAction('action:live.video.state.updated', { video })
     } catch (err) {
       logger.error('Cannot save/federate live video %d.', videoId, { err, ...localLTags })
     }
@@ -462,6 +468,8 @@ class LiveManager {
       PeerTubeSocket.Instance.sendVideoLiveNewState(fullVideo)
 
       await federateVideoIfNeeded(fullVideo, false)
+
+      Hooks.runAction('action:live.video.state.updated', { video: fullVideo })
     } catch (err) {
       logger.error('Cannot save/federate new video state of live streaming of video %s.', videoUUID, { err, ...lTags(videoUUID) })
     }
