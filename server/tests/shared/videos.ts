@@ -28,7 +28,7 @@ async function completeWebVideoFilesCheck (options: {
   const serverConfig = await originServer.config.getConfig()
   const requiresAuth = video.privacy.id === VideoPrivacy.PRIVATE || video.privacy.id === VideoPrivacy.INTERNAL
 
-  const transcodingEnabled = serverConfig.transcoding.webtorrent.enabled
+  const transcodingEnabled = serverConfig.transcoding.web_videos.enabled
 
   for (const attributeFile of files) {
     const file = video.files.find(f => f.resolution.id === attributeFile.resolution)
@@ -51,11 +51,12 @@ async function completeWebVideoFilesCheck (options: {
       expect(file.torrentUrl).to.match(new RegExp(`${server.url}/lazy-static/torrents/${nameReg}.torrent`))
 
       if (objectStorageBaseUrl && requiresAuth) {
-        expect(file.fileUrl).to.match(new RegExp(`${originServer.url}/object-storage-proxy/webseed/${privatePath}${nameReg}${extension}`))
+        const regexp = new RegExp(`${originServer.url}/object-storage-proxy/web-videos/${privatePath}${nameReg}${extension}`)
+        expect(file.fileUrl).to.match(regexp)
       } else if (objectStorageBaseUrl) {
         expectStartWith(file.fileUrl, objectStorageBaseUrl)
       } else {
-        expect(file.fileUrl).to.match(new RegExp(`${originServer.url}/static/webseed/${privatePath}${nameReg}${extension}`))
+        expect(file.fileUrl).to.match(new RegExp(`${originServer.url}/static/web-videos/${privatePath}${nameReg}${extension}`))
       }
 
       expect(file.fileDownloadUrl).to.match(new RegExp(`${originServer.url}/download/videos/${nameReg}${extension}`))
@@ -215,22 +216,22 @@ async function checkVideoFilesWereRemoved (options: {
 }) {
   const { video, server, captions = [], onlyVideoFiles = false } = options
 
-  const webtorrentFiles = video.files || []
+  const webVideoFiles = video.files || []
   const hlsFiles = video.streamingPlaylists[0]?.files || []
 
   const thumbnailName = basename(video.thumbnailPath)
   const previewName = basename(video.previewPath)
 
-  const torrentNames = webtorrentFiles.concat(hlsFiles).map(f => basename(f.torrentUrl))
+  const torrentNames = webVideoFiles.concat(hlsFiles).map(f => basename(f.torrentUrl))
 
   const captionNames = captions.map(c => basename(c.captionPath))
 
-  const webtorrentFilenames = webtorrentFiles.map(f => basename(f.fileUrl))
+  const webVideoFilenames = webVideoFiles.map(f => basename(f.fileUrl))
   const hlsFilenames = hlsFiles.map(f => basename(f.fileUrl))
 
   let directories: { [ directory: string ]: string[] } = {
-    videos: webtorrentFilenames,
-    redundancy: webtorrentFilenames,
+    videos: webVideoFilenames,
+    redundancy: webVideoFilenames,
     [join('playlists', 'hls')]: hlsFilenames,
     [join('redundancy', 'hls')]: hlsFilenames
   }

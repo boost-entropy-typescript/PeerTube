@@ -6,7 +6,7 @@ import { injectQueryToPlaylistUrls } from '@server/lib/hls'
 import {
   asyncMiddleware,
   ensureCanAccessPrivateVideoHLSFiles,
-  ensureCanAccessVideoPrivateWebTorrentFiles,
+  ensureCanAccessVideoPrivateWebVideoFiles,
   handleStaticError,
   optionalAuthenticate
 } from '@server/middlewares'
@@ -21,21 +21,21 @@ const staticRouter = express.Router()
 staticRouter.use(cors())
 
 // ---------------------------------------------------------------------------
-// WebTorrent/Classic videos
+// Web videos/Classic videos
 // ---------------------------------------------------------------------------
 
-const privateWebTorrentStaticMiddlewares = CONFIG.STATIC_FILES.PRIVATE_FILES_REQUIRE_AUTH === true
-  ? [ optionalAuthenticate, asyncMiddleware(ensureCanAccessVideoPrivateWebTorrentFiles) ]
+const privateWebVideoStaticMiddlewares = CONFIG.STATIC_FILES.PRIVATE_FILES_REQUIRE_AUTH === true
+  ? [ optionalAuthenticate, asyncMiddleware(ensureCanAccessVideoPrivateWebVideoFiles) ]
   : []
 
 staticRouter.use(
-  STATIC_PATHS.PRIVATE_WEBSEED,
-  ...privateWebTorrentStaticMiddlewares,
+  [ STATIC_PATHS.PRIVATE_WEB_VIDEOS, STATIC_PATHS.LEGACY_PRIVATE_WEB_VIDEOS ],
+  ...privateWebVideoStaticMiddlewares,
   express.static(DIRECTORIES.VIDEOS.PRIVATE, { fallthrough: false }),
   handleStaticError
 )
 staticRouter.use(
-  STATIC_PATHS.WEBSEED,
+  [ STATIC_PATHS.WEB_VIDEOS, STATIC_PATHS.LEGACY_WEB_VIDEOS ],
   express.static(DIRECTORIES.VIDEOS.PUBLIC, { fallthrough: false }),
   handleStaticError
 )

@@ -1,4 +1,5 @@
 import config from 'config'
+import { readFileSync, writeFileSync } from 'fs-extra'
 import { URL } from 'url'
 import { uniqify } from '@shared/core-utils'
 import { getFFmpegVersion } from '@shared/ffmpeg'
@@ -10,7 +11,7 @@ import { logger } from '../helpers/logger'
 import { ApplicationModel, getServerActor } from '../models/application/application'
 import { OAuthClientModel } from '../models/oauth/oauth-client'
 import { UserModel } from '../models/user/user'
-import { CONFIG, isEmailEnabled } from './config'
+import { CONFIG, getLocalConfigFilePath, isEmailEnabled, reloadConfig } from './config'
 import { WEBSERVER } from './constants'
 
 async function checkActivityPubUrls () {
@@ -37,10 +38,7 @@ function checkConfig () {
   const configFiles = config.util.getConfigSources().map(s => s.name).join(' -> ')
   logger.info('Using following configuration file hierarchy: %s.', configFiles)
 
-  // Moved configuration keys
-  if (config.has('services.csp-logger')) {
-    logger.warn('services.csp-logger configuration has been renamed to csp.report_uri. Please update your configuration file.')
-  }
+  checkRemovedConfigKeys()
 
   checkSecretsConfig()
   checkEmailConfig()
@@ -103,6 +101,34 @@ export {
 }
 
 // ---------------------------------------------------------------------------
+
+function checkRemovedConfigKeys () {
+  // Moved configuration keys
+  if (config.has('services.csp-logger')) {
+    logger.warn('services.csp-logger configuration has been renamed to csp.report_uri. Please update your configuration file.')
+  }
+
+  if (config.has('transcoding.webtorrent.enabled')) {
+    const localConfigPath = getLocalConfigFilePath()
+
+    const content = readFileSync(localConfigPath, { encoding: 'utf-8' })
+    if (!content.includes('"webtorrent"')) {
+      throw new Error('Please rename transcoding.webtorrent.enabled key to transcoding.web_videos.enabled in your configuration file')
+    }
+
+    try {
+      logger.info(
+        'Replacing "transcoding.webtorrent.enabled" key to "transcoding.web_videos.enabled" in your local configuration ' + localConfigPath
+      )
+
+      writeFileSync(localConfigPath, content.replace('"webtorrent"', '"web_videos"'), { encoding: 'utf-8' })
+
+      reloadConfig()
+    } catch (err) {
+      logger.error('Cannot write new configuration to file ' + localConfigPath, { err })
+    }
+  }
+}
 
 function checkSecretsConfig () {
   if (!CONFIG.SECRETS.PEERTUBE) {
@@ -191,15 +217,15 @@ function checkStorageConfig () {
     }
   }
 
-  if (CONFIG.STORAGE.VIDEOS_DIR === CONFIG.STORAGE.REDUNDANCY_DIR) {
+  if (CONFIG.STORAGE.WEB_VIDEOS_DIR === CONFIG.STORAGE.REDUNDANCY_DIR) {
     logger.warn('Redundancy directory should be different than the videos folder.')
   }
 }
 
 function checkTranscodingConfig () {
   if (CONFIG.TRANSCODING.ENABLED) {
-    if (CONFIG.TRANSCODING.WEBTORRENT.ENABLED === false && CONFIG.TRANSCODING.HLS.ENABLED === false) {
-      throw new Error('You need to enable at least WebTorrent transcoding or HLS transcoding.')
+    if (CONFIG.TRANSCODING.WEB_VIDEOS.ENABLED === false && CONFIG.TRANSCODING.HLS.ENABLED === false) {
+      throw new Error('You need to enable at least Web Video transcoding or HLS transcoding.')
     }
 
     if (CONFIG.TRANSCODING.CONCURRENCY <= 0) {
@@ -264,7 +290,7 @@ function checkLiveConfig () {
 function checkObjectStorageConfig () {
   if (CONFIG.OBJECT_STORAGE.ENABLED === true) {
 
-    if (!CONFIG.OBJECT_STORAGE.VIDEOS.BUCKET_NAME) {
+    if (!CONFIG.OBJECT_STORAGE.WEB_VIDEOS.BUCKET_NAME) {
       throw new Error('videos_bucket should be set when object storage support is enabled.')
     }
 
@@ -273,10 +299,10 @@ function checkObjectStorageConfig () {
     }
 
     if (
-      CONFIG.OBJECT_STORAGE.VIDEOS.BUCKET_NAME === CONFIG.OBJECT_STORAGE.STREAMING_PLAYLISTS.BUCKET_NAME &&
-      CONFIG.OBJECT_STORAGE.VIDEOS.PREFIX === CONFIG.OBJECT_STORAGE.STREAMING_PLAYLISTS.PREFIX
+      CONFIG.OBJECT_STORAGE.WEB_VIDEOS.BUCKET_NAME === CONFIG.OBJECT_STORAGE.STREAMING_PLAYLISTS.BUCKET_NAME &&
+      CONFIG.OBJECT_STORAGE.WEB_VIDEOS.PREFIX === CONFIG.OBJECT_STORAGE.STREAMING_PLAYLISTS.PREFIX
     ) {
-      if (CONFIG.OBJECT_STORAGE.VIDEOS.PREFIX === '') {
+      if (CONFIG.OBJECT_STORAGE.WEB_VIDEOS.PREFIX === '') {
         throw new Error('Object storage bucket prefixes should be set when the same bucket is used for both types of video.')
       }
 

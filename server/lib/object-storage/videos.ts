@@ -4,7 +4,7 @@ import { CONFIG } from '@server/initializers/config'
 import { MStreamingPlaylistVideo, MVideo, MVideoFile } from '@server/types/models'
 import { getHLSDirectory } from '../paths'
 import { VideoPathManager } from '../video-path-manager'
-import { generateHLSObjectBaseStorageKey, generateHLSObjectStorageKey, generateWebTorrentObjectStorageKey } from './keys'
+import { generateHLSObjectBaseStorageKey, generateHLSObjectStorageKey, generateWebVideoObjectStorageKey } from './keys'
 import {
   createObjectReadStream,
   listKeysOfPrefix,
@@ -55,21 +55,21 @@ function storeHLSFileFromContent (playlist: MStreamingPlaylistVideo, path: strin
 
 // ---------------------------------------------------------------------------
 
-function storeWebTorrentFile (video: MVideo, file: MVideoFile) {
+function storeWebVideoFile (video: MVideo, file: MVideoFile) {
   return storeObject({
     inputPath: VideoPathManager.Instance.getFSVideoFileOutputPath(video, file),
-    objectStorageKey: generateWebTorrentObjectStorageKey(file.filename),
-    bucketInfo: CONFIG.OBJECT_STORAGE.VIDEOS,
+    objectStorageKey: generateWebVideoObjectStorageKey(file.filename),
+    bucketInfo: CONFIG.OBJECT_STORAGE.WEB_VIDEOS,
     isPrivate: video.hasPrivateStaticPath()
   })
 }
 
 // ---------------------------------------------------------------------------
 
-async function updateWebTorrentFileACL (video: MVideo, file: MVideoFile) {
+async function updateWebVideoFileACL (video: MVideo, file: MVideoFile) {
   await updateObjectACL({
-    objectStorageKey: generateWebTorrentObjectStorageKey(file.filename),
-    bucketInfo: CONFIG.OBJECT_STORAGE.VIDEOS,
+    objectStorageKey: generateWebVideoObjectStorageKey(file.filename),
+    bucketInfo: CONFIG.OBJECT_STORAGE.WEB_VIDEOS,
     isPrivate: video.hasPrivateStaticPath()
   })
 }
@@ -102,8 +102,8 @@ function removeHLSFileObjectStorageByFullKey (key: string) {
 
 // ---------------------------------------------------------------------------
 
-function removeWebTorrentObjectStorage (videoFile: MVideoFile) {
-  return removeObject(generateWebTorrentObjectStorageKey(videoFile.filename), CONFIG.OBJECT_STORAGE.VIDEOS)
+function removeWebVideoObjectStorage (videoFile: MVideoFile) {
+  return removeObject(generateWebVideoObjectStorageKey(videoFile.filename), CONFIG.OBJECT_STORAGE.WEB_VIDEOS)
 }
 
 // ---------------------------------------------------------------------------
@@ -122,15 +122,15 @@ async function makeHLSFileAvailable (playlist: MStreamingPlaylistVideo, filename
   return destination
 }
 
-async function makeWebTorrentFileAvailable (filename: string, destination: string) {
-  const key = generateWebTorrentObjectStorageKey(filename)
+async function makeWebVideoFileAvailable (filename: string, destination: string) {
+  const key = generateWebVideoObjectStorageKey(filename)
 
-  logger.info('Fetching WebTorrent file %s from object storage to %s.', key, destination, lTags())
+  logger.info('Fetching Web Video file %s from object storage to %s.', key, destination, lTags())
 
   await makeAvailable({
     key,
     destination,
-    bucketInfo: CONFIG.OBJECT_STORAGE.VIDEOS
+    bucketInfo: CONFIG.OBJECT_STORAGE.WEB_VIDEOS
   })
 
   return destination
@@ -138,17 +138,17 @@ async function makeWebTorrentFileAvailable (filename: string, destination: strin
 
 // ---------------------------------------------------------------------------
 
-function getWebTorrentFileReadStream (options: {
+function getWebVideoFileReadStream (options: {
   filename: string
   rangeHeader: string
 }) {
   const { filename, rangeHeader } = options
 
-  const key = generateWebTorrentObjectStorageKey(filename)
+  const key = generateWebVideoObjectStorageKey(filename)
 
   return createObjectReadStream({
     key,
-    bucketInfo: CONFIG.OBJECT_STORAGE.VIDEOS,
+    bucketInfo: CONFIG.OBJECT_STORAGE.WEB_VIDEOS,
     rangeHeader
   })
 }
@@ -174,12 +174,12 @@ function getHLSFileReadStream (options: {
 export {
   listHLSFileKeysOf,
 
-  storeWebTorrentFile,
+  storeWebVideoFile,
   storeHLSFileFromFilename,
   storeHLSFileFromPath,
   storeHLSFileFromContent,
 
-  updateWebTorrentFileACL,
+  updateWebVideoFileACL,
   updateHLSFilesACL,
 
   removeHLSObjectStorage,
@@ -187,11 +187,11 @@ export {
   removeHLSFileObjectStorageByPath,
   removeHLSFileObjectStorageByFullKey,
 
-  removeWebTorrentObjectStorage,
+  removeWebVideoObjectStorage,
 
-  makeWebTorrentFileAvailable,
+  makeWebVideoFileAvailable,
   makeHLSFileAvailable,
 
-  getWebTorrentFileReadStream,
+  getWebVideoFileReadStream,
   getHLSFileReadStream
 }

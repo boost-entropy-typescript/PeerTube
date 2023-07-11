@@ -106,9 +106,9 @@ const CONFIG = {
     TMP_DIR: buildPath(config.get<string>('storage.tmp')),
     TMP_PERSISTENT_DIR: buildPath(config.get<string>('storage.tmp_persistent')),
     BIN_DIR: buildPath(config.get<string>('storage.bin')),
-    ACTOR_IMAGES: buildPath(config.get<string>('storage.avatars')),
+    ACTOR_IMAGES_DIR: buildPath(config.get<string>('storage.avatars')),
     LOG_DIR: buildPath(config.get<string>('storage.logs')),
-    VIDEOS_DIR: buildPath(config.get<string>('storage.videos')),
+    WEB_VIDEOS_DIR: buildPath(config.get<string>('storage.web_videos')),
     STREAMING_PLAYLISTS_DIR: buildPath(config.get<string>('storage.streaming_playlists')),
     REDUNDANCY_DIR: buildPath(config.get<string>('storage.redundancy')),
     THUMBNAILS_DIR: buildPath(config.get<string>('storage.thumbnails')),
@@ -140,10 +140,10 @@ const CONFIG = {
     PROXY: {
       PROXIFY_PRIVATE_FILES: config.get<boolean>('object_storage.proxy.proxify_private_files')
     },
-    VIDEOS: {
-      BUCKET_NAME: config.get<string>('object_storage.videos.bucket_name'),
-      PREFIX: config.get<string>('object_storage.videos.prefix'),
-      BASE_URL: config.get<string>('object_storage.videos.base_url')
+    WEB_VIDEOS: {
+      BUCKET_NAME: config.get<string>('object_storage.web_videos.bucket_name'),
+      PREFIX: config.get<string>('object_storage.web_videos.prefix'),
+      BASE_URL: config.get<string>('object_storage.web_videos.base_url')
     },
     STREAMING_PLAYLISTS: {
       BUCKET_NAME: config.get<string>('object_storage.streaming_playlists.bucket_name'),
@@ -371,8 +371,8 @@ const CONFIG = {
     HLS: {
       get ENABLED () { return config.get<boolean>('transcoding.hls.enabled') }
     },
-    WEBTORRENT: {
-      get ENABLED () { return config.get<boolean>('transcoding.webtorrent.enabled') }
+    WEB_VIDEOS: {
+      get ENABLED () { return config.get<boolean>('transcoding.web_videos.enabled') }
     },
     REMOTE_RUNNERS: {
       get ENABLED () { return config.get<boolean>('transcoding.remote_runners.enabled') }
@@ -584,16 +584,6 @@ function isEmailEnabled () {
   return false
 }
 
-// ---------------------------------------------------------------------------
-
-export {
-  CONFIG,
-  registerConfigChangedHandler,
-  isEmailEnabled
-}
-
-// ---------------------------------------------------------------------------
-
 function getLocalConfigFilePath () {
   const localConfigDir = getLocalConfigDir()
 
@@ -603,6 +593,17 @@ function getLocalConfigFilePath () {
 
   return join(localConfigDir, filename + '.json')
 }
+
+// ---------------------------------------------------------------------------
+
+export {
+  CONFIG,
+  getLocalConfigFilePath,
+  registerConfigChangedHandler,
+  isEmailEnabled
+}
+
+// ---------------------------------------------------------------------------
 
 function getLocalConfigDir () {
   if (process.env.PEERTUBE_LOCAL_CONFIG) return process.env.PEERTUBE_LOCAL_CONFIG

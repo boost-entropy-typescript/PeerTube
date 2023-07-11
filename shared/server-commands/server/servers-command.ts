@@ -77,8 +77,8 @@ export class ServersCommand extends AbstractCommand {
     return join(root(), 'test' + this.server.internalServerNumber, directory)
   }
 
-  buildWebTorrentFilePath (fileUrl: string) {
-    return this.buildDirectory(join('videos', basename(fileUrl)))
+  buildWebVideoFilePath (fileUrl: string) {
+    return this.buildDirectory(join('web-videos', basename(fileUrl)))
   }
 
   buildFragmentedFilePath (videoUUID: string, fileUrl: string) {

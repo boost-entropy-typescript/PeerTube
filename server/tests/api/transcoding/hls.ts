@@ -75,8 +75,8 @@ describe('Test HLS videos', function () {
 
     it('Should have the playlists/segment deleted from the disk', async function () {
       for (const server of servers) {
-        await checkDirectoryIsEmpty(server, 'videos', [ 'private' ])
-        await checkDirectoryIsEmpty(server, join('videos', 'private'))
+        await checkDirectoryIsEmpty(server, 'web-videos', [ 'private' ])
+        await checkDirectoryIsEmpty(server, join('web-videos', 'private'))
 
         await checkDirectoryIsEmpty(server, join('streaming-playlists', 'hls'), [ 'private' ])
         await checkDirectoryIsEmpty(server, join('streaming-playlists', 'hls', 'private'))
@@ -111,7 +111,7 @@ describe('Test HLS videos', function () {
     await doubleFollow(servers[0], servers[1])
   })
 
-  describe('With WebTorrent & HLS enabled', function () {
+  describe('With Web Video & HLS enabled', function () {
     runTestSuite(false)
   })
 
@@ -136,7 +136,7 @@ describe('Test HLS videos', function () {
             hls: {
               enabled: true
             },
-            webtorrent: {
+            webVideos: {
               enabled: false
             }
           }

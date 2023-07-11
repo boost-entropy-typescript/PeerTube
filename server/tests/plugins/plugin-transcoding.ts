@@ -35,7 +35,7 @@ function updateConf (server: PeerTubeServer, vodProfile: string, liveProfile: st
         hls: {
           enabled: true
         },
-        webtorrent: {
+        webVideos: {
           enabled: true
         },
         resolutions: {
@@ -247,7 +247,7 @@ describe('Test transcoding plugins', function () {
 
       const video = await server.videos.get({ id: videoUUID })
 
-      const path = server.servers.buildWebTorrentFilePath(video.files[0].fileUrl)
+      const path = server.servers.buildWebVideoFilePath(video.files[0].fileUrl)
       const audioProbe = await getAudioStream(path)
       expect(audioProbe.audioStream.codec_name).to.equal('opus')
 

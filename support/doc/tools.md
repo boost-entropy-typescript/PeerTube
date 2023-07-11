@@ -227,7 +227,7 @@ docker-compose exec -u peertube peertube npm run regenerate-thumbnails
 
 ### create-import-video-file-job.js
 
-You can use this script to import a video file to replace an already uploaded file or to add a new webtorrent resolution to a video. PeerTube needs to be running.
+You can use this script to import a video file to replace an already uploaded file or to add a new web compatible resolution to a video. PeerTube needs to be running.
 You can then create a transcoding job using the web interface if you need to optimize your file or create an HLS version of it.
 
 ```bash
@@ -423,7 +423,7 @@ peertube-runner server
 
 ### Register
 
-Then, you can register the runner on a new PeerTube instance so the runner can process its transcoding job:
+Then, you can register the runner to process transcoding job of a remote PeerTube instance:
 
 ```bash
 peertube-runner register --url http://peertube.example.com --registration-token ptrrt-... --runner-name my-runner-name

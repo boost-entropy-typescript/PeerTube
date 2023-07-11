@@ -273,11 +273,11 @@ describe('Test video studio', function () {
   describe('HLS only studio edition', function () {
 
     before(async function () {
-      // Disable webtorrent
+      // Disable Web Videos
       await servers[0].config.updateExistingSubConfig({
         newConfig: {
           transcoding: {
-            webtorrent: {
+            webVideos: {
               enabled: false
             }
           }
@@ -354,8 +354,8 @@ describe('Test video studio', function () {
           expect(oldFileUrls).to.not.include(f.fileUrl)
         }
 
-        for (const webtorrentFile of video.files) {
-          expectStartWith(webtorrentFile.fileUrl, objectStorage.getMockWebVideosBaseUrl())
+        for (const webVideoFile of video.files) {
+          expectStartWith(webVideoFile.fileUrl, objectStorage.getMockWebVideosBaseUrl())
         }
 
         for (const hlsFile of video.streamingPlaylists[0].files) {

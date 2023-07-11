@@ -184,12 +184,12 @@ describe('Test user videos', function () {
       }
     })
 
-    it('Should disable webtorrent, enable HLS, and update my quota', async function () {
+    it('Should disable web videos, enable HLS, and update my quota', async function () {
       this.timeout(160000)
 
       {
         const config = await server.config.getCustomConfig()
-        config.transcoding.webtorrent.enabled = false
+        config.transcoding.webVideos.enabled = false
         config.transcoding.hls.enabled = true
         config.transcoding.enabled = true
         await server.config.updateCustomSubConfig({ newConfig: config })

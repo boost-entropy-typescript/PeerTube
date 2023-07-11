@@ -126,7 +126,7 @@ describe('Test config API validators', function () {
         '2160p': false
       },
       alwaysTranscodeOriginalResolution: false,
-      webtorrent: {
+      webVideos: {
         enabled: true
       },
       hls: {
@@ -345,7 +345,7 @@ describe('Test config API validators', function () {
       })
     })
 
-    it('Should fail with a disabled webtorrent & hls transcoding', async function () {
+    it('Should fail with a disabled web videos & hls transcoding', async function () {
       const newUpdateParams = {
         ...updateParams,
 
@@ -353,7 +353,7 @@ describe('Test config API validators', function () {
           hls: {
             enabled: false
           },
-          webtorrent: {
+          web_videos: {
             enabled: false
           }
         }
