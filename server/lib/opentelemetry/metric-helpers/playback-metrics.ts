@@ -11,6 +11,11 @@ export class PlaybackMetrics {
 
   private downloadedBytesHTTPCounter: Counter
 
+  private peersP2PPeersGaugeBuffer: {
+    value: number
+    attributes: any
+  }[] = []
+
   constructor (private readonly meter: Meter) {
 
   }
@@ -34,6 +39,16 @@ export class PlaybackMetrics {
     this.uploadedBytesP2PCounter = this.meter.createCounter('peertube_playback_p2p_uploaded_bytes', {
       description: 'Uploaded bytes with P2P by PeerTube player.'
     })
+
+    this.meter.createObservableGauge('peertube_playback_p2p_peers', {
+      description: 'Total P2P peers connected to the PeerTube player.'
+    }).addCallback(observableResult => {
+      for (const gauge of this.peersP2PPeersGaugeBuffer) {
+        observableResult.observe(gauge.value, gauge.attributes)
+      }
+
+      this.peersP2PPeersGaugeBuffer = []
+    })
   }
 
   observe (video: MVideoImmutable, metrics: PlaybackMetricCreate) {
@@ -47,6 +62,8 @@ export class PlaybackMetrics {
       resolution: metrics.resolution + '',
       fps: metrics.fps + '',
 
+      p2pEnabled: metrics.p2pEnabled,
+
       videoUUID: video.uuid
     }
 
@@ -57,5 +74,12 @@ export class PlaybackMetrics {
     this.downloadedBytesP2PCounter.add(metrics.downloadedBytesP2P, attributes)
 
     this.uploadedBytesP2PCounter.add(metrics.uploadedBytesP2P, attributes)
+
+    if (metrics.p2pPeers) {
+      this.peersP2PPeersGaugeBuffer.push({
+        value: metrics.p2pPeers,
+        attributes
+      })
+    }
   }
 }
