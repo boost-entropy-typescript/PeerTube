@@ -12,7 +12,7 @@ import {
   feedsFormatValidator,
   setDefaultVideosSort,
   setFeedFormatContentType,
-  videoFeedsValidator,
+  feedsAccountOrChannelFiltersValidator,
   videosSortValidator,
   videoSubscriptionFeedsValidator
 } from '../../middlewares'
@@ -26,18 +26,18 @@ const { middleware: cacheRouteMiddleware } = cacheRouteFactory({
 
 // ---------------------------------------------------------------------------
 
-videoFeedsRouter.get('/feeds/videos.:format',
+videoFeedsRouter.get('/videos.:format',
   videosSortValidator,
   setDefaultVideosSort,
   feedsFormatValidator,
   setFeedFormatContentType,
   cacheRouteMiddleware(ROUTE_CACHE_LIFETIME.FEEDS),
   commonVideosFiltersValidator,
-  asyncMiddleware(videoFeedsValidator),
+  asyncMiddleware(feedsAccountOrChannelFiltersValidator),
   asyncMiddleware(generateVideoFeed)
 )
 
-videoFeedsRouter.get('/feeds/subscriptions.:format',
+videoFeedsRouter.get('/subscriptions.:format',
   videosSortValidator,
   setDefaultVideosSort,
   feedsFormatValidator,
