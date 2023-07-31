@@ -74,80 +74,6 @@ describe('Test videos filter', function () {
     ]
   })
 
-  describe('Check deprecated videos filter', function () {
-
-    async function getVideosNames (options: {
-      server: PeerTubeServer
-      token: string
-      filter: string
-      skipSubscription?: boolean
-      expectedStatus?: HttpStatusCode
-    }) {
-      const { server, token, filter, skipSubscription = false, expectedStatus = HttpStatusCode.OK_200 } = options
-
-      const videosResults: Video[][] = []
-
-      for (const path of paths) {
-        if (skipSubscription && path === subscriptionVideosPath) continue
-
-        const res = await makeGetRequest({
-          url: server.url,
-          path,
-          token,
-          query: {
-            sort: 'createdAt',
-            filter
-          },
-          expectedStatus
-        })
-
-        videosResults.push(res.body.data.map(v => v.name))
-      }
-
-      return videosResults
-    }
-
-    it('Should display local videos', async function () {
-      for (const server of servers) {
-        const namesResults = await getVideosNames({ server, token: server.accessToken, filter: 'local' })
-        for (const names of namesResults) {
-          expect(names).to.have.lengthOf(1)
-          expect(names[0]).to.equal('public ' + server.serverNumber)
-        }
-      }
-    })
-
-    it('Should display all local videos by the admin or the moderator', async function () {
-      for (const server of servers) {
-        for (const token of [ server.accessToken, server['moderatorAccessToken'] ]) {
-
-          const namesResults = await getVideosNames({ server, token, filter: 'all-local', skipSubscription: true })
-          for (const names of namesResults) {
-            expect(names).to.have.lengthOf(3)
-
-            expect(names[0]).to.equal('public ' + server.serverNumber)
-            expect(names[1]).to.equal('unlisted ' + server.serverNumber)
-            expect(names[2]).to.equal('private ' + server.serverNumber)
-          }
-        }
-      }
-    })
-
-    it('Should display all videos by the admin or the moderator', async function () {
-      for (const server of servers) {
-        for (const token of [ server.accessToken, server['moderatorAccessToken'] ]) {
-
-          const [ channelVideos, accountVideos, videos, searchVideos ] = await getVideosNames({ server, token, filter: 'all' })
-          expect(channelVideos).to.have.lengthOf(3)
-          expect(accountVideos).to.have.lengthOf(3)
-
-          expect(videos).to.have.lengthOf(5)
-          expect(searchVideos).to.have.lengthOf(5)
-        }
-      }
-    })
-  })
-
   describe('Check videos filters', function () {
 
     async function listVideos (options: {
@@ -468,19 +394,19 @@ describe('Test videos filter', function () {
 
       const finderFactory = (name: string) => (videos: Video[]) => videos.some(v => v.name === name)
 
-      await servers[0].config.enableTranscoding(true, false)
+      await servers[0].config.enableTranscoding({ hls: false, webVideo: true })
       await servers[0].videos.upload({ attributes: { name: 'web video' } })
       const hasWebVideo = finderFactory('web video')
 
       await waitJobs(servers)
 
-      await servers[0].config.enableTranscoding(false, true)
+      await servers[0].config.enableTranscoding({ hls: true, webVideo: false })
       await servers[0].videos.upload({ attributes: { name: 'hls video' } })
       const hasHLS = finderFactory('hls video')
 
       await waitJobs(servers)
 
-      await servers[0].config.enableTranscoding(true, true)
+      await servers[0].config.enableTranscoding({ hls: true, webVideo: true })
       await servers[0].videos.upload({ attributes: { name: 'hls and web video' } })
       const hasBoth = finderFactory('hls and web video')
 
@@ -546,7 +472,7 @@ describe('Test videos filter', function () {
 
         expect(foundVideo).to.not.be.undefined
       }
-      await servers[0].views.view({ id, token: servers[0].accessToken })
+      await servers[0].views.view({ id, currentTime: 1, token: servers[0].accessToken })
 
       for (const path of paths) {
         const videos = await listVideos({ server: servers[0], path, excludeAlreadyWatched: true })
