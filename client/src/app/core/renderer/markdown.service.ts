@@ -1,13 +1,14 @@
 import * as MarkdownIt from 'markdown-it'
 import { Injectable } from '@angular/core'
-import { buildVideoLink, decorateVideoLink } from '@shared/core-utils'
 import {
+  buildVideoLink,
   COMPLETE_RULES,
+  decorateVideoLink,
   ENHANCED_RULES,
   ENHANCED_WITH_HTML_RULES,
   TEXT_RULES,
   TEXT_WITH_HTML_RULES
-} from '@shared/core-utils/renderer/markdown'
+} from '@peertube/peertube-core-utils'
 import { HtmlRendererService } from './html-renderer.service'
 
 type MarkdownParsers = {
@@ -137,8 +138,7 @@ export class MarkdownService {
       }
     }
 
-    let html = this.markdownParsers[name].render(markdown)
-    html = this.avoidTruncatedTags(html)
+    const html = this.markdownParsers[name].render(markdown)
 
     if (config.escape) return this.htmlRenderer.toSafeHtml(html, additionalAllowedTags)
 
@@ -179,12 +179,5 @@ export class MarkdownService {
       // pass token to default renderer.*
       return defaultRender(tokens, index, options, env, self)
     }
-  }
-
-  private avoidTruncatedTags (html: string) {
-    return html.replace(/\*\*?([^*]+)$/, '$1')
-      .replace(/<a[^>]+>([^<]+)<\/a>\s*...((<\/p>)|(<\/li>)|(<\/strong>))?$/mi, '$1...')
-      .replace(/\[[^\]]+\]\(([^)]+)$/m, '$1')
-      .replace(/\s?\[[^\]]+\]?[.]{3}<\/p>$/m, '...</p>')
   }
 }

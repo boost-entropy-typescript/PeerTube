@@ -42,6 +42,7 @@ jobs:
       - name: Build
         run: |
           startClient=`date +%s`
+          npm run build:server
           npm run build:client
           endClient=`date +%s`
           clientBuildTime=$((endClient-startClient))
@@ -71,7 +72,7 @@ jobs:
 
       - name: Run benchmark
         run: |
-          node dist/scripts/benchmark.js -o benchmark.json
+          npm run benchmark-server -- -o benchmark.json
 
       - name: Display result
         run: |
