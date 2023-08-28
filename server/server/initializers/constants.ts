@@ -465,6 +465,9 @@ const CONSTRAINTS_FIELDS = {
   },
   VIDEO_PASSWORD: {
     LENGTH: { min: 2, max: 100 }
+  },
+  VIDEO_CHAPTERS: {
+    TITLE: { min: 1, max: 100 } // Length
   }
 }
 
@@ -1369,6 +1372,7 @@ async function buildLanguages () {
     rsl: true, // Russian sign language
 
     kab: true, // Kabyle
+    gcf: true, // Guadeloupean
 
     lat: true, // Latin
 
