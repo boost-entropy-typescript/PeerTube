@@ -1397,9 +1397,16 @@ async function buildLanguages () {
   languages['el'] = 'Greek'
   languages['tok'] = 'Toki Pona'
 
+  // Override Portuguese label
+  languages['pt'] = 'Portuguese (Brazilian)'
+  languages['pt-PT'] = 'Portuguese (Portugal)'
+
   // Chinese languages
   languages['zh-Hans'] = 'Simplified Chinese'
   languages['zh-Hant'] = 'Traditional Chinese'
+
+  // Catalan languages
+  languages['ca-valencia'] = 'Valencian'
 
   return languages
 }
