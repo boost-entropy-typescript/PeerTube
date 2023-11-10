@@ -70,7 +70,7 @@ trust_proxy:
 
 # Your database name will be database.name OR 'peertube'+database.suffix
 database:
-  hostname: 'localhost'
+  hostname: '127.0.0.1'
   port: 5432
   ssl: false
   suffix: '_dev'
@@ -83,7 +83,7 @@ database:
 # You can also specify a 'socket' path to a unix socket but first need to
 # set 'hostname' and 'port' to null
 redis:
-  hostname: 'localhost'
+  hostname: '127.0.0.1'
   port: 6379
   auth: null # Used by both standalone and sentinel
   db: 0
@@ -416,6 +416,14 @@ remote_runners:
   stalled_jobs:
     live: '30 seconds'
     vod: '2 minutes'
+
+thumbnails:
+  # When automatically generating a thumbnail from the video
+  generation_from_video:
+    # How many frames to analyze at the middle of the video to select the most appropriate one
+    # Increasing this value will increase CPU and memory usage when generating the thumbnail, especially for high video resolution
+    # Minimum value is 2
+    frames_to_analyze: 50
 
 cache:
   previews:
