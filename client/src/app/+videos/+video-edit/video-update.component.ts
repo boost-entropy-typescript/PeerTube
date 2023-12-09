@@ -21,7 +21,7 @@ import {
 } from '@app/shared/shared-main'
 import { LiveVideoService } from '@app/shared/shared-video-live'
 import { LoadingBarService } from '@ngx-loading-bar/core'
-import { pick, simpleObjectsDeepEqual } from '@peertube/peertube-core-utils'
+import { simpleObjectsDeepEqual } from '@peertube/peertube-core-utils'
 import { HttpStatusCode, LiveVideo, LiveVideoUpdate, VideoPrivacy, VideoSource, VideoState } from '@peertube/peertube-models'
 import { hydrateFormFromVideo } from './shared/video-edit-utils'
 import { VideoUploadService } from './shared/video-upload.service'
@@ -221,7 +221,12 @@ export class VideoUpdateComponent extends FormReactive implements OnInit, OnDest
         }
 
         // Don't update live attributes if they did not change
-        const baseVideo = pick(this.liveVideo, Object.keys(liveVideoUpdate) as (keyof LiveVideoUpdate)[])
+        const baseVideo = {
+          saveReplay: this.liveVideo.saveReplay,
+          replaySettings: this.liveVideo.replaySettings,
+          permanentLive: this.liveVideo.permanentLive,
+          latencyMode: this.liveVideo.latencyMode
+        }
         const liveChanged = !simpleObjectsDeepEqual(baseVideo, liveVideoUpdate)
         if (!liveChanged) return of(undefined)
 
