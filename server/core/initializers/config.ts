@@ -610,8 +610,10 @@ const CONFIG = {
       get DISABLE_LOCAL_SEARCH () { return config.get<boolean>('search.search_index.disable_local_search') },
       get IS_DEFAULT_SEARCH () { return config.get<boolean>('search.search_index.is_default_search') }
     }
+  },
+  STORYBOARDS: {
+    get ENABLED () { return config.get<boolean>('storyboards.enabled') }
   }
-
 }
 
 function registerConfigChangedHandler (fun: Function) {
