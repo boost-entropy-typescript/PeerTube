@@ -30,7 +30,7 @@ export class MyAccountNotificationPreferencesComponent implements OnInit {
     private notifier: Notifier
   ) {
     this.labelNotifications = {
-      newVideoFromSubscription: $localize`New video from your subscriptions`,
+      newVideoFromSubscription: $localize`New video or live from your subscriptions`,
       newCommentOnMyVideo: $localize`New comment on your video`,
       abuseAsModerator: $localize`New abuse`,
       videoAutoBlacklistAsModerator: $localize`An automatically blocked video is awaiting review`,
@@ -75,14 +75,14 @@ export class MyAccountNotificationPreferencesComponent implements OnInit {
           'abuseStateChange',
           'abuseNewMessage',
           'abuseAsModerator',
-          'videoAutoBlacklistAsModerator'
+          'videoAutoBlacklistAsModerator',
+          'newUserRegistration'
         ]
       },
 
       {
         label: $localize`Administration`,
         keys: [
-          'newUserRegistration',
           'newInstanceFollower',
           'autoInstanceFollowing',
           'newPeerTubeVersion',
@@ -114,6 +114,10 @@ export class MyAccountNotificationPreferencesComponent implements OnInit {
     if (!rightToHave) return true // No rights needed
 
     return this.user.hasRight(rightToHave)
+  }
+
+  hasNotificationsInGroup (group: { keys: (keyof UserNotificationSetting)[] }) {
+    return group.keys.some(k => this.hasUserRight(k))
   }
 
   getWebLabel (notificationType: keyof UserNotificationSetting) {

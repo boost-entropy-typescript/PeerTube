@@ -18,7 +18,7 @@ import { VideoLiveSessionModel } from '@server/models/video/video-live-session.j
 import { VideoLiveModel } from '@server/models/video/video-live.js'
 import { VideoStreamingPlaylistModel } from '@server/models/video/video-streaming-playlist.js'
 import { VideoModel } from '@server/models/video/video.js'
-import { MVideo, MVideoLiveSession, MVideoLiveVideo, MVideoLiveVideoWithSetting } from '@server/types/models/index.js'
+import { MUser, MVideo, MVideoLiveSession, MVideoLiveVideo, MVideoLiveVideoWithSetting } from '@server/types/models/index.js'
 import {
   ffprobePromise,
   getVideoStreamBitrate,
@@ -35,6 +35,7 @@ import { computeResolutionsToTranscode } from '../transcoding/transcoding-resolu
 import { LiveQuotaStore } from './live-quota-store.js'
 import { cleanupAndDestroyPermanentLive, getLiveSegmentTime } from './live-utils.js'
 import { MuxingSession } from './shared/index.js'
+import { Notifier } from '../notifier/notifier.js'
 
 // Disable node media server logs
 nodeMediaServerLogger.setLogType(0)
@@ -249,6 +250,12 @@ class LiveManager {
       return this.abortSession(sessionId)
     }
 
+    const user = await UserModel.loadByLiveId(videoLive.id)
+    if (user.blocked) {
+      logger.warn('User is blocked. Refusing stream %s.', streamKey, lTags(sessionId, video.uuid))
+      return this.abortSession(sessionId)
+    }
+
     if (this.videoSessions.has(video.uuid)) {
       logger.warn('Video %s has already a live session. Refusing stream %s.', video.uuid, streamKey, lTags(sessionId, video.uuid))
       return this.abortSession(sessionId)
@@ -294,6 +301,8 @@ class LiveManager {
       sessionId,
       videoLive,
 
+      user,
+
       inputLocalUrl,
       inputPublicUrl,
       fps,
@@ -308,6 +317,8 @@ class LiveManager {
     sessionId: string
     videoLive: MVideoLiveVideoWithSetting
 
+    user: MUser
+
     inputLocalUrl: string
     inputPublicUrl: string
 
@@ -317,13 +328,12 @@ class LiveManager {
     allResolutions: number[]
     hasAudio: boolean
   }) {
-    const { sessionId, videoLive } = options
+    const { sessionId, videoLive, user } = options
     const videoUUID = videoLive.Video.uuid
     const localLTags = lTags(sessionId, videoUUID)
 
     const liveSession = await this.saveStartingSession(videoLive)
 
-    const user = await UserModel.loadByLiveId(videoLive.id)
     LiveQuotaStore.Instance.addNewLive(user.id, sessionId)
 
     const muxingSession = new MuxingSession({
@@ -417,6 +427,7 @@ class LiveManager {
         logger.error('Cannot federate live video %s.', video.url, { err, ...localLTags })
       }
 
+      Notifier.Instance.notifyOnNewVideoOrLiveIfNeeded(video)
       PeerTubeSocket.Instance.sendVideoLiveNewState(video)
 
       Hooks.runAction('action:live.video.state.updated', { video })
