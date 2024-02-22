@@ -77,11 +77,13 @@ import { VideoLiveModel } from '../video/video-live.js'
 import { VideoPlaylistModel } from '../video/video-playlist.js'
 import { VideoModel } from '../video/video.js'
 import { UserNotificationSettingModel } from './user-notification-setting.js'
+import { UserExportModel } from './user-export.js'
 
 enum ScopeNames {
   FOR_ME_API = 'FOR_ME_API',
   WITH_VIDEOCHANNELS = 'WITH_VIDEOCHANNELS',
   WITH_QUOTA = 'WITH_QUOTA',
+  WITH_TOTAL_FILE_SIZES = 'WITH_TOTAL_FILE_SIZES',
   WITH_STATS = 'WITH_STATS'
 }
 
@@ -166,9 +168,9 @@ enum ScopeNames {
           literal(
             '(' +
               UserModel.generateUserQuotaBaseSQL({
-                withSelect: false,
                 whereUserId: '"UserModel"."id"',
-                daily: false
+                daily: false,
+                onlyMaxResolution: true
               }) +
             ')'
           ),
@@ -178,13 +180,31 @@ enum ScopeNames {
           literal(
             '(' +
               UserModel.generateUserQuotaBaseSQL({
-                withSelect: false,
                 whereUserId: '"UserModel"."id"',
-                daily: true
+                daily: true,
+                onlyMaxResolution: true
               }) +
             ')'
           ),
           'videoQuotaUsedDaily'
+        ]
+      ]
+    }
+  },
+  [ScopeNames.WITH_TOTAL_FILE_SIZES]: {
+    attributes: {
+      include: [
+        [
+          literal(
+            '(' +
+              UserModel.generateUserQuotaBaseSQL({
+                whereUserId: '"UserModel"."id"',
+                daily: false,
+                onlyMaxResolution: false
+              }) +
+            ')'
+          ),
+          'totalVideoFileSize'
         ]
       ]
     }
@@ -452,6 +472,13 @@ export class UserModel extends Model<Partial<AttributesOnly<UserModel>>> {
   })
   OAuthTokens: Awaited<OAuthTokenModel>[]
 
+  @HasMany(() => UserExportModel, {
+    foreignKey: 'userId',
+    onDelete: 'cascade',
+    hooks: true
+  })
+  UserExports: Awaited<UserExportModel>[]
+
   // Used if we already set an encrypted password in user model
   skipPasswordEncryption = false
 
@@ -515,7 +542,7 @@ export class UserModel extends Model<Partial<AttributesOnly<UserModel>>> {
 
     return Promise.all([
       UserModel.unscoped().count(query),
-      UserModel.scope([ 'defaultScope', ScopeNames.WITH_QUOTA ]).findAll(query)
+      UserModel.scope([ 'defaultScope', ScopeNames.WITH_QUOTA, ScopeNames.WITH_TOTAL_FILE_SIZES ]).findAll(query)
     ]).then(([ total, data ]) => ({ total, data }))
   }
 
@@ -601,6 +628,7 @@ export class UserModel extends Model<Partial<AttributesOnly<UserModel>>> {
     if (withStats) {
       scopes.push(ScopeNames.WITH_QUOTA)
       scopes.push(ScopeNames.WITH_STATS)
+      scopes.push(ScopeNames.WITH_TOTAL_FILE_SIZES)
     }
 
     return UserModel.scope(scopes).findByPk(id)
@@ -724,6 +752,23 @@ export class UserModel extends Model<Partial<AttributesOnly<UserModel>>> {
     return UserModel.findOne(query)
   }
 
+  static loadByAccountId (accountId: number): Promise<MUserDefault> {
+    const query = {
+      include: [
+        {
+          required: true,
+          attributes: [ 'id' ],
+          model: AccountModel.unscoped(),
+          where: {
+            id: accountId
+          }
+        }
+      ]
+    }
+
+    return UserModel.findOne(query)
+  }
+
   static loadByAccountActorId (accountActorId: number): Promise<MUserDefault> {
     const query = {
       include: [
@@ -780,17 +825,19 @@ export class UserModel extends Model<Partial<AttributesOnly<UserModel>>> {
   }
 
   static generateUserQuotaBaseSQL (options: {
-    whereUserId: '$userId' | '"UserModel"."id"'
-    withSelect: boolean
     daily: boolean
+    whereUserId: '$userId' | '"UserModel"."id"'
+    onlyMaxResolution: boolean
   }) {
-    const andWhere = options.daily === true
+    const { daily, whereUserId, onlyMaxResolution } = options
+
+    const andWhere = daily === true
       ? 'AND "video"."createdAt" > now() - interval \'24 hours\''
       : ''
 
     const videoChannelJoin = 'INNER JOIN "videoChannel" ON "videoChannel"."id" = "video"."channelId" ' +
       'INNER JOIN "account" ON "videoChannel"."accountId" = "account"."id" ' +
-      `WHERE "account"."userId" = ${options.whereUserId} ${andWhere}`
+      `WHERE "account"."userId" = ${whereUserId} ${andWhere}`
 
     const webVideoFiles = 'SELECT "videoFile"."size" AS "size", "video"."id" AS "videoId" FROM "videoFile" ' +
       'INNER JOIN "video" ON "videoFile"."videoId" = "video"."id" AND "video"."isLive" IS FALSE ' +
@@ -801,25 +848,34 @@ export class UserModel extends Model<Partial<AttributesOnly<UserModel>>> {
       'INNER JOIN "video" ON "videoStreamingPlaylist"."videoId" = "video"."id" AND "video"."isLive" IS FALSE ' +
       videoChannelJoin
 
+    const sizeSelect = onlyMaxResolution
+      ? 'MAX("t1"."size")'
+      : 'SUM("t1"."size")'
+
     return 'SELECT COALESCE(SUM("size"), 0) AS "total" ' +
       'FROM (' +
-        `SELECT MAX("t1"."size") AS "size" FROM (${webVideoFiles} UNION ${hlsFiles}) t1 ` +
+        `SELECT ${sizeSelect} AS "size" FROM (${webVideoFiles} UNION ${hlsFiles}) t1 ` +
         'GROUP BY "t1"."videoId"' +
       ') t2'
   }
 
-  static getTotalRawQuery (query: string, userId: number) {
-    const options = {
+  static async getUserQuota (options: {
+    userId: number
+    daily: boolean
+  }) {
+    const { daily, userId } = options
+
+    const sql = this.generateUserQuotaBaseSQL({ daily, whereUserId: '$userId', onlyMaxResolution: true })
+
+    const queryOptions = {
       bind: { userId },
       type: QueryTypes.SELECT as QueryTypes.SELECT
     }
 
-    return UserModel.sequelize.query<{ total: string }>(query, options)
-                    .then(([ { total } ]) => {
-                      if (total === null) return 0
+    const [ { total } ] = await UserModel.sequelize.query<{ total: string }>(sql, queryOptions)
+    if (!total) return 0
 
-                      return parseInt(total, 10)
-                    })
+    return parseInt(total, 10)
   }
 
   static async getStats () {
@@ -885,6 +941,7 @@ export class UserModel extends Model<Partial<AttributesOnly<UserModel>>> {
     const [ abusesCount, abusesAcceptedCount ] = (this.get('abusesCount') as string || ':').split(':')
     const abusesCreatedCount = this.get('abusesCreatedCount')
     const videoCommentsCount = this.get('videoCommentsCount')
+    const totalVideoFileSize = this.get('totalVideoFileSize')
 
     const json: User = {
       id: this.id,
@@ -914,12 +971,16 @@ export class UserModel extends Model<Partial<AttributesOnly<UserModel>>> {
       videoQuota: this.videoQuota,
       videoQuotaDaily: this.videoQuotaDaily,
 
+      totalVideoFileSize: totalVideoFileSize !== undefined
+        ? forceNumber(totalVideoFileSize)
+        : undefined,
+
       videoQuotaUsed: videoQuotaUsed !== undefined
-        ? forceNumber(videoQuotaUsed) + LiveQuotaStore.Instance.getLiveQuotaOf(this.id)
+        ? forceNumber(videoQuotaUsed) + LiveQuotaStore.Instance.getLiveQuotaOfUser(this.id)
         : undefined,
 
       videoQuotaUsedDaily: videoQuotaUsedDaily !== undefined
-        ? forceNumber(videoQuotaUsedDaily) + LiveQuotaStore.Instance.getLiveQuotaOf(this.id)
+        ? forceNumber(videoQuotaUsedDaily) + LiveQuotaStore.Instance.getLiveQuotaOfUser(this.id)
         : undefined,
 
       videosCount: videosCount !== undefined

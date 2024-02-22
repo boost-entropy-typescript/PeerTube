@@ -161,7 +161,12 @@ async function updateInstanceBanner (req: express.Request, res: express.Response
   const serverActor = await getServerActor()
   serverActor.Banners = await ActorImageModel.listByActor(serverActor, ActorImageType.BANNER) // Reload banners from DB
 
-  await updateLocalActorImageFiles(serverActor.Account, bannerPhysicalFile, ActorImageType.BANNER)
+  await updateLocalActorImageFiles({
+    accountOrChannel: serverActor.Account,
+    imagePhysicalFile: bannerPhysicalFile,
+    type: ActorImageType.BANNER,
+    sendActorUpdate: false
+  })
 
   return res.sendStatus(HttpStatusCode.NO_CONTENT_204)
 }
@@ -355,6 +360,16 @@ function customConfig (): CustomConfig {
       videoChannelSynchronization: {
         enabled: CONFIG.IMPORT.VIDEO_CHANNEL_SYNCHRONIZATION.ENABLED,
         maxPerUser: CONFIG.IMPORT.VIDEO_CHANNEL_SYNCHRONIZATION.MAX_PER_USER
+      },
+      users: {
+        enabled: CONFIG.IMPORT.USERS.ENABLED
+      }
+    },
+    export: {
+      users: {
+        enabled: CONFIG.EXPORT.USERS.ENABLED,
+        exportExpiration: CONFIG.EXPORT.USERS.EXPORT_EXPIRATION,
+        maxUserVideoQuota: CONFIG.EXPORT.USERS.MAX_USER_VIDEO_QUOTA
       }
     },
     trending: {

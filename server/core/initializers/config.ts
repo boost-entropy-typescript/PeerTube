@@ -153,6 +153,11 @@ const CONFIG = {
       BUCKET_NAME: config.get<string>('object_storage.streaming_playlists.bucket_name'),
       PREFIX: config.get<string>('object_storage.streaming_playlists.prefix'),
       BASE_URL: config.get<string>('object_storage.streaming_playlists.base_url')
+    },
+    USER_EXPORTS: {
+      BUCKET_NAME: config.get<string>('object_storage.user_exports.bucket_name'),
+      PREFIX: config.get<string>('object_storage.user_exports.prefix'),
+      BASE_URL: config.get<string>('object_storage.user_exports.base_url')
     }
   },
   WEBSERVER: {
@@ -358,6 +363,14 @@ const CONFIG = {
       FRAMES_TO_ANALYZE: config.get<number>('thumbnails.generation_from_video.frames_to_analyze')
     }
   },
+  STATS: {
+    REGISTRATION_REQUESTS: {
+      ENABLED: config.get<boolean>('stats.registration_requests.enabled')
+    },
+    ABUSES: {
+      ENABLED: config.get<boolean>('stats.abuses.enabled')
+    }
+  },
   ADMIN: {
     get EMAIL () { return config.get<string>('admin.email') }
   },
@@ -511,6 +524,16 @@ const CONFIG = {
       get FULL_SYNC_VIDEOS_LIMIT () {
         return config.get<number>('import.video_channel_synchronization.full_sync_videos_limit')
       }
+    },
+    USERS: {
+      get ENABLED () { return config.get<boolean>('import.users.enabled') }
+    }
+  },
+  EXPORT: {
+    USERS: {
+      get ENABLED () { return config.get<boolean>('export.users.enabled') },
+      get MAX_USER_VIDEO_QUOTA () { return parseBytes(config.get<string>('export.users.max_user_video_quota')) },
+      get EXPORT_EXPIRATION () { return parseDurationToMs(config.get<string>('export.users.export_expiration')) }
     }
   },
   AUTO_BLACKLIST: {

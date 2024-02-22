@@ -11,9 +11,7 @@ export class MyAccountComponent implements OnInit {
   menuEntries: TopMenuDropdownParam[] = []
   user: AuthUser
 
-  constructor (
-    private screenService: ScreenService
-  ) { }
+  constructor (private screenService: ScreenService) { }
 
   get isBroadcastMessageDisplayed () {
     return this.screenService.isBroadcastMessageDisplayed
@@ -54,6 +52,11 @@ export class MyAccountComponent implements OnInit {
       {
         label: $localize`Notifications`,
         routerLink: '/my-account/notifications'
+      },
+
+      {
+        label: $localize`Import/Export`,
+        routerLink: '/my-account/import-export'
       },
 
       {
