@@ -10,7 +10,7 @@ import {
 } from '@peertube/peertube-models'
 import { buildUUID, uuidToShort } from '@peertube/peertube-node-utils'
 import { activityPubCollectionPagination } from '@server/lib/activitypub/collection.js'
-import { MAccountId, MChannelId } from '@server/types/models/index.js'
+import { MAccountId, MChannelId, MVideoPlaylistElement } from '@server/types/models/index.js'
 import { join } from 'path'
 import { FindOptions, Includeable, literal, Op, ScopeOptions, Sequelize, Transaction, WhereOptions } from 'sequelize'
 import {
@@ -39,6 +39,7 @@ import {
   CONSTRAINTS_FIELDS,
   LAZY_STATIC_PATHS,
   THUMBNAILS_SIZE,
+  USER_EXPORT_MAX_ITEMS,
   VIDEO_PLAYLIST_PRIVACIES,
   VIDEO_PLAYLIST_TYPES,
   WEBSERVER
@@ -496,15 +497,14 @@ export class VideoPlaylistModel extends SequelizeModel<VideoPlaylistModel> {
   }
 
   static listPlaylistForExport (accountId: number): Promise<MVideoPlaylistFull[]> {
-    const query = {
-      where: {
-        ownerAccountId: accountId
-      }
-    }
-
     return VideoPlaylistModel
       .scope([ ScopeNames.WITH_ACCOUNT_AND_CHANNEL, ScopeNames.WITH_VIDEOS_LENGTH, ScopeNames.WITH_THUMBNAIL ])
-      .findAll(query)
+      .findAll({
+        where: {
+          ownerAccountId: accountId
+        },
+        limit: USER_EXPORT_MAX_ITEMS
+      })
   }
 
   // ---------------------------------------------------------------------------
@@ -627,6 +627,13 @@ export class VideoPlaylistModel extends SequelizeModel<VideoPlaylistModel> {
 
   hasGeneratedThumbnail () {
     return this.hasThumbnail() && this.Thumbnail.automaticallyGenerated === true
+  }
+
+  shouldGenerateThumbnailWithNewElement (newElement: MVideoPlaylistElement) {
+    if (this.hasThumbnail() === false) return true
+    if (newElement.position === 1 && this.hasGeneratedThumbnail()) return true
+
+    return false
   }
 
   generateThumbnailName () {
