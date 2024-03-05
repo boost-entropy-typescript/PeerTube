@@ -26,10 +26,20 @@ import {
   TRANSCODING_THREADS_VALIDATOR
 } from '@app/shared/form-validators/custom-config-validators'
 import { USER_VIDEO_QUOTA_DAILY_VALIDATOR, USER_VIDEO_QUOTA_VALIDATOR } from '@app/shared/form-validators/user-validators'
-import { FormReactive, FormReactiveService } from '@app/shared/shared-forms'
-import { CustomPageService } from '@app/shared/shared-main/custom-page'
+import { FormReactive } from '@app/shared/shared-forms/form-reactive'
+import { FormReactiveService } from '@app/shared/shared-forms/form-reactive.service'
 import { CustomConfig, CustomPage, HTMLServerConfig } from '@peertube/peertube-models'
 import { EditConfigurationService } from './edit-configuration.service'
+import { EditAdvancedConfigurationComponent } from './edit-advanced-configuration.component'
+import { EditLiveConfigurationComponent } from './edit-live-configuration.component'
+import { EditVODTranscodingComponent } from './edit-vod-transcoding.component'
+import { EditBasicConfigurationComponent } from './edit-basic-configuration.component'
+import { EditInstanceInformationComponent } from './edit-instance-information.component'
+import { EditHomepageComponent } from './edit-homepage.component'
+import { NgbNav, NgbNavItem, NgbNavLink, NgbNavLinkBase, NgbNavContent, NgbNavOutlet } from '@ng-bootstrap/ng-bootstrap'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { NgIf, NgFor } from '@angular/common'
+import { CustomPageService } from '@app/shared/shared-main/custom-page/custom-page.service'
 
 type ComponentCustomConfig = CustomConfig & {
   instanceCustomHomepage: CustomPage
@@ -38,7 +48,26 @@ type ComponentCustomConfig = CustomConfig & {
 @Component({
   selector: 'my-edit-custom-config',
   templateUrl: './edit-custom-config.component.html',
-  styleUrls: [ './edit-custom-config.component.scss' ]
+  styleUrls: [ './edit-custom-config.component.scss' ],
+  standalone: true,
+  imports: [
+    NgIf,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbNav,
+    NgbNavItem,
+    NgbNavLink,
+    NgbNavLinkBase,
+    NgbNavContent,
+    EditHomepageComponent,
+    EditInstanceInformationComponent,
+    EditBasicConfigurationComponent,
+    EditVODTranscodingComponent,
+    EditLiveConfigurationComponent,
+    EditAdvancedConfigurationComponent,
+    NgbNavOutlet,
+    NgFor
+  ]
 })
 export class EditCustomConfigComponent extends FormReactive implements OnInit {
   activeNav: string

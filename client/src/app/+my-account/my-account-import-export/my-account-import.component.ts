@@ -6,12 +6,17 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { buildHTTPErrorResponse, genericUploadErrorHandler, getUploadXRetryConfig } from '@app/helpers'
 import { HttpStatusCode, UserImport, UserImportState } from '@peertube/peertube-models'
 import { UploadxService, UploadState, UploaderX } from 'ngx-uploadx'
-import { BytesPipe } from '@app/shared/shared-main'
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap'
+import { UploadProgressComponent } from '../../shared/standalone-upload/upload-progress.component'
+import { NgIf, DatePipe } from '@angular/common'
+import { BytesPipe } from '@app/shared/shared-main/angular/bytes.pipe'
 
 @Component({
   selector: 'my-account-import',
   templateUrl: './my-account-import.component.html',
-  styleUrls: [ './my-account-import.component.scss' ]
+  styleUrls: [ './my-account-import.component.scss' ],
+  standalone: true,
+  imports: [ NgIf, UploadProgressComponent, NgbTooltip, DatePipe ]
 })
 export class MyAccountImportComponent implements OnInit, OnDestroy, CanComponentDeactivate {
   @Input() videoQuotaUsed: number

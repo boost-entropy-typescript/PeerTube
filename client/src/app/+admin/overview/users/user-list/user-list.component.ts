@@ -1,14 +1,33 @@
-import { SortMeta } from 'primeng/api'
+import { SortMeta, SharedModule } from 'primeng/api'
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute, Router, RouterLink } from '@angular/router'
 import { AuthService, ConfirmService, LocalStorageService, Notifier, RestPagination, RestTable, ServerService } from '@app/core'
 import { formatICU, getAPIHost } from '@app/helpers'
-import { AdvancedInputFilter } from '@app/shared/shared-forms'
-import { Actor, DropdownAction } from '@app/shared/shared-main'
-import { AccountMutedStatus, BlocklistService, UserBanModalComponent, UserModerationDisplayType } from '@app/shared/shared-moderation'
-import { UserAdminService } from '@app/shared/shared-users'
 import { User, UserRole, UserRoleType } from '@peertube/peertube-models'
 import { logger } from '@root-helpers/logger'
+import { BytesPipe } from '../../../../shared/shared-main/angular/bytes.pipe'
+import { AutoColspanDirective } from '../../../../shared/shared-main/angular/auto-colspan.directive'
+import { UserEmailInfoComponent } from '../../../shared/user-email-info.component'
+import { ActorAvatarComponent } from '../../../../shared/shared-actor-image/actor-avatar.component'
+import {
+  AccountMutedStatus,
+  UserModerationDisplayType,
+  UserModerationDropdownComponent
+} from '../../../../shared/shared-moderation/user-moderation-dropdown.component'
+import { TableExpanderIconComponent } from '../../../../shared/shared-tables/table-expander-icon.component'
+import { PeertubeCheckboxComponent } from '../../../../shared/shared-forms/peertube-checkbox.component'
+import { FormsModule } from '@angular/forms'
+import { SelectCheckboxComponent } from '../../../../shared/shared-forms/select/select-checkbox.component'
+import { NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem, NgbTooltip } from '@ng-bootstrap/ng-bootstrap'
+import { AdvancedInputFilter, AdvancedInputFilterComponent } from '../../../../shared/shared-forms/advanced-input-filter.component'
+import { ActionDropdownComponent, DropdownAction } from '../../../../shared/shared-main/buttons/action-dropdown.component'
+import { NgIf, NgClass, DatePipe } from '@angular/common'
+import { TableModule } from 'primeng/table'
+import { GlobalIconComponent } from '../../../../shared/shared-icons/global-icon.component'
+import { Actor } from '@app/shared/shared-main/account/actor.model'
+import { BlocklistService } from '@app/shared/shared-moderation/blocklist.service'
+import { UserBanModalComponent } from '@app/shared/shared-moderation/user-ban-modal.component'
+import { UserAdminService } from '@app/shared/shared-users/user-admin.service'
 
 type UserForList = User & {
   rawVideoQuota: number
@@ -20,7 +39,34 @@ type UserForList = User & {
 @Component({
   selector: 'my-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: [ './user-list.component.scss' ]
+  styleUrls: [ './user-list.component.scss' ],
+  standalone: true,
+  imports: [
+    GlobalIconComponent,
+    TableModule,
+    SharedModule,
+    NgIf,
+    ActionDropdownComponent,
+    RouterLink,
+    AdvancedInputFilterComponent,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
+    NgbDropdownItem,
+    SelectCheckboxComponent,
+    FormsModule,
+    PeertubeCheckboxComponent,
+    NgbTooltip,
+    NgClass,
+    TableExpanderIconComponent,
+    UserModerationDropdownComponent,
+    ActorAvatarComponent,
+    UserEmailInfoComponent,
+    AutoColspanDirective,
+    UserBanModalComponent,
+    DatePipe,
+    BytesPipe
+  ]
 })
 export class UserListComponent extends RestTable <User> implements OnInit {
   private static readonly LOCAL_STORAGE_SELECTED_COLUMNS_KEY = 'admin-user-list-selected-columns'
