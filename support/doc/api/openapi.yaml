@@ -5321,6 +5321,7 @@ paths:
     get:
       tags:
         - Search
+        - Video
       summary: Search videos
       operationId: searchVideos
       parameters:
@@ -5353,6 +5354,7 @@ paths:
         - $ref: '#/components/parameters/searchTarget'
         - $ref: '#/components/parameters/videosSearchSort'
         - $ref: '#/components/parameters/excludeAlreadyWatched'
+        - $ref: '#/components/parameters/host'
         - name: startDate
           in: query
           description: Get videos that are published after this date
@@ -5404,6 +5406,7 @@ paths:
     get:
       tags:
         - Search
+        - Video Channels
       summary: Search channels
       operationId: searchChannels
       parameters:
@@ -5420,6 +5423,8 @@ paths:
         - $ref: '#/components/parameters/count'
         - $ref: '#/components/parameters/searchTarget'
         - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/host'
+        - $ref: '#/components/parameters/handles'
       callbacks:
         'searchTarget === search-index':
           $ref: '#/components/callbacks/searchIndex'
@@ -5437,6 +5442,7 @@ paths:
     get:
       tags:
         - Search
+        - Video Playlists
       summary: Search playlists
       operationId: searchPlaylists
       parameters:
@@ -5453,6 +5459,8 @@ paths:
         - $ref: '#/components/parameters/count'
         - $ref: '#/components/parameters/searchTarget'
         - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/host'
+        - $ref: '#/components/parameters/uuids'
       callbacks:
         'searchTarget === search-index':
           $ref: '#/components/callbacks/searchIndex'
@@ -6877,7 +6885,7 @@ components:
           items:
             $ref: '#/components/schemas/VideoCategorySet'
       style: form
-      explode: false
+      explode: true
     tagsOneOf:
       name: tagsOneOf
       in: query
@@ -6891,7 +6899,7 @@ components:
           items:
             type: string
       style: form
-      explode: false
+      explode: true
     tagsAllOf:
       name: tagsAllOf
       in: query
@@ -6904,7 +6912,7 @@ components:
           items:
             type: string
       style: form
-      explode: false
+      explode: true
     languageOneOf:
       name: languageOneOf
       in: query
@@ -6917,7 +6925,7 @@ components:
           items:
             $ref: '#/components/schemas/VideoLanguageSet'
       style: form
-      explode: false
+      explode: true
     licenceOneOf:
       name: licenceOneOf
       in: query
@@ -6930,7 +6938,7 @@ components:
           items:
             $ref: '#/components/schemas/VideoLicenceSet'
       style: form
-      explode: false
+      explode: true
     skipCount:
       name: skipCount
       in: query
@@ -6993,7 +7001,22 @@ components:
       schema:
         items:
           type: string
-      description: 'Find videos with specific UUIDs'
+      description: 'Find elements with specific UUIDs'
+    host:
+      name: host
+      in: query
+      required: false
+      schema:
+          type: string
+      description: 'Find elements owned by this host'
+    handles:
+      name: handles
+      in: query
+      required: false
+      schema:
+        items:
+          type: string
+      description: 'Find elements with these handles'
     include:
       name: include
       in: query
