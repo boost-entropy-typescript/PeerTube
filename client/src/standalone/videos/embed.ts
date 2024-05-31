@@ -432,6 +432,19 @@ export class PeerTubeEmbed {
 
     this.player = this.peertubePlayer.getPlayer()
   }
+
+  getImageDataUrl (): string {
+    const canvas = document.createElement('canvas')
+
+    canvas.width = this.player.videoWidth()
+    canvas.height = this.player.videoHeight()
+
+    const videoEl = this.player.tech(true).el() as HTMLVideoElement
+
+    canvas.getContext('2d').drawImage(videoEl, 0, 0, canvas.width, canvas.height)
+
+    return canvas.toDataURL('image/jpeg')
+  }
 }
 
 PeerTubeEmbed.main()
