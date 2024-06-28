@@ -259,6 +259,7 @@ async function buildYoutubeDLImport (options: {
     type: 'youtube-dl' as 'youtube-dl',
     videoImportId: videoImport.id,
     fileExt,
+    generateTranscription: importDataOverride.generateTranscription ?? true,
     // If part of a sync process, there is a parent job that will aggregate children results
     preventException: !!channelSync
   }
@@ -316,7 +317,12 @@ async function processYoutubeSubtitles (youtubeDL: YoutubeDLWrapper, targetUrl: 
         continue
       }
 
-      await createLocalCaption({ language: subtitle.language, path: subtitle.path, video })
+      await createLocalCaption({
+        language: subtitle.language,
+        path: subtitle.path,
+        video,
+        automaticallyGenerated: false
+      })
 
       logger.info('Added %s youtube-dl subtitle', subtitle.path)
     }

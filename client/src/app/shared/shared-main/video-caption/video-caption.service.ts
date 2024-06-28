@@ -1,15 +1,15 @@
-import { Observable, of } from 'rxjs'
-import { catchError, map, switchMap } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { RestExtractor, ServerService } from '@app/core'
 import { objectToFormData } from '@app/helpers'
 import { peertubeTranslate, sortBy } from '@peertube/peertube-core-utils'
-import { ResultList, VideoCaption } from '@peertube/peertube-models'
+import { PeerTubeProblemDocument, ResultList, ServerErrorCode, VideoCaption } from '@peertube/peertube-models'
+import { Observable, from, of, throwError } from 'rxjs'
+import { catchError, concatMap, map, switchMap, toArray } from 'rxjs/operators'
 import { environment } from '../../../../environments/environment'
-import { VideoCaptionEdit } from './video-caption-edit.model'
 import { VideoPasswordService } from '../video/video-password.service'
 import { VideoService } from '../video/video.service'
+import { VideoCaptionEdit } from './video-caption-edit.model'
 
 @Injectable()
 export class VideoCaptionService {
@@ -73,5 +73,41 @@ export class VideoCaptionService {
 
   getCaptionContent ({ captionPath }: Pick<VideoCaption, 'captionPath'>) {
     return this.authHttp.get(environment.originServerUrl + captionPath, { responseType: 'text' })
+  }
+
+  generateCaption (videoIds: (number | string)[]) {
+    return from(videoIds)
+      .pipe(
+        concatMap(videoId => {
+          return this.authHttp.post(`${VideoService.BASE_VIDEO_URL}/${videoId}/captions/generate`, {})
+            .pipe(
+              map(() => 'success' as 'success'),
+              catchError(err => {
+                const error: PeerTubeProblemDocument = err.error
+
+                if (error?.code === ServerErrorCode.VIDEO_ALREADY_HAS_CAPTIONS) {
+                  return of('already-has-captions' as 'already-has-captions')
+                }
+
+                if (error?.code === ServerErrorCode.VIDEO_ALREADY_BEING_TRANSCRIBED) {
+                  return of('already-being-transcribed' as 'already-being-transcribed')
+                }
+
+                return throwError(() => err)
+              })
+            )
+        }),
+        toArray(),
+        map(data => {
+          return data.reduce((p, c) => {
+            if (c === 'success') p.success += 1
+            if (c === 'already-has-captions') p.alreadyHasCaptions += 1
+            if (c === 'already-being-transcribed') p.alreadyBeingTranscribed += 1
+
+            return p
+          }, { success: 0, alreadyHasCaptions: 0, alreadyBeingTranscribed: 0 })
+        }),
+        catchError(err => this.restExtractor.handleError(err))
+      )
   }
 }
