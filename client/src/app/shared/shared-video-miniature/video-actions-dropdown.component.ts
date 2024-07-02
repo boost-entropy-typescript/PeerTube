@@ -234,8 +234,8 @@ export class VideoActionsDropdownComponent implements OnChanges {
     return this.video.canRemoveFiles(this.user)
   }
 
-  canRunForcedTranscoding () {
-    return this.video.canRunForcedTranscoding(this.user)
+  canRunTranscoding () {
+    return this.video.canRunTranscoding(this.user)
   }
 
   /* Action handlers */
@@ -342,7 +342,7 @@ export class VideoActionsDropdownComponent implements OnChanges {
   }
 
   runTranscoding (video: Video, type: 'hls' | 'web-video') {
-    this.videoService.runTranscoding({ videos: [ video ], type, askForForceTranscodingIfNeeded: true })
+    this.videoService.runTranscoding({ videos: [ video ], type })
       .subscribe({
         next: () => {
           this.notifier.success($localize`Transcoding job created for "${video.name}".`)
@@ -354,10 +354,12 @@ export class VideoActionsDropdownComponent implements OnChanges {
   }
 
   generateCaption (video: Video) {
-    this.videoCaptionService.generateCaption([ video.id ])
+    this.videoCaptionService.generateCaption({ videos: [ video ] })
       .subscribe({
-        next: () => {
-          this.notifier.success($localize`Transcription job created for "${video.name}".`)
+        next: result => {
+          if (result.success) this.notifier.success($localize`Transcription job created for "${video.name}".`)
+          else if (result.alreadyBeingTranscribed) this.notifier.info($localize`This video is already being transcribed.`)
+          else if (result.alreadyHasCaptions) this.notifier.info($localize`This video already has captions.`)
         },
 
         error: err => this.notifier.error(err.message)
@@ -462,13 +464,13 @@ export class VideoActionsDropdownComponent implements OnChanges {
         {
           label: $localize`Run HLS transcoding`,
           handler: ({ video }) => this.runTranscoding(video, 'hls'),
-          isDisplayed: () => this.displayOptions.transcoding && this.canRunForcedTranscoding(),
+          isDisplayed: () => this.displayOptions.transcoding && this.canRunTranscoding(),
           iconName: 'cog'
         },
         {
           label: $localize`Run Web Video transcoding`,
           handler: ({ video }) => this.runTranscoding(video, 'web-video'),
-          isDisplayed: () => this.displayOptions.transcoding && this.canRunForcedTranscoding(),
+          isDisplayed: () => this.displayOptions.transcoding && this.canRunTranscoding(),
           iconName: 'cog'
         },
         {
