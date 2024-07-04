@@ -35,6 +35,12 @@ export class Ctranslate2Transcriber extends OpenaiTranscriber {
       ...modelArgs,
       '--word_timestamps',
       'True',
+      '--vad_filter',
+      'true',
+      // Better precision with 5s of audio
+      // We mainly use vad_filter to improve language detection (first 30 seconds of the video, so no voice is problematic)
+      '--vad_min_silence_duration_ms',
+      '5000',
       '--output_format',
       'all',
       '--output_dir',
