@@ -11,6 +11,7 @@ import { VideoCaptionModel } from '@server/models/video/video-caption.js'
 import { VideoJobInfoModel } from '@server/models/video/video-job-info.js'
 import { VideoModel } from '@server/models/video/video.js'
 import { MVideo, MVideoCaption, MVideoFullLight, MVideoUUID, MVideoUrl } from '@server/types/models/index.js'
+import { MutexInterface } from 'async-mutex'
 import { ensureDir, remove } from 'fs-extra/esm'
 import { join } from 'path'
 import { federateVideoIfNeeded } from './activitypub/videos/federate.js'
@@ -18,7 +19,6 @@ import { JobQueue } from './job-queue/job-queue.js'
 import { Notifier } from './notifier/notifier.js'
 import { TranscriptionJobHandler } from './runners/index.js'
 import { VideoPathManager } from './video-path-manager.js'
-import { MutexInterface } from 'async-mutex'
 
 const lTags = loggerTagsFactory('video-caption')
 
@@ -152,6 +152,16 @@ export async function onTranscriptionEnded (options: {
   if (!video.language) {
     video.language = language
     await video.save()
+  }
+
+  const existing = await VideoCaptionModel.loadByVideoIdAndLanguage(video.id, language)
+  if (existing && !existing.automaticallyGenerated) {
+    logger.info(
+      // eslint-disable-next-line max-len
+      `Do not replace existing caption for video ${video.uuid} after transcription (subtitle may have been added while during the transcription process)`,
+      lTags(video.uuid)
+    )
+    return
   }
 
   const caption = await createLocalCaption({
