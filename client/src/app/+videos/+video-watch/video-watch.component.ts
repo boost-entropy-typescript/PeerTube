@@ -317,13 +317,12 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
   private loadVideo (options: {
     videoId: string
     forceAutoplay: boolean
+    liveRefresh?: boolean
     videoPassword?: string
   }) {
-    const { videoId, forceAutoplay, videoPassword } = options
+    const { videoId, liveRefresh, forceAutoplay, videoPassword } = options
 
-    if (this.isSameElement(this.video, videoId)) return
-
-    this.video = undefined
+    if (!liveRefresh && this.isSameElement(this.video, videoId)) return
 
     const videoObs = this.hooks.wrapObsFun(
       this.videoService.getVideo.bind(this.videoService),
@@ -563,14 +562,7 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
 
       if (this.video.isLive) {
         player.one('ended', () => {
-          this.zone.run(() => {
-            // We changed the video, it's not a live anymore
-            if (!this.video.isLive) return
-
-            this.video.state.id = VideoState.LIVE_ENDED
-
-            this.updatePlayerOnNoLive()
-          })
+          this.zone.run(() => this.endLive())
         })
       }
 
@@ -885,6 +877,7 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
       .subscribe(({ type, payload }) => {
         if (type === 'state-change') return this.handleLiveStateChange(payload.state)
         if (type === 'views-change') return this.handleLiveViewsChange(payload.viewers)
+        if (type === 'force-end') return this.endLive()
       })
   }
 
@@ -895,9 +888,7 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
 
     const videoUUID = this.video.uuid
 
-    // Reset to force refresh the video
-    this.video = undefined
-    this.loadVideo({ videoId: videoUUID, forceAutoplay: true })
+    this.loadVideo({ videoId: videoUUID, forceAutoplay: true, liveRefresh: true })
   }
 
   private handleLiveViewsChange (newViewers: number) {
@@ -994,5 +985,14 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
 
       peertubeLink: false
     }
+  }
+
+  private endLive () {
+    // We changed the video, it's not a live anymore
+    if (!this.video.isLive) return
+
+    this.video.state.id = VideoState.LIVE_ENDED
+
+    this.updatePlayerOnNoLive()
   }
 }
