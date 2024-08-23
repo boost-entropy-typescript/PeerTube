@@ -1,3 +1,4 @@
+import { getResolutionLabel } from '@peertube/peertube-core-utils'
 import {
   Video,
   VideoAdditionalAttributes,
@@ -25,7 +26,6 @@ import {
 import { MServer, MStreamingPlaylistRedundanciesOpt, MVideoFormattable, MVideoFormattableDetails } from '../../../types/models/index.js'
 import { MVideoFileRedundanciesOpt } from '../../../types/models/video/video-file.js'
 import { sortByResolutionDesc } from './shared/index.js'
-import { getResolutionLabel } from '@peertube/peertube-core-utils'
 
 export type VideoFormattingJSONOptions = {
   completeDescription?: boolean
@@ -258,7 +258,11 @@ export function videoFilesModelToFormattedJSON (
         metadataUrl: videoFile.metadataUrl ?? getLocalVideoFileMetadataUrl(video, videoFile),
 
         hasAudio: videoFile.hasAudio(),
-        hasVideo: videoFile.hasVideo()
+        hasVideo: videoFile.hasVideo(),
+
+        storage: video.remote
+          ? null
+          : videoFile.storage
       }
     })
 }

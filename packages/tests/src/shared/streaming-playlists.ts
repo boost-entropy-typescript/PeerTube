@@ -2,6 +2,7 @@
 
 import { getHLS, removeFragmentedMP4Ext, uuidRegex } from '@peertube/peertube-core-utils'
 import {
+  FileStorage,
   HttpStatusCode,
   VideoDetails,
   VideoPrivacy,
@@ -90,6 +91,7 @@ export async function checkResolutionsInMasterPlaylist (options: {
   server: PeerTubeServer
   playlistUrl: string
   resolutions: number[]
+  framerates?: { [id: number]: number }
   token?: string
   transcoded?: boolean // default true
   withRetry?: boolean // default false
@@ -101,6 +103,7 @@ export async function checkResolutionsInMasterPlaylist (options: {
     server,
     playlistUrl,
     resolutions,
+    framerates,
     token,
     hasAudio = true,
     hasVideo = true,
@@ -136,7 +139,13 @@ export async function checkResolutionsInMasterPlaylist (options: {
       : ''
 
     if (transcoded) {
-      regexp += `,(FRAME-RATE=\\d+,)?CODECS="${codecs}"${audioGroup}`
+      const framerateRegex = framerates
+        ? framerates[resolution]
+        : '\\d+'
+
+      if (!framerateRegex) throw new Error('Unknown framerate for resolution ' + resolution)
+
+      regexp += `,(FRAME-RATE=${framerateRegex},)?CODECS="${codecs}"${audioGroup}`
     }
 
     expect(masterPlaylist).to.match(new RegExp(`${regexp}`))
@@ -181,6 +190,8 @@ export async function completeCheckHlsPlaylist (options: {
 
   for (const server of options.servers) {
     const videoDetails = await server.videos.getWithToken({ id: videoUUID })
+    const isOrigin = videoDetails.account.host === server.host
+
     const requiresAuth = videoDetails.privacy.id === VideoPrivacy.PRIVATE || videoDetails.privacy.id === VideoPrivacy.INTERNAL
 
     const privatePath = requiresAuth
@@ -212,19 +223,27 @@ export async function completeCheckHlsPlaylist (options: {
         expect(file.resolution.label).to.equal('Audio only')
         expect(file.hasAudio).to.be.true
         expect(file.hasVideo).to.be.false
+
+        expect(file.height).to.equal(0)
+        expect(file.width).to.equal(0)
       } else {
         expect(file.resolution.label).to.equal(resolution + 'p')
 
         expect(file.hasVideo).to.be.true
         expect(file.hasAudio).to.equal(hasAudio && !splittedAudio)
-      }
 
-      if (resolution === 0) {
-        expect(file.height).to.equal(0)
-        expect(file.width).to.equal(0)
-      } else {
         expect(Math.min(file.height, file.width)).to.equal(resolution)
         expect(Math.max(file.height, file.width)).to.be.greaterThan(resolution)
+      }
+
+      if (isOrigin) {
+        if (objectStorageBaseUrl) {
+          expect(file.storage).to.equal(FileStorage.OBJECT_STORAGE)
+        } else {
+          expect(file.storage).to.equal(FileStorage.FILE_SYSTEM)
+        }
+      } else {
+        expect(file.storage).to.be.null
       }
 
       expect(file.magnetUri).to.have.lengthOf.above(2)

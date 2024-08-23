@@ -15,6 +15,7 @@
     "importHelpers": true,
     "strictBindCallApply": true,
     "target": "ES2022",
+    "isolatedModules": true,
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -43,8 +44,7 @@
       "crypto": [
         "src/shims/noop.ts"
       ]
-    },
-    "useDefineForClassFields": false
+    }
   },
   "references": [
     { "path": "../packages/core-utils" },
