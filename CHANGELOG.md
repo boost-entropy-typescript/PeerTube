@@ -1,14 +1,15 @@
 # Changelog
 
-## v6.3.0-rc.1
+## v6.3.0
 
 ### IMPORTANT NOTES
 
- * **Important** You need to manually execute a migration script after your upgrade while PeerTube is running.
+ * **Important** You need to manually execute a migration script after your upgrade while PeerTube is running and the database migration is complete (`Migrations finished. New migration version schema: 865` in PeerTube startup logs, this migration script may take a while).
  The purpose of this migration is to update video files metadata in the database.
  This migration can take a long time if you have many federated/local videos, but is designed to be safe to run multiple times:
    * Classic installation: `cd /var/www/peertube/peertube-latest && sudo -u peertube NODE_CONFIG_DIR=/var/www/peertube/config NODE_ENV=production node dist/scripts/migrations/peertube-6.3.js`
-   * Docker installation: `cd /var/www/peertube-docker && docker-compose exec -u peertube peertube node dist/scripts/migrations/peertube-6.3.js`
+   * Docker installation: `cd /var/www/peertube-docker && docker compose exec -u peertube peertube node dist/scripts/migrations/peertube-6.3.js`
+ * **Important for Docker admins** If you enabled the "Keep a version of the input file" configuration, files may have been stored in the container instead of the host volume. To prevent data loss, you must **copy** the files on the host before upgrading using `docker compose cp peertube:/app/storage/original-video-files docker-volume/data`
 
 ### Docker
 
@@ -55,6 +56,7 @@
   * Forward watch page `start` query param to the OEmbed service so that the embed starts at the correct time
   * Notify local users on when an *Internal* video is published
   * Add ability for admins to disable federation (disabling ActivityPub endpoints)
+  * Improve local video search relevance
 
 ### Bug fixes
 
@@ -73,6 +75,11 @@
   * Use first step *Public* privacy when publishing lives without having validated the second step
   * Fix studio page responsive
   * Add CORS to oEmbed API
+  * Fix storyboard display at the end of the video
+  * Correctly cleanup permanent live empty directories
+  * Fix duplicated resolutions when capping fps
+  * Don't resize remote actor images with unknown size
+  * More robust caption update concurrency
 
 
 ## v6.2.1
