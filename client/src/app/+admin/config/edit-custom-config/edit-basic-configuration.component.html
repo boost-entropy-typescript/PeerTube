@@ -25,10 +25,11 @@
       </ng-container>
 
       <div class="form-group" formGroupName="instance">
-        <label i18n for="instanceDefaultClientRoute">Landing page</label>
+        <label i18n id="instanceDefaultClientRouteLabel" for="instanceDefaultClientRoute">Landing page</label>
 
         <my-select-custom-value
-          id="instanceDefaultClientRoute"
+          labelId="instanceDefaultClientRouteLabel"
+          labelForId="instanceDefaultClientRoute"
           [items]="defaultLandingPageOptions"
           formControlName="defaultClientRoute"
           inputType="text"
@@ -134,7 +135,7 @@
           <label i18n for="broadcastMessageMessage">Message</label><my-help helpType="markdownText"></my-help>
 
           <my-markdown-textarea
-            name="broadcastMessageMessage" formControlName="message"
+            inputId="broadcastMessageMessage" formControlName="message"
             [formError]="formErrors['broadcastMessage.message']" markdownType="to-unsafe-html"
           ></my-markdown-textarea>
 
@@ -165,7 +166,7 @@
             <ng-container ngProjectAs="description">
               <span i18n>⚠️ This functionality requires a lot of attention and extra moderation.</span>
 
-              <div class="alert pt-alert-primary alert-signup" *ngIf="signupAlertMessage">{{ signupAlertMessage }}</div>
+              <my-alert type="primary" class="alert-signup" *ngIf="signupAlertMessage">{{ signupAlertMessage }}</my-alert>
             </ng-container>
 
             <ng-container ngProjectAs="extra">
@@ -219,10 +220,11 @@
 
       <ng-container formGroupName="user">
         <div class="form-group">
-          <label i18n for="userVideoQuota">Default video quota per user</label>
+          <label i18n id="userVideoQuotaLabel" for="userVideoQuota">Default video quota per user</label>
 
           <my-select-custom-value
-            id="userVideoQuota"
+            labelId="userVideoQuotaLabel"
+            labelForId="userVideoQuota"
             [items]="getVideoQuotaOptions()"
             formControlName="videoQuota"
             i18n-inputSuffix inputSuffix="bytes" inputType="number"
@@ -235,10 +237,11 @@
         </div>
 
         <div class="form-group">
-          <label i18n for="userVideoQuotaDaily">Default daily upload limit per user</label>
+          <label i18n id="userVideoQuotaDaily" for="userVideoQuotaDaily">Default daily upload limit per user</label>
 
           <my-select-custom-value
-            id="userVideoQuotaDaily"
+            labelId="userVideoQuotaDailyLabel"
+            labelForId="userVideoQuotaDaily"
             [items]="getVideoQuotaDailyOptions()"
             formControlName="videoQuotaDaily"
             i18n-inputSuffix inputSuffix="bytes" inputType="number"
@@ -279,7 +282,7 @@
             <span i18n class="small muted ms-1">allows to import multiple videos in parallel. ⚠️ Requires a PeerTube restart.</span>
 
             <div class="number-with-unit">
-              <input type="number" name="importConcurrency" formControlName="concurrency" />
+              <input type="number" id="importConcurrency" formControlName="concurrency" />
               <span i18n>jobs in parallel</span>
             </div>
 
@@ -552,12 +555,13 @@
               <ng-container ngProjectAs="extra">
 
                 <div class="form-group" [ngClass]="getDisabledExportUsersClass()">
-                  <label i18n for="exportUsersMaxUserVideoQuota">Max user video quota allowed to generate the export</label>
+                  <label i18n id="exportUsersMaxUserVideoQuota" for="exportUsersMaxUserVideoQuota">Max user video quota allowed to generate the export</label>
 
                   <span i18n class="ms-2 small muted">If the user decides to include the video files in the archive</span>
 
                   <my-select-custom-value
-                    id="exportUsersMaxUserVideoQuota"
+                    labelId="exportUsersMaxUserVideoQuota"
+                    labelForId="exportUsersMaxUserVideoQuota"
                     [items]="exportMaxUserVideoQuotaOptions"
                     formControlName="maxUserVideoQuota"
                     i18n-inputSuffix inputSuffix="bytes" inputType="number"

@@ -15,7 +15,7 @@
 <div class="margin-content">
   <ng-container *ngIf="!externalAuthError && !isAuthenticatedWithExternalAuth">
 
-    <div class="alert pt-alert-primary" role="alert">
+    <my-alert type="primary">
       <h5 class="alert-heading" i18n>
         Logging into an account lets you publish content
       </h5>
@@ -31,30 +31,30 @@
           Find yours among multiple instances at: <a class="link-orange" href="https://joinpeertube.org/instances" target="_blank" rel="noopener noreferrer">https://joinpeertube.org/instances</a>.
         </p>
       }
-    </div>
+    </my-alert>
 
-    <div class="alert alert-danger" i18n *ngIf="externalAuthError">
+    <my-alert type="danger" i18n *ngIf="externalAuthError">
       Sorry but there was an issue with the external login process. Please <a class="link-orange" routerLink="/about">contact an administrator</a>.
-    </div>
+    </my-alert>
 
-    <div *ngIf="error" class="alert alert-danger">
+    <my-alert *ngIf="error" type="danger">
       {{ error }}
 
       <a *ngIf="error === 'User email is not verified.'" class="ms-1 link-orange" i18n routerLink="/verify-account/ask-send-email">
         Request new verification email
       </a>
-    </div>
+    </my-alert>
 
     <div class="wrapper">
       <div class="login-form-and-externals">
 
-        <form class="w-100 m-0" myPluginSelector pluginSelectorId="login-form" role="form" (ngSubmit)="login()" [formGroup]="form">
+        <form class="w-100 m-0" myPluginSelector pluginSelectorId="login-form" (ngSubmit)="login()" [formGroup]="form">
           <ng-container *ngIf="!otpStep">
             <div class="form-group">
               <div>
                 <label i18n for="username">Username or email address</label>
                 <input
-                  type="text" id="username" i18n-placeholder placeholder="Example: john@example.com" required tabindex="1"
+                  type="text" id="username" i18n-placeholder placeholder="Example: john@example.com" required
                   formControlName="username" class="form-control" [ngClass]="{ 'input-error': formErrors['username'] }" myAutofocus
                   autocomplete="username"
                 >
@@ -69,8 +69,8 @@
               <label i18n for="password">Password</label>
 
               <my-input-text
-                formControlName=  "password" inputId="password" i18n-placeholder placeholder="Password"
-                [formError]="formErrors['password']" autocomplete="current-password" [tabindex]="2"
+                formControlName="password" inputId="password" i18n-placeholder placeholder="Password"
+                [formError]="formErrors['password']" autocomplete="current-password"
               ></my-input-text>
             </div>
           </ng-container>
@@ -89,7 +89,7 @@
 
           <input type="submit" class="peertube-button orange-button w-100" i18n-value value="Login" [disabled]="!form.valid">
 
-          <div *ngIf="!otpStep" class="additional-links d-flex justify-content-center mt-4 mb-5">
+          <div *ngIf="!otpStep" class="additional-links d-flex justify-content-center mt-4 mb-5 text-center">
             <button type="button" i18n class="button-unstyle link-orange mx-3" (click)="openForgotPasswordModal()" i18n-title title="Click here to reset your password">
               I forgot my password
             </button>
@@ -137,9 +137,9 @@
 
   <div class="modal-body text-start">
 
-    <div *ngIf="isEmailDisabled()" class="alert alert-danger" i18n>
+    <my-alert *ngIf="isEmailDisabled()" type="danger" i18n>
       We are sorry, you cannot recover your password because your instance administrator did not configure the PeerTube email system.
-    </div>
+    </my-alert>
 
     <div *ngIf="!isEmailDisabled()" class="mb-4" i18n>
       Enter your email address and we will send you a link to reset your password.
@@ -158,7 +158,7 @@
 
   <div class="modal-footer inputs">
     <input
-      type="button" role="button" i18n-value value="Cancel" class="peertube-button d-none d-sm-block"
+      type="button" role="button" i18n-value value="Cancel" class="peertube-button grey-button d-none d-sm-block"
       (click)="hideForgotPasswordModal()" (key.enter)="hideForgotPasswordModal()"
     >
 

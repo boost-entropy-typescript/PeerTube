@@ -7,11 +7,11 @@
   &:hover,
   &:focus,
   &:active {
-    text-decoration: none !important;
+    text-decoration: none;
   }
 
   &:focus:not(:focus-visible) {
-    outline: none !important;
+    outline: none;
   }
 }
 
@@ -102,7 +102,7 @@
   }
 
   &[readonly] {
-    opacity: 0.7;
+    color: pvar(--greyForegroundColor);
   }
 
   @media screen and (max-width: calc(#{$width} + 40px)) {
@@ -134,8 +134,7 @@
     background-color: pvar(--mainHoverColor);
   }
 
-  &[disabled],
-  &.disabled {
+  &[disabled] {
     cursor: default;
     color: #fff;
     background-color: pvar(--inputBorderColor);
@@ -165,8 +164,7 @@
     background-color: pvar(--mainColorLightest);
   }
 
-  &[disabled],
-  &.disabled {
+  &[disabled] {
     cursor: default;
     color: pvar(--mainColor);
     background-color: pvar(--inputBorderColor);
@@ -183,8 +181,7 @@
 
   @include button-focus($grey-button-outline-color);
 
-  &[disabled],
-  .disabled {
+  &[disabled] {
     cursor: default;
   }
 
@@ -194,22 +191,20 @@
 }
 
 @mixin grey-button {
-  background-color: pvar(--greyBackgroundColor);
   color: pvar(--greyForegroundColor);
+  background-color: pvar(--greyBackgroundColor);
 
   @include button-focus($grey-button-outline-color);
 
   &:hover,
   &:active,
   &:focus,
-  &[disabled],
-  &.disabled {
+  &[disabled] {
     color: pvar(--greyForegroundColor);
     background-color: pvar(--greySecondaryBackgroundColor);
   }
 
-  &[disabled],
-  &.disabled {
+  &[disabled] {
     cursor: default;
   }
 
@@ -219,29 +214,24 @@
 }
 
 @mixin danger-button {
-  $color: color.adjust($color: #c54130, $lightness: 10%);
-  $text: #fff6f5;
+  background-color: pvar(--red);
+  color: pvar(--white);
 
-  background-color: $color;
-  color: $text;
-
-  @include button-focus(color.scale($color, $alpha: -95%));
+  @include button-focus(pvar(--red));
 
   &:hover,
   &:active,
-  &:focus,
-  &[disabled],
-  &.disabled {
-    background-color: color.adjust($color: $color, $lightness: 10%);
+  &:focus:not(:focus-visible) {
+    opacity: 0.8;
   }
 
-  &[disabled],
-  &.disabled {
+  &[disabled] {
     cursor: default;
+    opacity: 0.7;
   }
 
   my-global-icon {
-    @include apply-svg-color($text);
+    @include apply-svg-color(pvar(--white));
   }
 }
 
@@ -369,14 +359,6 @@
   position: relative;
   height: min-content;
 
-  &.disabled {
-    background-color: #E5E5E5;
-
-    select {
-      cursor: default;
-    }
-  }
-
   select[disabled] {
     background-color: #f9f9f9;
   }
@@ -412,21 +394,8 @@
 
     @include rounded-line-height-1-5($form-input-font-size);
 
-    &:focus {
-      outline: none;
-    }
-
-    &:-moz-focusring {
-      color: transparent;
-      text-shadow: 0 0 0 #000;
-    }
-
     option {
       color: #000;
-
-      &[value=undefined] {
-        font-weight: $font-semibold;
-      }
     }
   }
 
@@ -628,47 +597,6 @@
   }
 }
 
-@mixin progressbar($small: false, $height: 1rem, $font-size: 0.75rem, $background-color: pvar(--greyBackgroundColor)) {
-  background-color: $background-color;
-  display: flex;
-  height: $height;
-  overflow: hidden;
-  font-size: $font-size;
-  border-radius: 0.25rem;
-  position: relative;
-
-  span {
-    position: absolute;
-    color: pvar(--greyForegroundColor);
-
-    @if $small {
-      top: -1px;
-    }
-
-    &:nth-of-type(1) {
-      left: .2rem;
-    }
-    &:nth-of-type(2) {
-      right: .2rem;
-    }
-  }
-
-  .progress-bar {
-    color: pvar(--mainBackgroundColor);
-    background-color: pvar(--mainColor);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    white-space: nowrap;
-    transition: width 0.6s ease;
-
-    &.red {
-      background-color: color.adjust($color: #c54130, $lightness: 10%);
-    }
-  }
-}
-
 @mixin divider($color: pvar(--submenuBackgroundColor), $background: pvar(--mainBackgroundColor)) {
   width: 95%;
   border-top: .05rem solid $color;
@@ -688,45 +616,6 @@
       font-size: .7rem;
       padding: 0 .4rem;
       transform: translateY(-.65rem);
-    }
-  }
-}
-
-@mixin chip {
-  --avatar-size: 1.2rem;
-
-  display: inline-flex;
-  color: pvar(--mainForegroundColor);
-  height: var(--avatar-size);
-  max-width: 320px;
-  overflow: hidden;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  vertical-align: middle;
-  white-space: nowrap;
-
-  my-actor-avatar {
-    border-radius: 5rem;
-    width: var(--avatar-size);
-    height: var(--avatar-size);
-
-    @include margin-right(.2rem);
-  }
-
-  &.two-lines {
-    --avatar-size: 2rem;
-
-    font-size: 14px;
-    line-height: 1rem;
-
-    my-actor-avatar {
-      display: inline-block;
-    }
-
-    > div {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
   }
 }

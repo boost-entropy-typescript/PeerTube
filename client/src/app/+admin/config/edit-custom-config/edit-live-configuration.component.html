@@ -51,7 +51,7 @@
                 <span class="ms-2 small muted">(-1 for "unlimited")</span>
 
                 <div class="number-with-unit">
-                  <input type="number" name="liveMaxInstanceLives" formControlName="maxInstanceLives" />
+                  <input type="number" id="liveMaxInstanceLives" formControlName="maxInstanceLives" />
                   <span i18n>{form.value['live']['maxInstanceLives'], plural, =1 {live} other {lives}}</span>
                 </div>
 
@@ -63,7 +63,7 @@
                 <span class="ms-2 small muted">(-1 for "unlimited")</span>
 
                 <div class="number-with-unit">
-                  <input type="number" name="liveMaxUserLives" formControlName="maxUserLives" />
+                  <input type="number" id="liveMaxUserLives" formControlName="maxUserLives" />
                   <span i18n>{form.value['live']['maxUserLives'], plural, =1 {live} other {lives}}</span>
                 </div>
 
@@ -164,7 +164,7 @@
           </div>
 
           <div class="form-group" [ngClass]="getDisabledLiveLocalTranscodingClass()">
-            <label i18n for="liveTranscodingThreads">Live transcoding threads</label>
+            <label i18n id="liveTranscodingThreadsLabel" for="liveTranscodingThreads">Live transcoding threads</label>
 
             <span class="small muted ms-1">
               <ng-container *ngIf="getTotalTranscodingThreads().atMost" i18n>
@@ -177,7 +177,8 @@
             </span>
 
             <my-select-custom-value
-              id="liveTranscodingThreads"
+              labelId="liveTranscodingThreadsLabel"
+              labelForId="liveTranscodingThreads"
               [items]="transcodingThreadOptions"
               formControlName="threads"
               [clearable]="false"

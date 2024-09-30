@@ -22,6 +22,10 @@ body {
   /*** theme ***/
   // now beware sass requires interpolation
   // for css custom properties #{$var}
+  --red: #{$red};
+  --green: #{$green};
+  --white: #{$white};
+
   --mainColor: #{$main-color};
   --mainColorLighter: #{$main-color-lighter};
   --mainColorLightest: #{$main-color-lightest};
@@ -107,8 +111,9 @@ input[readonly] {
 
 input,
 textarea {
-  outline: none;
   color: pvar(--inputForegroundColor);
+
+  @include disable-outline;
 }
 
 button {
@@ -165,6 +170,15 @@ code {
       z-index: #{z('sub-menu') - 1};
       max-width: pvar(--mainColWidth);
     }
+  }
+
+  .skip-to-content-sub-menu {
+    display: block;
+    z-index: z(modal);
+    padding: 1rem;
+    background: pvar(--mainBackgroundColor);
+    text-align: center;
+    text-decoration: underline;
   }
 
   // Use an appropriate offset top when sub-menu fixed

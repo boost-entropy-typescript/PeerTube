@@ -18,15 +18,13 @@
       <input type="text" id="targetUrl" [(ngModel)]="targetUrl" class="form-control" />
 
       <div *ngIf="isChannelSyncEnabled()" class="form-group-description" i18n>
-        You can also synchronize a remote channel in <a routerLink="/my-library/video-channel-syncs">your library</a>
+        You can also synchronize a remote channel in <a class="text-decoration-underline" routerLink="/my-library/video-channel-syncs">your library</a>
       </div>
     </div>
 
     <div class="form-group">
       <label i18n for="first-step-channel">Channel</label>
-      <my-select-channel
-        labelForId="first-step-channel" [items]="userVideoChannels" [(ngModel)]="firstStepChannelId"
-      ></my-select-channel>
+      <my-select-channel labelForId="first-step-channel" [items]="userVideoChannels" [(ngModel)]="firstStepChannelId"></my-select-channel>
     </div>
 
     <div class="form-group">
@@ -44,14 +42,15 @@
 </div>
 
 
-<div *ngIf="error" class="alert alert-danger">
+<my-alert *ngIf="error" type="danger">
   <div i18n>Sorry, but something went wrong</div>
-  {{ error }}
-</div>
 
-<div *ngIf="!error && hasImportedVideo" class="alert pt-alert-primary" i18n>
+  {{ error }}
+</my-alert>
+
+<my-alert type="primary" *ngIf="!error && hasImportedVideo" i18n>
   Congratulations, the video behind {{ targetUrl }} will be imported! You can already add information about this video.
-</div>
+</my-alert>
 
 <!-- Hidden because we want to load the component -->
 <form [hidden]="!hasImportedVideo" novalidate [formGroup]="form">

@@ -18,7 +18,7 @@ import { VideoActionsDisplayType, VideoActionsDropdownComponent } from './video-
 import { RouterLink } from '@angular/router'
 import { VideoViewsCounterComponent } from '../shared-video/video-views-counter.component'
 import { DateToggleComponent } from '../shared-main/date/date-toggle.component'
-import { LinkComponent } from '../shared-main/angular/link.component'
+import { LinkComponent } from '../shared-main/common/link.component'
 import { ActorAvatarComponent } from '../shared-actor-image/actor-avatar.component'
 import { VideoThumbnailComponent } from '../shared-thumbnail/video-thumbnail.component'
 import { NgClass, NgIf, NgFor } from '@angular/common'
@@ -118,6 +118,7 @@ export class VideoMiniatureComponent implements OnInit {
   videoTarget: string
 
   private ownerDisplayType: 'account' | 'videoChannel'
+  private actionsLoaded = false
 
   constructor (
     private screenService: ScreenService,
@@ -244,9 +245,12 @@ export class VideoMiniatureComponent implements OnInit {
   }
 
   loadActions () {
+    if (this.actionsLoaded) return
     if (this.displayVideoActions) this.showActions = true
 
     this.loadWatchLater()
+
+    this.actionsLoaded = true
   }
 
   onVideoBlocked () {

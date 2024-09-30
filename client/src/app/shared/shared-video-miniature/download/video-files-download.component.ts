@@ -1,6 +1,7 @@
 import { KeyValuePipe, NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common'
 import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnInit, Output } from '@angular/core'
 import { FormsModule } from '@angular/forms'
+import { AlertComponent } from '@app/shared/shared-main/common/alert.component'
 import {
   NgbCollapse,
   NgbNav,
@@ -20,8 +21,8 @@ import { firstValueFrom } from 'rxjs'
 import { tap } from 'rxjs/operators'
 import { InputTextComponent } from '../../shared-forms/input-text.component'
 import { GlobalIconComponent } from '../../shared-icons/global-icon.component'
-import { BytesPipe } from '../../shared-main/angular/bytes.pipe'
-import { NumberFormatterPipe } from '../../shared-main/angular/number-formatter.pipe'
+import { BytesPipe } from '../../shared-main/common/bytes.pipe'
+import { NumberFormatterPipe } from '../../shared-main/common/number-formatter.pipe'
 import { VideoDetails } from '../../shared-main/video/video-details.model'
 import { VideoService } from '../../shared-main/video/video.service'
 
@@ -48,7 +49,8 @@ type FileMetadata = { [key: string]: { label: string, value: string | number } }
     KeyValuePipe,
     NgbTooltip,
     NgTemplateOutlet,
-    NgClass
+    NgClass,
+    AlertComponent
   ]
 })
 export class VideoFilesDownloadComponent implements OnInit {

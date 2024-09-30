@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common'
 import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { AlertComponent } from '../shared-main/common/alert.component'
+import { ProgressBarComponent } from '../shared-main/common/progress-bar.component'
 
 @Component({
   selector: 'my-upload-progress',
   templateUrl: './upload-progress.component.html',
   styleUrls: [ './upload-progress.component.scss' ],
-  imports: [ CommonModule ],
+  imports: [ CommonModule, ProgressBarComponent, AlertComponent ],
   standalone: true
 })
 export class UploadProgressComponent {
@@ -17,4 +19,12 @@ export class UploadProgressComponent {
 
   @Output() cancel = new EventEmitter()
   @Output() retry = new EventEmitter()
+
+  getUploadingLabel () {
+    if (this.uploadPercents === 100 && this.uploaded === false) {
+      return $localize`Processing…`
+    }
+
+    return $localize`${this.uploadPercents}%`
+  }
 }

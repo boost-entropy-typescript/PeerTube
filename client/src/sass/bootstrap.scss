@@ -31,6 +31,9 @@ body {
   --bs-border-color-translucent: #{pvar(--inputBorderColor)};
 
   --bs-body-color: #{pvar(--mainForegroundColor)};
+  --bs-body-bg: #{pvar(--mainBackgroundColor)};
+
+  --bs-emphasis-color: #{pvar(--mainForegroundColor)};
 }
 
 .accordion {
@@ -47,6 +50,10 @@ body {
   --bs-popover-header-color: #{pvar(--mainForegroundColor)};
 
   font-family: $main-fonts;
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: #{pvar(--greyForegroundColor)};
 }
 
 .flex-auto {
@@ -93,6 +100,10 @@ body {
 
 .dropdown-divider {
   margin: 0.3rem 0;
+}
+
+.disable-dropdown-caret::after {
+  display: none;
 }
 
 // ---------------------------------------------------------------------------

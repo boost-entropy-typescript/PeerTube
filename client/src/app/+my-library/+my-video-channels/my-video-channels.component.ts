@@ -3,8 +3,8 @@ import { Component } from '@angular/core'
 import { RouterLink } from '@angular/router'
 import { AuthService, ComponentPagination, ConfirmService, Notifier, ScreenService, hasMoreItems } from '@app/core'
 import { formatICU } from '@app/helpers'
-import { VideoChannel } from '@app/shared/shared-main/video-channel/video-channel.model'
-import { VideoChannelService } from '@app/shared/shared-main/video-channel/video-channel.service'
+import { VideoChannel } from '@app/shared/shared-main/channel/video-channel.model'
+import { VideoChannelService } from '@app/shared/shared-main/channel/video-channel.service'
 import { maxBy, minBy } from '@peertube/peertube-core-utils'
 import { ChartData, ChartOptions, TooltipItem, TooltipModel } from 'chart.js'
 import { ChartModule } from 'primeng/chart'
@@ -12,12 +12,14 @@ import { Subject, first, map, switchMap } from 'rxjs'
 import { ActorAvatarComponent } from '../../shared/shared-actor-image/actor-avatar.component'
 import { AdvancedInputFilterComponent } from '../../shared/shared-forms/advanced-input-filter.component'
 import { GlobalIconComponent } from '../../shared/shared-icons/global-icon.component'
-import { DeferLoadingDirective } from '../../shared/shared-main/angular/defer-loading.directive'
-import { InfiniteScrollerDirective } from '../../shared/shared-main/angular/infinite-scroller.directive'
-import { NumberFormatterPipe } from '../../shared/shared-main/angular/number-formatter.pipe'
+import { DeferLoadingDirective } from '../../shared/shared-main/common/defer-loading.directive'
+import { InfiniteScrollerDirective } from '../../shared/shared-main/common/infinite-scroller.directive'
+import { NumberFormatterPipe } from '../../shared/shared-main/common/number-formatter.pipe'
 import { DeleteButtonComponent } from '../../shared/shared-main/buttons/delete-button.component'
 import { EditButtonComponent } from '../../shared/shared-main/buttons/edit-button.component'
-import { ChannelsSetupMessageComponent } from '../../shared/shared-main/misc/channels-setup-message.component'
+import { ChannelsSetupMessageComponent } from '../../shared/shared-main/channel/channels-setup-message.component'
+
+type CustomChartData = (ChartData & { startDate: string, total: number })
 
 @Component({
   templateUrl: './my-video-channels.component.html',
@@ -42,7 +44,7 @@ import { ChannelsSetupMessageComponent } from '../../shared/shared-main/misc/cha
 export class MyVideoChannelsComponent {
   videoChannels: VideoChannel[] = []
 
-  videoChannelsChartData: ChartData[]
+  videoChannelsChartData: CustomChartData[]
 
   chartOptions: ChartOptions
 
@@ -75,6 +77,7 @@ export class MyVideoChannelsComponent {
 
     this.pagination.currentPage = 1
     this.videoChannels = []
+    this.pagesDone.clear()
 
     this.loadMoreVideoChannels()
   }
@@ -146,8 +149,15 @@ export class MyVideoChannelsComponent {
               fill: false,
               borderColor: '#c6c6c6'
             }
-          ]
-        } as ChartData))
+          ],
+
+          total: v.viewsPerDay.map(day => day.views)
+            .reduce((p, c) => p + c, 0),
+
+          startDate: v.viewsPerDay.length !== 0
+            ? v.viewsPerDay[0].date.toLocaleDateString()
+            : ''
+        }))
 
         this.buildChartOptions()
 
@@ -206,5 +216,18 @@ export class MyVideoChannelsComponent {
         intersect: false
       }
     }
+  }
+
+  getChartAriaLabel (data: CustomChartData) {
+    if (!data.startDate) return ''
+
+    return formatICU($localize`${data.total} {value, plural, =1 {view} other {views}} since ${data.startDate}`, { value: data.total })
+  }
+
+  getTotalTitle () {
+    return formatICU(
+      $localize`You have ${this.pagination.totalItems} {total, plural, =1 {channel} other {channels}}`,
+      { total: this.pagination.totalItems }
+    )
   }
 }
