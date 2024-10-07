@@ -1,7 +1,9 @@
-<h1>
-  <my-global-icon iconName="playlists" aria-hidden="true"></my-global-icon>
-  <ng-container i18n>Logs</ng-container>
-</h1>
+<div class="sub-title-container">
+  <div class="sub-title">
+    <my-global-icon iconName="playlists" aria-hidden="true"></my-global-icon>
+    <h1 i18n>Logs</h1>
+  </div>
+</div>
 
 <div class="header">
 
@@ -19,33 +21,21 @@
     <div>
       <label i18n for="log-start-date">Start date</label>
 
-      <ng-select
-        [(ngModel)]="startDate"
-        (ngModelChange)="refresh()"
-        [clearable]="false"
-        [searchable]="false"
-        labelForId="log-start-date"
-      >
-        <ng-option *ngFor="let time of timeChoices" [value]="time.id">
-          {{ time.label }} ({{ time.id | date: time.dateFormat }} - <span i18n>now</span>)
-        </ng-option>
-      </ng-select>
+      <my-select-options inputId="log-start-date" [items]="timeChoices" [(ngModel)]="startDate" (ngModelChange)="refresh()">
+        <ng-template ptTemplate="item" let-item>
+          {{ item.label }} ({{ item.id | date: item.dateFormat }} - <span i18n>now</span>)
+        </ng-template>
+      </my-select-options>
     </div>
 
     <div>
       <label i18n for="log-level">Log level</label>
 
-      <ng-select
-        [(ngModel)]="level"
-        (ngModelChange)="refresh()"
-        [clearable]="false"
-        [searchable]="false"
-        labelForId="log-level"
-      >
-        <ng-option *ngFor="let levelChoice of levelChoices" [value]="levelChoice.id">
-          <span class="level-choice me-1" [ngClass]="levelChoice.id">&#11044;</span> {{ levelChoice.label }}
-        </ng-option>
-      </ng-select>
+      <my-select-options inputId="log-level" [items]="levelChoices" [(ngModel)]="level" (ngModelChange)="refresh()">
+        <ng-template ptTemplate="item" let-item>
+          <span class="level-choice me-1" [ngClass]="item.id">&#11044;</span> {{ item.label }}
+        </ng-template>
+      </my-select-options>
     </div>
 
     <div>
@@ -53,7 +43,7 @@
 
       <my-select-tags
         *ngIf="!isAuditLog()"
-        labelForId="log-tags"
+        inputId="log-tags"
         i18n-placeholder placeholder="Example: ffmpeg, api"
         [(ngModel)]="tagsOneOf" (ngModelChange)="refresh()"
       ></my-select-tags>

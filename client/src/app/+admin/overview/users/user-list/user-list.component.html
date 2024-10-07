@@ -1,7 +1,9 @@
-<h1>
-  <my-global-icon iconName="user" aria-hidden="true"></my-global-icon>
-  <ng-container i18n>Users</ng-container>
-</h1>
+<div class="sub-title-container">
+  <div class="sub-title">
+    <my-global-icon iconName="user" aria-hidden="true"></my-global-icon>
+    <h1 i18n>Users</h1>
+  </div>
+</div>
 
 <p-table
   [value]="users" [paginator]="totalRecords > 0" [totalRecords]="totalRecords" [rows]="rowsPerPage" [first]="pagination.start"
@@ -52,7 +54,7 @@
               <label i18n for="select-columns">Select the columns to display</label>
 
               <my-select-checkbox
-                labelForId="select-columns"
+                inputId="select-columns"
                 [availableItems]="columns"
                 [selectableGroup]="false" [(ngModel)]="selectedColumns"
                 i18n-placeholder placeholder="Select the columns to display"
