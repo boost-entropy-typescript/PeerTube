@@ -20,7 +20,10 @@ describe('Test index HTML generation', function () {
   let privatePlaylistId: string
   let unlistedPlaylistId: string
 
-  let instanceDescription: string
+  let instanceConfig: {
+    name: string
+    shortDescription: string
+  }
 
   before(async function () {
     this.timeout(120000);
@@ -36,7 +39,7 @@ describe('Test index HTML generation', function () {
       unlistedVideoId,
       privatePlaylistId,
       unlistedPlaylistId,
-      instanceDescription
+      instanceConfig
     } = await prepareClientTests())
   })
 
@@ -46,7 +49,7 @@ describe('Test index HTML generation', function () {
       const config = await servers[0].config.getConfig()
       const res = await makeHTMLRequest(servers[0].url, '/videos/trending')
 
-      checkIndexTags(res.text, 'PeerTube', instanceDescription, '', config)
+      checkIndexTags(res.text, instanceConfig.name, instanceConfig.shortDescription, '', config)
     })
 
     it('Should update the customized configuration and have the correct index html tags', async function () {
