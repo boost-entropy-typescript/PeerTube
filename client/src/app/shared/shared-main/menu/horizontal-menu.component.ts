@@ -6,6 +6,7 @@ import { logger } from '@root-helpers/logger'
 import { filter, Subscription } from 'rxjs'
 import { PluginSelectorDirective } from '../plugins/plugin-selector.directive'
 import { ListOverflowComponent } from './list-overflow.component'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 export type HorizontalMenuEntry = {
   label: string
@@ -51,7 +52,11 @@ export class HorizontalMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   private routerSub: Subscription
 
-  constructor (private router: Router, private route: ActivatedRoute) {
+  constructor (
+    private router: Router,
+    private route: ActivatedRoute,
+    private modal: NgbModal
+  ) {
 
   }
 
@@ -67,6 +72,12 @@ export class HorizontalMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy () {
     if (this.routerSub) this.routerSub.unsubscribe()
+  }
+
+  onLinkClick (modal: boolean) {
+    if (modal) {
+      this.modal.dismissAll()
+    }
   }
 
   private buildChildren () {
@@ -90,7 +101,7 @@ export class HorizontalMenuComponent implements OnInit, OnChanges, OnDestroy {
     })
 
     if (!entry) {
-      if (this.menuEntries.length !== 0) {
+      if (this.menuEntries.length !== 0 && currentUrl !== '/') {
         logger.info(`Unable to find entry for ${currentUrl} or ${currentComponentPath}`, { menuEntries: this.menuEntries })
       }
 

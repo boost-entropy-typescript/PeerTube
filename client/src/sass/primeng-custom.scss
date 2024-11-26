@@ -2,7 +2,7 @@
 @use '_mixins' as *;
 @use '_icons' as *;
 
-$hover-bg: pvar(--bg-secondary-350);
+$hover-bg: pvar(--bg-secondary-400);
 
 /* stylelint-disable */
 @import 'primeng/resources/primeng.css';
@@ -233,11 +233,11 @@ body .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
   margin-top: 0;
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-  color: pvar(--fg);
-  background: pvar(--bg-secondary-500);
+  color: pvar(--on-primary);
+  background: pvar(--primary);
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus {
-  background: pvar(--bg-secondary-500);
+  background: pvar(--primary);
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled).p-focus {
   color: pvar(--fg);
@@ -763,9 +763,10 @@ p-table {
       display: inline-flex;
       align-items: center;
       flex-wrap: wrap;
+      gap: 0.5rem;
 
       .left-buttons {
-        @include padding-left(15px);
+        @include padding-left(1rem);
       }
     }
   }
@@ -1172,14 +1173,9 @@ p-toast {
 @media screen and (max-width: $mobile-view) {
   p-table {
     .p-datatable-header {
-      .caption {
-        flex-wrap: wrap;
-
-        > div {
-          width: 100%;
-          padding: 0 !important;
-          margin-bottom: 5px;
-        }
+      .caption > div {
+        width: 100%;
+        padding: 0 !important;
       }
     }
   }
