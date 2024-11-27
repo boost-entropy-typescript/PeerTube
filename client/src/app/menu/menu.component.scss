@@ -57,7 +57,7 @@
   overflow: hidden;
   width: 100%;
   height: 100%;
-  max-height: calc(100% - 50px); // Space for links below the menu
+  max-height: calc(100% - 75px); // Space for links below the menu
 }
 
 .main-menu-scrollbar {
@@ -283,5 +283,9 @@ my-button[theme=secondary] ::ng-deep my-global-icon {
 
   .toggle-menu-container {
     display: none;
+  }
+
+  .block-title {
+    max-width: 90%;
   }
 }
