@@ -65,7 +65,7 @@ body {
   --support-btn-heart-bg: var(--supportButtonHeartColor, #{$support-button-heart});
 
   --x-margin-content: 2rem;
-  --x-videos-margin-content: 2rem;
+
   --main-col-width: calc(100vw - #{$menu-width});
 
   --secondary-icon-color: #{pvar(--fg-50)};
@@ -205,6 +205,16 @@ label,
   margin-bottom: 0.5rem;
   font-size: 18px;
   color: pvar(--fg-350);
+}
+
+.pt-label-container {
+  margin-bottom: 0.5rem;
+
+  label {
+    display: inline;
+
+    @include margin-right(0.25rem);
+  }
 }
 
 code {
