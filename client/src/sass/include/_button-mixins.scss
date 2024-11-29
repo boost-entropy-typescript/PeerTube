@@ -4,7 +4,7 @@
 @use '_mixins' as *;
 
 @mixin secondary-button (
-  $fg: pvar(--fg),
+  $fg: inherit,
   $active-bg: pvar(--bg-secondary-500),
   $hover-bg: pvar(--bg-secondary-450),
   $border-color: pvar(--bg-secondary-500)
@@ -211,8 +211,12 @@
     line-height: $width;
     top: $top;
     right: $right;
+  }
 
-    @include margin-right($margin-right);
+  &:not(.icon-only) {
+    my-global-icon {
+      @include margin-right($margin-right);
+    }
   }
 }
 
