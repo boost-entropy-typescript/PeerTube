@@ -43,7 +43,7 @@ export type VideoFormattingJSONOptions = {
   }
 }
 
-export function guessAdditionalAttributesFromQuery (query: VideosCommonQueryAfterSanitize): VideoFormattingJSONOptions {
+export function guessAdditionalAttributesFromQuery (query: Pick<VideosCommonQueryAfterSanitize, 'include'>): VideoFormattingJSONOptions {
   if (!query?.include) return {}
 
   return {
@@ -126,6 +126,8 @@ export function videoModelToFormattedJSON (video: MVideoFormattable, options: Vi
     userHistory: userHistory
       ? { currentTime: userHistory.currentTime }
       : undefined,
+
+    comments: video.comments,
 
     // Can be added by external plugins
     pluginData: (video as any).pluginData,
@@ -336,10 +338,9 @@ function buildAdditionalAttributes (video: MVideoFormattable, options: VideoForm
 
   if (add?.blacklistInfo === true) {
     result.blacklisted = !!video.VideoBlacklist
-    result.blacklistedReason =
-      video.VideoBlacklist
-        ? video.VideoBlacklist.reason
-        : null
+    result.blacklistedReason = video.VideoBlacklist
+      ? video.VideoBlacklist.reason
+      : null
   }
 
   if (add?.blockedOwner === true) {
