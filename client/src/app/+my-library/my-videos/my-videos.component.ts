@@ -106,6 +106,7 @@ export class MyVideosComponent extends RestTable<Video> implements OnInit, OnDes
 
   totalRecords = 0
   sort: SortMeta = { field: 'publishedAt', order: -1 }
+  rowsPerPage = 5
   pagination: RestPagination = { count: this.rowsPerPage, start: 0 }
 
   videosContainedInPlaylists: VideosExistInPlaylists = {}
@@ -123,9 +124,7 @@ export class MyVideosComponent extends RestTable<Video> implements OnInit, OnDes
     mute: false,
     liveInfo: true,
     removeFiles: false,
-    transcoding: false,
-    studio: true,
-    stats: true
+    transcoding: false
   }
 
   moreVideoActions: DropdownAction<{ video: Video }>[][] = []
