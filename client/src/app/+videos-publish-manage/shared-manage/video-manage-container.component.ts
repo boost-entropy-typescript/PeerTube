@@ -6,13 +6,14 @@ import { RouterModule } from '@angular/router'
 import { Notifier, ScreenService } from '@app/core'
 import { HeaderService } from '@app/header/header.service'
 import { Video } from '@app/shared/shared-main/video/video.model'
+import { VideoStateMessageService } from '@app/shared/shared-video/video-state-message.service'
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
-import { GlobalIconComponent } from '../../shared/shared-icons/global-icon.component'
 import { ButtonComponent } from '../../shared/shared-main/buttons/button.component'
 import { UploadProgressComponent } from '../../shared/standalone-upload/upload-progress.component'
 import { ManageErrorsComponent } from './common/manage-errors.component'
 import { VideoEdit } from './common/video-edit.model'
 import { VideoManageController } from './video-manage-controller.service'
+import { VideoManageMenuComponent } from './video-manage-menu.component'
 
 @Component({
   selector: 'my-video-manage-container',
@@ -27,7 +28,7 @@ import { VideoManageController } from './video-manage-controller.service'
     ManageErrorsComponent,
     NgbTooltipModule,
     UploadProgressComponent,
-    GlobalIconComponent
+    VideoManageMenuComponent
   ]
 })
 export class VideoManageContainerComponent implements OnInit, OnDestroy {
@@ -35,6 +36,7 @@ export class VideoManageContainerComponent implements OnInit, OnDestroy {
   private notifier = inject(Notifier)
   private headerService = inject(HeaderService)
   private screenService = inject(ScreenService)
+  private videoStateMessage = inject(VideoStateMessageService)
 
   readonly canWatch = input.required<boolean, string | boolean>({ transform: booleanAttribute })
   readonly canUpdate = input.required<boolean, string | boolean>({ transform: booleanAttribute })
@@ -63,8 +65,16 @@ export class VideoManageContainerComponent implements OnInit, OnDestroy {
     this.headerService.setSearchHidden(false)
   }
 
+  // ---------------------------------------------------------------------------
+
   hasFormErrors () {
     return this.manageController.hasFormErrors()
+  }
+
+  // ---------------------------------------------------------------------------
+
+  getStateWarning () {
+    return this.videoStateMessage.buildWarn(this.videoEdit.getVideoAttributes().state)
   }
 
   // ---------------------------------------------------------------------------
