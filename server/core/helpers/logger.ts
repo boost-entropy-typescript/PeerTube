@@ -1,12 +1,17 @@
 import { context, trace } from '@opentelemetry/api'
 import { omit } from '@peertube/peertube-core-utils'
+import { isTestOrDevInstance } from '@peertube/peertube-node-utils'
 import { stat } from 'fs/promises'
 import { join } from 'path'
 import { format as sqlFormat } from 'sql-formatter'
+import { isatty } from 'tty'
 import { createLogger, format, transports } from 'winston'
 import { FileTransportOptions } from 'winston/lib/winston/transports'
 import { CONFIG } from '../initializers/config.js'
 import { LOG_FILENAME } from '../initializers/constants.js'
+
+const consoleSupportsColor = isTestOrDevInstance() ||
+  (isatty(1) && process.env.TERM && process.env.TERM !== 'dumb')
 
 const label = CONFIG.WEBSERVER.HOSTNAME + ':' + CONFIG.WEBSERVER.PORT
 
@@ -58,12 +63,28 @@ if (CONFIG.LOG.ROTATION.ENABLED) {
 }
 
 function buildLogger (labelSuffix?: string) {
+  const formatters = [ timestampFormatter ]
+
+  if (consoleSupportsColor) formatters.push(format.colorize())
+  formatters.push(consoleLoggerFormat)
+
+  const consoleTransport = new transports.Console({
+    handleExceptions: true,
+    format: format.combine(...formatters)
+  })
+
   return createLogger({
     level: process.env.LOGGER_LEVEL ?? CONFIG.LOG.LEVEL,
     defaultMeta: {
-      get traceId () { return trace.getSpanContext(context.active())?.traceId },
-      get spanId () { return trace.getSpanContext(context.active())?.spanId },
-      get traceFlags () { return trace.getSpanContext(context.active())?.traceFlags }
+      get traceId () {
+        return trace.getSpanContext(context.active())?.traceId
+      },
+      get spanId () {
+        return trace.getSpanContext(context.active())?.spanId
+      },
+      get traceFlags () {
+        return trace.getSpanContext(context.active())?.traceFlags
+      }
     },
     format: format.combine(
       labelFormatter(labelSuffix),
@@ -71,14 +92,7 @@ function buildLogger (labelSuffix?: string) {
     ),
     transports: [
       new transports.File(fileLoggerOptions),
-      new transports.Console({
-        handleExceptions: true,
-        format: format.combine(
-          timestampFormatter,
-          format.colorize(),
-          consoleLoggerFormat
-        )
-      })
+      consoleTransport
     ],
     exitOnError: true
   })
@@ -108,7 +122,7 @@ function bunyanLogFactory (level: string) {
 }
 
 const bunyanLogger = {
-  level: () => { },
+  level: () => {},
   trace: bunyanLogFactory('debug'),
   debug: bunyanLogFactory('debug'),
   verbose: bunyanLogFactory('debug'),
@@ -153,10 +167,17 @@ async function mtimeSortFilesDesc (files: string[], basePath: string) {
 // ---------------------------------------------------------------------------
 
 export {
-
-  buildLogger, bunyanLogger, consoleLoggerFormat,
-  jsonLoggerFormat, labelFormatter, logger,
-  loggerTagsFactory, mtimeSortFilesDesc, timestampFormatter, type LoggerTags, type LoggerTagsFn
+  buildLogger,
+  bunyanLogger,
+  consoleLoggerFormat,
+  jsonLoggerFormat,
+  labelFormatter,
+  logger,
+  loggerTagsFactory,
+  mtimeSortFilesDesc,
+  timestampFormatter,
+  type LoggerTags,
+  type LoggerTagsFn
 }
 
 // ---------------------------------------------------------------------------
@@ -185,7 +206,9 @@ function removeCyclicValues () {
     if (value instanceof Error) {
       const error = {}
 
-      Object.getOwnPropertyNames(value).forEach(key => { error[key] = value[key] })
+      Object.getOwnPropertyNames(value).forEach(key => {
+        error[key] = value[key]
+      })
 
       return error
     }
