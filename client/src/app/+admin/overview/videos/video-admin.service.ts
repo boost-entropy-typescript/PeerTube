@@ -40,6 +40,16 @@ export class VideoAdminService {
   buildAdminInputFilter (): AdvancedInputFilter[] {
     return [
       {
+        title: $localize`Moderation`,
+        children: [
+          {
+            value: 'nsfw:true',
+            label: $localize`Sensitive videos`
+          }
+        ]
+      },
+
+      {
         title: $localize`Video type`,
         children: [
           {
@@ -145,6 +155,10 @@ export class VideoAdminService {
       autoTagOneOf: {
         prefix: 'autoTag:',
         multiple: true
+      },
+      nsfw: {
+        prefix: 'nsfw:',
+        isBoolean: true
       }
     })
 
