@@ -147,13 +147,9 @@
           <context context-type="linenumber">398</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="ngb.progressbar.value" datatype="html">
-        <source>
-          <x id="INTERPOLATION" equiv-text="nd so on.    *"/>
-        </source>
-        <target state="translated">
-          <x id="INTERPOLATION" equiv-text="nd so on.    *"/>
-        </target>
+      <trans-unit id="ngb.progressbar.value" datatype="html" xml:space="preserve">
+        <source><x id="INTERPOLATION" equiv-text="nd so on.    *"/> </source>
+        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="nd so on.    *"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/src/progressbar/progressbar.ts</context>
           <context context-type="linenumber">41</context>

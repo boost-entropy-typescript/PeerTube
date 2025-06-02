@@ -795,17 +795,17 @@
           <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7385834259346199883" datatype="html">
+      <trans-unit id="7385834259346199883" datatype="html" xml:space="preserve">
         <source>Video stream</source>
-        <target state="translated">Video stream</target>
+        <target state="translated">Stream videa</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-video-miniature/download/video-files-download.component.html</context>
           <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5496771215105419189" datatype="html">
+      <trans-unit id="5496771215105419189" datatype="html" xml:space="preserve">
         <source>Audio stream</source>
-        <target state="translated">Audio stream</target>
+        <target state="translated">Stream zvuku</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-video-miniature/download/video-files-download.component.html</context>
           <context context-type="linenumber">80</context>
@@ -1740,23 +1740,35 @@
       <trans-unit id="6334544592573094529" datatype="html" xml:space="preserve">
         <source>Transcoding job created for "<x id="PH" equiv-text="video.name"/>".</source>
         <target state="translated">Úloha překódování vytvořena pro "<x id="PH" equiv-text="video.name"/>".</target>
-
-      <context-group purpose="location"><context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context><context context-type="linenumber">385</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context>
+          <context context-type="linenumber">385</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="6323039311444223540" datatype="html" xml:space="preserve">
         <source>Transcription job created for "<x id="PH" equiv-text="video.name"/>".</source>
         <target state="translated">Úloha přepisu vytvořená pro "<x id="PH" equiv-text="video.name"/>".</target>
-
-      <context-group purpose="location"><context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context><context context-type="linenumber">397</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context>
+          <context context-type="linenumber">397</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="8890980168396748709" datatype="html" xml:space="preserve">
         <source>This video is already being transcribed.</source>
         <target state="translated">Toto video je již přepsáno.</target>
-
-      <context-group purpose="location"><context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context><context context-type="linenumber">398</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context>
+          <context context-type="linenumber">398</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="6621122803162844810" datatype="html" xml:space="preserve">
         <source>This video already has captions.</source>
         <target state="translated">Toto video již obsahuje titulky.</target>
-
-      <context-group purpose="location"><context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context><context context-type="linenumber">399</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context>
+          <context context-type="linenumber">399</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="2949829240129672512">
         <source>Using a syndication feed</source>
         <target>Pomocí syndikačního proudu</target>
@@ -2794,9 +2806,9 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3772536059362630823" datatype="html">
+      <trans-unit id="3772536059362630823" datatype="html" xml:space="preserve">
         <source>Create a channel to <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>publish videos<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
-        <target state="new">Create a channel to <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>publish videos<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></target>
+        <target state="translated">Pro <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>zveřejňování videí<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> si vytvořte kanál</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+signup/+register/steps/register-step-about.component.html</context>
           <context context-type="linenumber">24,26</context>
@@ -4812,13 +4824,19 @@ The link will expire within 1 hour.</source>
       <trans-unit id="3717862857627538007" datatype="html" xml:space="preserve">
         <source>Delete your video</source>
         <target state="translated">Smazat vaše video</target>
-
-      <context-group purpose="location"><context context-type="sourcefile">src/app/+videos-publish-manage/shared-manage/main-info/video-main-info.component.html</context><context context-type="linenumber">174</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/+videos-publish-manage/shared-manage/main-info/video-main-info.component.html</context>
+          <context context-type="linenumber">174</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="2364932147716378858" datatype="html" xml:space="preserve">
         <source>Warning: this is a definitive action!</source>
         <target state="translated">Varování: jedná se o definitivní akci!</target>
-
-      <context-group purpose="location"><context context-type="sourcefile">src/app/+videos-publish-manage/shared-manage/main-info/video-main-info.component.html</context><context context-type="linenumber">175</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/+videos-publish-manage/shared-manage/main-info/video-main-info.component.html</context>
+          <context context-type="linenumber">175</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="4525569337497033381" datatype="html">
         <source>See the subtitle file</source>
         <target state="translated">Viz soubor s titulky</target>
@@ -8918,7 +8936,7 @@ The link will expire within 1 hour.</source>
       </trans-unit>
       <trans-unit id="3204334247986678419" datatype="html" xml:space="preserve">
         <source>Runners</source>
-        <target state="translated">Runners</target>
+        <target state="translated">Runnery</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/admin-settings.component.ts</context>
           <context context-type="linenumber">109</context>
@@ -11166,7 +11184,7 @@ The link will expire within 1 hour.</source>
       </trans-unit>
       <trans-unit id="2798443406255719006" datatype="html" xml:space="preserve">
         <source>Max video FPS</source>
-        <target state="translated">Max video FPS</target>
+        <target state="translated">Max. FPS videa</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/config/edit-custom-config/edit-vod-transcoding.component.html</context>
           <context context-type="linenumber">145,147</context>
@@ -17769,8 +17787,11 @@ The link will expire within 1 hour.</source>
       <trans-unit id="7435577479985600212" datatype="html" xml:space="preserve">
         <source><x id="PH" equiv-text="this.video().name"/> will be duplicated by your platform.</source>
         <target state="translated"><x id="PH" equiv-text="this.video().name"/> bude duplikován vaší platformou.</target>
-
-      <context-group purpose="location"><context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context><context context-type="linenumber">327</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context>
+          <context context-type="linenumber">327</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="6389312883797462351" datatype="html">
         <source>Studio</source>
         <target state="translated">Studio</target>
@@ -17914,10 +17935,19 @@ The link will expire within 1 hour.</source>
       <trans-unit id="3897348120591552265" datatype="html" xml:space="preserve">
         <source>Manage</source>
         <target state="translated">Spravovat</target>
-
-
-
-      <context-group purpose="location"><context context-type="sourcefile">src/app/+my-library/my-videos/my-videos.component.html</context><context context-type="linenumber">185</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/+video-list/video-user-subscriptions.component.ts</context><context context-type="linenumber">32</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context><context context-type="linenumber">476</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/+my-library/my-videos/my-videos.component.html</context>
+          <context context-type="linenumber">185</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/+video-list/video-user-subscriptions.component.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context>
+          <context context-type="linenumber">476</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="8054671906242440075" datatype="html" xml:space="preserve">
         <source>No video found matching current filters.</source>
         <target state="translated">Nebylo nalezeno žádné video vyhovující aktuálním filtrům.</target>
@@ -18715,9 +18745,9 @@ Ensure you have correctly configured PeerTube (config/ directory), in particular
           <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2222108104954671970" datatype="html">
+      <trans-unit id="2222108104954671970" datatype="html" xml:space="preserve">
         <source><x id="PH"/> sec </source>
-        <target state="translated"><x id="PH"/> sec </target>
+        <target state="translated"><x id="PH"/> sek </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-main/date/time-duration-formatter.pipe.ts</context>
           <context context-type="linenumber">31</context>
@@ -19507,9 +19537,9 @@ Ensure you have correctly configured PeerTube (config/ directory), in particular
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6162939840135537478" datatype="html">
+      <trans-unit id="6162939840135537478" datatype="html" xml:space="preserve">
         <source>Moderators of <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/> will have to approve your registration request once you have completed and submitted the form.</source>
-        <target state="new">Moderators of <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/> will have to approve your registration request once you have completed and submitted the form.</target>
+        <target state="translated">Po dokončení a odeslání formuláře budou vaši registraci muset schválit moderátoři serveru <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/>.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+signup/+register/steps/register-step-about.component.html</context>
           <context context-type="linenumber">5,7</context>
@@ -19523,33 +19553,33 @@ Ensure you have correctly configured PeerTube (config/ directory), in particular
           <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4088688473818160303" datatype="html">
+      <trans-unit id="4088688473818160303" datatype="html" xml:space="preserve">
         <source>Why create an account?</source>
-        <target state="new">Why create an account?</target>
+        <target state="translated">Proč si vytvořit účet?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+signup/+register/steps/register-step-about.component.html</context>
           <context context-type="linenumber">12,14</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4362414027529971937" datatype="html">
-        <source> As you probably noticed: creating an account is not necessary to watch videos on <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/>. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> However, creating an account on <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/> will allow you to: </source>
-        <target state="new"> As you probably noticed: creating an account is not necessary to watch videos on <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/>. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> However, creating an account on <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/> will allow you to: </target>
+      <trans-unit id="4362414027529971937" datatype="html" xml:space="preserve">
+        <source>As you probably noticed: creating an account is not necessary to watch videos on <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/>. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> However, creating an account on <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/> will allow you to: </source>
+        <target state="translated">Možná jste si všimli, že ke sledování videí na serveru <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/> nepotřebujete účet. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Vytvoření účtu na serveru <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/> vám nicméně umožní: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+signup/+register/steps/register-step-about.component.html</context>
           <context context-type="linenumber">15,21</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7876769433154649513" datatype="html">
+      <trans-unit id="7876769433154649513" datatype="html" xml:space="preserve">
         <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Comment<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> on videos</source>
-        <target state="new"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Comment<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> on videos</target>
+        <target state="translated"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Komentování<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> u videí</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+signup/+register/steps/register-step-about.component.html</context>
           <context context-type="linenumber">21,22</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7572002493627985078" datatype="html">
+      <trans-unit id="7572002493627985078" datatype="html" xml:space="preserve">
         <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Subscribe<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> to channels and receive notifications of new videos</source>
-        <target state="new"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Subscribe<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> to channels and receive notifications of new videos</target>
+        <target state="translated"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Odebírání<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> kanálů a získávání oznámení o nových videích</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+signup/+register/steps/register-step-about.component.html</context>
           <context context-type="linenumber">22,23</context>
@@ -22336,18 +22366,27 @@ Ensure you have correctly configured PeerTube (config/ directory), in particular
       <trans-unit id="3285186377513578054" datatype="html" xml:space="preserve">
         <source>This option is visible only to you</source>
         <target state="translated">Tato možnost je viditelná pouze pro vás</target>
-
-      <context-group purpose="location"><context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context><context context-type="linenumber">442</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context>
+          <context context-type="linenumber">442</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="5568422920123461404" datatype="html" xml:space="preserve">
         <source>Show transcription</source>
         <target state="translated">Zobrazit přepis</target>
-
-      <context-group purpose="location"><context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context><context context-type="linenumber">446</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context>
+          <context context-type="linenumber">446</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="1984753051925435175" datatype="html" xml:space="preserve">
         <source>Hide transcription</source>
         <target state="translated">Skrýt přepis</target>
-
-      <context-group purpose="location"><context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context><context context-type="linenumber">458</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context>
+          <context context-type="linenumber">458</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="4021752662928002901" datatype="html">
         <source>Update</source>
         <target state="translated">Aktualizovat</target>
@@ -22435,9 +22474,15 @@ Ensure you have correctly configured PeerTube (config/ directory), in particular
       <trans-unit id="7977192130714582918" datatype="html" xml:space="preserve">
         <source>Generate caption</source>
         <target state="translated">Vygenerovat titulek</target>
-
-
-      <context-group purpose="location"><context context-type="sourcefile">src/app/+admin/overview/videos/video-list.component.ts</context><context context-type="linenumber">172</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context><context context-type="linenumber">540</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/+admin/overview/videos/video-list.component.ts</context>
+          <context context-type="linenumber">172</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context>
+          <context context-type="linenumber">540</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="8315587636588243636" datatype="html">
         <source>Are you sure you want to delete this <x id="PH" equiv-text="file.resolution.label"/> file?</source>
         <target state="translated">Určitě chcete odstranit tento <x id="PH" equiv-text="file.resolution.label"/> soubor?</target>
@@ -22521,8 +22566,11 @@ Ensure you have correctly configured PeerTube (config/ directory), in particular
       <trans-unit id="5571441159247782289" datatype="html" xml:space="preserve">
         <source>Unmute account</source>
         <target state="translated">Ukončit ztlumení účtu</target>
-
-      <context-group purpose="location"><context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context><context context-type="linenumber">554</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/shared-video-miniature/video-actions-dropdown.component.ts</context>
+          <context context-type="linenumber">554</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="6941992199451163843" datatype="html" xml:space="preserve">
         <source>Videos on <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{ instanceName }}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
         <target state="translated">Videa na <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{ instanceName }}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></target>

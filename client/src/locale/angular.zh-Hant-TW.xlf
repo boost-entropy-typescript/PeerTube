@@ -2806,9 +2806,9 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3772536059362630823" datatype="html">
+      <trans-unit id="3772536059362630823" datatype="html" xml:space="preserve">
         <source>Create a channel to <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>publish videos<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
-        <target state="new">Create a channel to <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>publish videos<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></target>
+        <target state="translated">建立頻道以<x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>發佈影片<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+signup/+register/steps/register-step-about.component.html</context>
           <context context-type="linenumber">24,26</context>
@@ -5435,9 +5435,9 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5326147529562345662" datatype="html">
+      <trans-unit id="5326147529562345662" datatype="html" xml:space="preserve">
         <source>Close modal window</source>
-        <target state="new">Close modal window</target>
+        <target state="translated">關閉互動視窗</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+videos-publish-manage/shared-manage/captions/video-caption-edit-modal.component.ts</context>
           <context context-type="linenumber">117</context>
@@ -5828,9 +5828,9 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3327538490069601336" datatype="html">
+      <trans-unit id="3327538490069601336" datatype="html" xml:space="preserve">
         <source>Cannot create live because this platform has too many created lives</source>
-        <target state="new">Cannot create live because this platform has too many created lives</target>
+        <target state="translated">因為此平台已建立太多直播，因此無法建立直播</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+videos-publish-manage/+video-publish/live/video-go-live.component.ts</context>
           <context context-type="linenumber">125</context>
@@ -17073,17 +17073,17 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6784127216978878229" datatype="html">
+      <trans-unit id="6784127216978878229" datatype="html" xml:space="preserve">
         <source>Override sensitive content policy for certain videos</source>
-        <target state="new">Override sensitive content policy for certain videos</target>
+        <target state="translated">覆寫某些影片的敏感內容政策</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-user-settings/user-video-settings.component.html</context>
           <context context-type="linenumber">18,20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8679065902183523301" datatype="html">
+      <trans-unit id="8679065902183523301" datatype="html" xml:space="preserve">
         <source>These subjective criteria may be optionally applied to certain videos. The classification of some videos may differ from your personal judgment.</source>
-        <target state="new"> These subjective criteria may be optionally applied to certain videos. The classification of some videos may differ from your personal judgment. </target>
+        <target state="translated">這些主觀標準可選擇性地套用於某些影片。某些影片的分類可能與您個人的判斷不同。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-user-settings/user-video-settings.component.html</context>
           <context context-type="linenumber">21,22</context>
@@ -19576,9 +19576,9 @@ Ensure you have correctly configured PeerTube (config/ directory), in particular
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6162939840135537478" datatype="html">
+      <trans-unit id="6162939840135537478" datatype="html" xml:space="preserve">
         <source>Moderators of <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/> will have to approve your registration request once you have completed and submitted the form.</source>
-        <target state="new">Moderators of <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/> will have to approve your registration request once you have completed and submitted the form.</target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{ instanceName }}"/> 的管理員將會在您完成並遞交表單後核准您的註冊請求。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+signup/+register/steps/register-step-about.component.html</context>
           <context context-type="linenumber">5,7</context>
@@ -19592,33 +19592,33 @@ Ensure you have correctly configured PeerTube (config/ directory), in particular
           <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4088688473818160303" datatype="html">
+      <trans-unit id="4088688473818160303" datatype="html" xml:space="preserve">
         <source>Why create an account?</source>
-        <target state="new">Why create an account?</target>
+        <target state="translated">為什麼要建立帳號？</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+signup/+register/steps/register-step-about.component.html</context>
           <context context-type="linenumber">12,14</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4362414027529971937" datatype="html">
+      <trans-unit id="4362414027529971937" datatype="html" xml:space="preserve">
         <source>As you probably noticed: creating an account is not necessary to watch videos on <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/>. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> However, creating an account on <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/> will allow you to: </source>
-        <target state="new"> As you probably noticed: creating an account is not necessary to watch videos on <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/>. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> However, creating an account on <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/> will allow you to: </target>
+        <target state="translated">您可能已經注意到：如果只是要在 <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/> 上觀賞影片的話，並不需要建立帳號。<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> 不過，在 <x id="INTERPOLATION" equiv-text="{{ instanceName }}"/> 上建立帳號讓您可以： </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+signup/+register/steps/register-step-about.component.html</context>
           <context context-type="linenumber">15,21</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7876769433154649513" datatype="html">
+      <trans-unit id="7876769433154649513" datatype="html" xml:space="preserve">
         <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Comment<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> on videos</source>
-        <target state="new"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Comment<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> on videos</target>
+        <target state="translated">影片上的<x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>留言<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+signup/+register/steps/register-step-about.component.html</context>
           <context context-type="linenumber">21,22</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7572002493627985078" datatype="html">
+      <trans-unit id="7572002493627985078" datatype="html" xml:space="preserve">
         <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Subscribe<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> to channels and receive notifications of new videos</source>
-        <target state="new"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Subscribe<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> to channels and receive notifications of new videos</target>
+        <target state="translated"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>訂閱<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/>頻道並接收新影片的通知</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+signup/+register/steps/register-step-about.component.html</context>
           <context context-type="linenumber">22,23</context>
