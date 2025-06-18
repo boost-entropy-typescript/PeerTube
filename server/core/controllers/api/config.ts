@@ -272,7 +272,20 @@ function customConfig (): CustomConfig {
       }
     },
     theme: {
-      default: CONFIG.THEME.DEFAULT
+      default: CONFIG.THEME.DEFAULT,
+
+      customization: {
+        primaryColor: CONFIG.THEME.CUSTOMIZATION.PRIMARY_COLOR,
+        foregroundColor: CONFIG.THEME.CUSTOMIZATION.FOREGROUND_COLOR,
+        backgroundColor: CONFIG.THEME.CUSTOMIZATION.BACKGROUND_COLOR,
+        backgroundSecondaryColor: CONFIG.THEME.CUSTOMIZATION.BACKGROUND_SECONDARY_COLOR,
+        menuForegroundColor: CONFIG.THEME.CUSTOMIZATION.MENU_FOREGROUND_COLOR,
+        menuBackgroundColor: CONFIG.THEME.CUSTOMIZATION.MENU_BACKGROUND_COLOR,
+        menuBorderRadius: CONFIG.THEME.CUSTOMIZATION.MENU_BORDER_RADIUS,
+        headerForegroundColor: CONFIG.THEME.CUSTOMIZATION.HEADER_FOREGROUND_COLOR,
+        headerBackgroundColor: CONFIG.THEME.CUSTOMIZATION.HEADER_BACKGROUND_COLOR,
+        inputBorderRadius: CONFIG.THEME.CUSTOMIZATION.INPUT_BORDER_RADIUS
+      }
     },
     services: {
       twitter: {
@@ -461,6 +474,9 @@ function customConfig (): CustomConfig {
       instance: {
         enabled: CONFIG.FOLLOWERS.INSTANCE.ENABLED,
         manualApproval: CONFIG.FOLLOWERS.INSTANCE.MANUAL_APPROVAL
+      },
+      channels: {
+        enabled: CONFIG.FOLLOWERS.CHANNELS.ENABLED
       }
     },
     followings: {
@@ -495,6 +511,35 @@ function customConfig (): CustomConfig {
     },
     storyboards: {
       enabled: CONFIG.STORYBOARDS.ENABLED
+    },
+    defaults: {
+      publish: {
+        downloadEnabled: CONFIG.DEFAULTS.PUBLISH.DOWNLOAD_ENABLED,
+        commentsPolicy: CONFIG.DEFAULTS.PUBLISH.COMMENTS_POLICY,
+        privacy: CONFIG.DEFAULTS.PUBLISH.PRIVACY,
+        licence: CONFIG.DEFAULTS.PUBLISH.LICENCE
+      },
+      p2p: {
+        webapp: {
+          enabled: CONFIG.DEFAULTS.P2P.WEBAPP.ENABLED
+        },
+
+        embed: {
+          enabled: CONFIG.DEFAULTS.P2P.EMBED.ENABLED
+        }
+      },
+      player: {
+        autoPlay: CONFIG.DEFAULTS.PLAYER.AUTO_PLAY
+      }
+    },
+
+    email: {
+      body: {
+        signature: CONFIG.EMAIL.BODY.SIGNATURE
+      },
+      subject: {
+        prefix: CONFIG.EMAIL.SUBJECT.PREFIX
+      }
     }
   }
 }
@@ -504,12 +549,13 @@ function convertCustomConfigBody (body: CustomConfig) {
     // Transcoding resolutions exception
     if (/^\d{3,4}p$/.exec(k)) return k
     if (k === '0p') return k
+    if (k === 'p2p') return k
 
     return snakeCase(k)
   }
 
   function valueConverter (v: any) {
-    if (validator.default.isNumeric(v + '')) return parseInt('' + v, 10)
+    if (validator.isNumeric(v + '')) return parseInt('' + v, 10)
 
     return v
   }

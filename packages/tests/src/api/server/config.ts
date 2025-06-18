@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions,@typescript-eslint/require-await */
 
-import { ActorImageType, CustomConfig, HttpStatusCode } from '@peertube/peertube-models'
+import { ActorImageType, CustomConfig, HttpStatusCode, VideoCommentPolicy, VideoPrivacy } from '@peertube/peertube-models'
 import {
   PeerTubeServer,
   cleanupTests,
@@ -131,6 +131,7 @@ function checkInitialConfig (server: PeerTubeServer, data: CustomConfig) {
 
   expect(data.followers.instance.enabled).to.be.true
   expect(data.followers.instance.manualApproval).to.be.false
+  expect(data.followers.channels.enabled).to.be.true
 
   expect(data.followings.instance.autoFollowBack.enabled).to.be.false
   expect(data.followings.instance.autoFollowIndex.enabled).to.be.false
@@ -146,6 +147,17 @@ function checkInitialConfig (server: PeerTubeServer, data: CustomConfig) {
   expect(data.export.users.enabled).to.be.true
   expect(data.export.users.exportExpiration).to.equal(1000 * 3600 * 48)
   expect(data.export.users.maxUserVideoQuota).to.equal(10737418240)
+
+  expect(data.defaults.publish.commentsPolicy).to.equal(VideoCommentPolicy.ENABLED)
+  expect(data.defaults.publish.downloadEnabled).to.be.true
+  expect(data.defaults.publish.licence).to.be.null
+  expect(data.defaults.publish.privacy).to.equal(VideoPrivacy.PUBLIC)
+  expect(data.defaults.p2p.embed.enabled).to.be.true
+  expect(data.defaults.p2p.webapp.enabled).to.be.true
+  expect(data.defaults.player.autoPlay).to.be.true
+
+  expect(data.email.body.signature).to.equal('')
+  expect(data.email.subject.prefix).to.equal('[{{instanceName}}] ')
 }
 
 function buildNewCustomConfig (server: PeerTubeServer): CustomConfig {
@@ -188,7 +200,19 @@ function buildNewCustomConfig (server: PeerTubeServer): CustomConfig {
       }
     },
     theme: {
-      default: 'default'
+      default: 'default',
+      customization: {
+        primaryColor: '#001',
+        foregroundColor: '#002',
+        backgroundColor: '#003',
+        backgroundSecondaryColor: '#004',
+        menuForegroundColor: '#005',
+        menuBackgroundColor: '#006',
+        menuBorderRadius: '1px',
+        headerForegroundColor: '#008',
+        headerBackgroundColor: '#009',
+        inputBorderRadius: '2px'
+      }
     },
     services: {
       twitter: {
@@ -370,6 +394,9 @@ function buildNewCustomConfig (server: PeerTubeServer): CustomConfig {
       instance: {
         enabled: false,
         manualApproval: true
+      },
+      channels: {
+        enabled: false
       }
     },
     followings: {
@@ -409,6 +436,33 @@ function buildNewCustomConfig (server: PeerTubeServer): CustomConfig {
         enabled: false,
         exportExpiration: 43,
         maxUserVideoQuota: 42
+      }
+    },
+    defaults: {
+      publish: {
+        commentsPolicy: VideoCommentPolicy.REQUIRES_APPROVAL,
+        downloadEnabled: false,
+        licence: 2,
+        privacy: VideoPrivacy.INTERNAL
+      },
+      p2p: {
+        embed: {
+          enabled: false
+        },
+        webapp: {
+          enabled: true
+        }
+      },
+      player: {
+        autoPlay: false
+      }
+    },
+    email: {
+      body: {
+        signature: 'my signature'
+      },
+      subject: {
+        prefix: 'my prefix'
       }
     }
   }

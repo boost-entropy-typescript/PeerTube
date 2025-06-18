@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ServerService } from '@app/core'
 import { BuildFormArgument } from '@app/shared/form-validators/form-validator.model'
-import { FormReactiveErrors, FormReactiveService, FormReactiveValidationMessages } from '@app/shared/shared-forms/form-reactive.service'
+import { FormReactiveErrors, FormReactiveService, FormReactiveMessages } from '@app/shared/shared-forms/form-reactive.service'
 import { AlertComponent } from '@app/shared/shared-main/common/alert.component'
 import { VideoService } from '@app/shared/shared-main/video/video.service'
 import {
@@ -16,7 +16,6 @@ import {
   VideoState
 } from '@peertube/peertube-models'
 import debug from 'debug'
-import { CalendarModule } from 'primeng/calendar'
 import { Subscription } from 'rxjs'
 import { SelectOptionsItem } from 'src/types/select-options-item.model'
 import { InputTextComponent } from '../../../shared/shared-forms/input-text.component'
@@ -53,7 +52,6 @@ type Form = {
     PeerTubeTemplateDirective,
     SelectOptionsComponent,
     InputTextComponent,
-    CalendarModule,
     PeertubeCheckboxComponent,
     LiveDocumentationLinkComponent,
     AlertComponent,
@@ -70,7 +68,7 @@ export class VideoLiveSettingsComponent implements OnInit, OnDestroy {
 
   form: FormGroup<Form>
   formErrors: FormReactiveErrors = {}
-  validationMessages: FormReactiveValidationMessages = {}
+  validationMessages: FormReactiveMessages = {}
 
   videoEdit: VideoEdit
 

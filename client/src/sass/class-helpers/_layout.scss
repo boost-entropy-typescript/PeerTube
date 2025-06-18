@@ -1,6 +1,6 @@
-@use 'sass:color';
-@use '_variables' as *;
-@use '_mixins' as *;
+@use "sass:color";
+@use "_variables" as *;
+@use "_mixins" as *;
 
 .pt-two-cols {
   @include make-row();

@@ -65,14 +65,6 @@ const CONFIG = {
     CA_FILE: config.get<string>('smtp.ca_file'),
     FROM_ADDRESS: config.get<string>('smtp.from_address')
   },
-  EMAIL: {
-    BODY: {
-      SIGNATURE: config.get<string>('email.body.signature')
-    },
-    SUBJECT: {
-      PREFIX: config.get<string>('email.subject.prefix') + ' '
-    }
-  },
 
   NSFW_FLAGS_SETTINGS: {
     ENABLED: config.get<boolean>('nsfw_flags_settings.enabled')
@@ -138,17 +130,29 @@ const CONFIG = {
 
   DEFAULTS: {
     PUBLISH: {
-      DOWNLOAD_ENABLED: config.get<boolean>('defaults.publish.download_enabled'),
-      COMMENTS_POLICY: config.get<VideoCommentPolicyType>('defaults.publish.comments_policy'),
-      PRIVACY: config.get<VideoPrivacyType>('defaults.publish.privacy'),
-      LICENCE: config.get<number>('defaults.publish.licence')
+      get DOWNLOAD_ENABLED () {
+        return config.get<boolean>('defaults.publish.download_enabled')
+      },
+      get COMMENTS_POLICY () {
+        return config.get<VideoCommentPolicyType>('defaults.publish.comments_policy')
+      },
+      get PRIVACY () {
+        return config.get<VideoPrivacyType>('defaults.publish.privacy')
+      },
+      get LICENCE () {
+        return config.get<number>('defaults.publish.licence')
+      }
     },
     P2P: {
       WEBAPP: {
-        ENABLED: config.get<boolean>('defaults.p2p.webapp.enabled')
+        get ENABLED () {
+          return config.get<boolean>('defaults.p2p.webapp.enabled')
+        }
       },
       EMBED: {
-        ENABLED: config.get<boolean>('defaults.p2p.embed.enabled')
+        get ENABLED () {
+          return config.get<boolean>('defaults.p2p.embed.enabled')
+        }
       }
     },
     PLAYER: {
@@ -970,6 +974,11 @@ const CONFIG = {
       get MANUAL_APPROVAL () {
         return config.get<boolean>('followers.instance.manual_approval')
       }
+    },
+    CHANNELS: {
+      get ENABLED () {
+        return config.get<boolean>('followers.channels.enabled')
+      }
     }
   },
   FOLLOWINGS: {
@@ -992,6 +1001,39 @@ const CONFIG = {
   THEME: {
     get DEFAULT () {
       return config.get<string>('theme.default')
+    },
+
+    CUSTOMIZATION: {
+      get PRIMARY_COLOR () {
+        return config.get<string>('theme.customization.primary_color')
+      },
+      get FOREGROUND_COLOR () {
+        return config.get<string>('theme.customization.foreground_color')
+      },
+      get BACKGROUND_COLOR () {
+        return config.get<string>('theme.customization.background_color')
+      },
+      get BACKGROUND_SECONDARY_COLOR () {
+        return config.get<string>('theme.customization.background_secondary_color')
+      },
+      get MENU_FOREGROUND_COLOR () {
+        return config.get<string>('theme.customization.menu_foreground_color')
+      },
+      get MENU_BACKGROUND_COLOR () {
+        return config.get<string>('theme.customization.menu_background_color')
+      },
+      get MENU_BORDER_RADIUS () {
+        return config.get<string>('theme.customization.menu_border_radius')
+      },
+      get HEADER_BACKGROUND_COLOR () {
+        return config.get<string>('theme.customization.header_background_color')
+      },
+      get HEADER_FOREGROUND_COLOR () {
+        return config.get<string>('theme.customization.header_foreground_color')
+      },
+      get INPUT_BORDER_RADIUS () {
+        return config.get<string>('theme.customization.input_border_radius')
+      }
     }
   },
   BROADCAST_MESSAGE: {
@@ -1035,6 +1077,18 @@ const CONFIG = {
   STORYBOARDS: {
     get ENABLED () {
       return config.get<boolean>('storyboards.enabled')
+    }
+  },
+  EMAIL: {
+    BODY: {
+      get SIGNATURE () {
+        return config.get<string>('email.body.signature')
+      }
+    },
+    SUBJECT: {
+      get PREFIX () {
+        return config.get<string>('email.subject.prefix')
+      }
     }
   }
 }
