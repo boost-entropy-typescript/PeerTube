@@ -1,7 +1,3 @@
-import bytes from 'bytes'
-import { IConfig } from 'config'
-import { createRequire } from 'module'
-import { dirname, join } from 'path'
 import {
   BroadcastMessageLevel,
   NSFWPolicyType,
@@ -10,10 +6,14 @@ import {
   VideoRedundancyConfigFilter,
   VideosRedundancyStrategy
 } from '@peertube/peertube-models'
-import { decacheModule } from '@server/helpers/decache.js'
 import { buildPath, root } from '@peertube/peertube-node-utils'
-import { parseBytes, parseDurationToMs } from '../helpers/core-utils.js'
 import { TranscriptionEngineName, WhisperBuiltinModelName } from '@peertube/peertube-transcription'
+import { decacheModule } from '@server/helpers/decache.js'
+import bytes from 'bytes'
+import { IConfig } from 'config'
+import { createRequire } from 'module'
+import { dirname, join } from 'path'
+import { parseBytes, parseDurationToMs } from '../helpers/core-utils.js'
 
 const require = createRequire(import.meta.url)
 let config: IConfig = require('config')
@@ -75,6 +75,11 @@ const CONFIG = {
   },
 
   CLIENT: {
+    HEADER: {
+      get HIDE_INSTANCE_NAME () {
+        return config.get<boolean>('client.header.hide_instance_name')
+      }
+    },
     VIDEOS: {
       MINIATURE: {
         get PREFER_AUTHOR_DISPLAY_NAME () {
@@ -180,7 +185,8 @@ const CONFIG = {
     CACHE_DIR: buildPath(config.get<string>('storage.cache')),
     PLUGINS_DIR: buildPath(config.get<string>('storage.plugins')),
     CLIENT_OVERRIDES_DIR: buildPath(config.get<string>('storage.client_overrides')),
-    WELL_KNOWN_DIR: buildPath(config.get<string>('storage.well_known'))
+    WELL_KNOWN_DIR: buildPath(config.get<string>('storage.well_known')),
+    UPLOADS_DIR: buildPath(config.get<string>('storage.uploads'))
   },
   STATIC_FILES: {
     PRIVATE_FILES_REQUIRE_AUTH: config.get<boolean>('static_files.private_files_require_auth')
@@ -1090,6 +1096,11 @@ const CONFIG = {
         return config.get<string>('email.subject.prefix')
       }
     }
+  },
+  VIDEO_COMMENTS: {
+    get ACCEPT_REMOTE_COMMENTS () {
+      return config.get<boolean>('video_comments.accept_remote_comments')
+    }
   }
 }
 
@@ -1125,8 +1136,8 @@ export {
   CONFIG,
   getConfigModule,
   getLocalConfigFilePath,
-  registerConfigChangedHandler,
-  isEmailEnabled
+  isEmailEnabled,
+  registerConfigChangedHandler
 }
 
 // ---------------------------------------------------------------------------
