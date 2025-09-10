@@ -50,6 +50,11 @@ export interface ServerConfig {
       }
     }
 
+    browseVideos: {
+      defaultSort: string
+      defaultScope: string
+    }
+
     menu: {
       login: {
         redirectOnSingleExternalAuth: boolean
@@ -126,6 +131,7 @@ export interface ServerConfig {
       externalLink: string
       mastodonLink: string
       blueskyLink: string
+      xLink: string
     }
 
     defaultClientRoute: string
@@ -413,6 +419,9 @@ export interface ServerConfig {
 
   storyboards: {
     enabled: boolean
+    remoteRunners: {
+      enabled: boolean
+    }
   }
 
   videoTranscription: {

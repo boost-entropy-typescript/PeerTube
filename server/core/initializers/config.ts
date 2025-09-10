@@ -95,6 +95,14 @@ const CONFIG = {
         }
       }
     },
+    BROWSE_VIDEOS: {
+      get DEFAULT_SORT () {
+        return config.get<string>('client.browse_videos.default_sort')
+      },
+      get DEFAULT_SCOPE () {
+        return config.get<string>('client.browse_videos.default_scope')
+      }
+    },
     MENU: {
       LOGIN: {
         get REDIRECT_ON_SINGLE_EXTERNAL_AUTH () {
@@ -951,6 +959,9 @@ const CONFIG = {
       },
       get BLUESKY () {
         return config.get<string>('instance.social.bluesky_link')
+      },
+      get X_LINK () {
+        return config.get<string>('instance.social.x_link')
       }
     },
 
@@ -1091,6 +1102,11 @@ const CONFIG = {
   STORYBOARDS: {
     get ENABLED () {
       return config.get<boolean>('storyboards.enabled')
+    },
+    REMOTE_RUNNERS: {
+      get ENABLED () {
+        return config.get<boolean>('storyboards.remote_runners.enabled')
+      }
     }
   },
   EMAIL: {

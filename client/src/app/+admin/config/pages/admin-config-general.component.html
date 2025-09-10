@@ -322,6 +322,34 @@
 
   <div class="pt-two-cols mt-4">
     <div class="title-col">
+      <h2 i18n>BROWSE VIDEOS</h2>
+    </div>
+
+    <div class="content-col">
+      <div class="form-group" formGroupName="client">
+        <ng-container formGroupName="browseVideos">
+          <div class="form-group">
+            <label i18n for="browseVideosDefaultSort">Default sort</label>
+
+            <my-select-videos-sort inputId="browseVideosDefaultSort" formControlName="defaultSort"></my-select-videos-sort>
+
+            <div *ngIf="formErrors.client.browseVideos.defaultSort" class="form-error" role="alert">{{ formErrors.client.browseVideos.defaultSort }}</div>
+          </div>
+
+          <div class="form-group">
+            <label i18n for="browseVideosDefaultScope">Default scope</label>
+
+            <my-select-videos-scope inputId="browseVideosDefaultScope" formControlName="defaultScope"></my-select-videos-scope>
+
+            <div *ngIf="formErrors.client.browseVideos.defaultScope" class="form-error" role="alert">{{ formErrors.client.browseVideos.defaultScope }}</div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="pt-two-cols mt-4">
+    <div class="title-col">
       <h2 i18n>VIDEOS</h2>
     </div>
 
@@ -367,6 +395,20 @@
             <ng-container ngProjectAs="description">
               <span i18n>Generate storyboards of local videos using ffmpeg so users can see the video preview in the player while scrubbing the video</span>
             </ng-container>
+
+            <ng-container ngProjectAs="extra">
+              <div class="form-group" formGroupName="remoteRunners" [ngClass]="getStoryboardRunnerDisabledClass()">
+                <my-peertube-checkbox
+                  inputName="storyboardsRemoteRunnersEnabled" formControlName="enabled"
+                  i18n-labelText labelText="Enable remote runners to generate storyboards"
+                >
+                  <ng-container ngProjectAs="description">
+                    <div i18n>Use <a routerLink="/admin/settings/system/runners/runners-list">remote runners</a> to generate storyboards.</div>
+                    <div i18n>Remote runners have to register on your instance first.</div>
+                  </ng-container>
+                </my-peertube-checkbox>
+              </div>
+            </ng-container>
           </my-peertube-checkbox>
         </div>
       </ng-container>
@@ -388,10 +430,8 @@
                   i18n-labelText labelText="Enable remote runners for transcription"
                 >
                   <ng-container ngProjectAs="description">
-                    <span i18n>
-                      Use <a routerLink="/admin/settings/system/runners/runners-list">remote runners</a> to process transcription tasks.
-                      Remote runners has to register on your instance first.
-                    </span>
+                    <div i18n>Use <a routerLink="/admin/settings/system/runners/runners-list">remote runners</a> to process transcription tasks.</div>
+                    <div i18n>Remote runners have to register on your instance first.</div>
                   </ng-container>
                 </my-peertube-checkbox>
               </div>

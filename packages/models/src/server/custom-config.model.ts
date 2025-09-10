@@ -47,6 +47,7 @@ export interface CustomConfig {
       externalLink: string
       mastodonLink: string
       blueskyLink: string
+      xLink: string
     }
 
     defaultClientRoute: string
@@ -89,6 +90,11 @@ export interface CustomConfig {
       miniature: {
         preferAuthorDisplayName: boolean
       }
+    }
+
+    browseVideos: {
+      defaultSort: string
+      defaultScope: string
     }
 
     menu: {
@@ -340,6 +346,9 @@ export interface CustomConfig {
 
   storyboards: {
     enabled: boolean
+    remoteRunners: {
+      enabled: boolean
+    }
   }
 
   defaults: {

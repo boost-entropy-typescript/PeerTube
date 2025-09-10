@@ -3,9 +3,11 @@ import { isConfigLogoTypeValid } from '@server/helpers/custom-validators/config.
 import { isIntOrNull } from '@server/helpers/custom-validators/misc.js'
 import { isNumberArray, isStringArray } from '@server/helpers/custom-validators/search.js'
 import { isVideoCommentsPolicyValid, isVideoLicenceValid, isVideoPrivacyValid } from '@server/helpers/custom-validators/videos.js'
+import { guessLanguageFromReq } from '@server/helpers/i18n.js'
 import { CONFIG, isEmailEnabled } from '@server/initializers/config.js'
 import express from 'express'
 import { body, param } from 'express-validator'
+import { getBrowseVideosDefaultScopeError, getBrowseVideosDefaultSortError } from '../../helpers/custom-validators/browse-videos.js'
 import { isThemeNameValid } from '../../helpers/custom-validators/plugins.js'
 import { isUserNSFWPolicyValid, isUserVideoQuotaDailyValid, isUserVideoQuotaValid } from '../../helpers/custom-validators/users.js'
 import { isThemeRegistered } from '../../lib/plugins/theme-utils.js'
@@ -30,6 +32,7 @@ export const customConfigUpdateValidator = [
   body('instance.social.mastodonLink').exists(),
   body('instance.social.blueskyLink').exists(),
   body('instance.defaultLanguage').exists(),
+  body('instance.social.xLink').exists(),
 
   body('instance.isNSFW').isBoolean(),
   body('instance.languages').custom(isStringArray),
@@ -159,6 +162,7 @@ export const customConfigUpdateValidator = [
     if (!checkInvalidLiveConfig(req.body, req, res)) return
     if (!checkInvalidVideoStudioConfig(req.body, req, res)) return
     if (!checkInvalidSearchConfig(req.body, req, res)) return
+    if (!checkInvalidBrowseVideosConfig(req.body, req, res)) return
 
     return next()
   }
@@ -249,6 +253,26 @@ function checkInvalidSearchConfig (customConfig: CustomConfig, req: express.Requ
 
   if (customConfig.search.searchIndex.enabled === true && customConfig.search.remoteUri.users === false) {
     res.fail({ message: req.t('You cannot enable search index without enabling remote URI search for users.') })
+    return false
+  }
+
+  return true
+}
+
+function checkInvalidBrowseVideosConfig (customConfig: CustomConfig, req: express.Request, res: express.Response) {
+  const sortError = getBrowseVideosDefaultSortError(
+    customConfig.client.browseVideos.defaultSort,
+    customConfig.trending.videos.algorithms.enabled,
+    guessLanguageFromReq(req, res)
+  )
+  if (sortError) {
+    res.fail({ message: sortError })
+    return false
+  }
+
+  const scopeError = getBrowseVideosDefaultScopeError(customConfig.client.browseVideos.defaultScope, guessLanguageFromReq(req, res))
+  if (scopeError) {
+    res.fail({ message: scopeError })
     return false
   }
 

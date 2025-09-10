@@ -69,6 +69,10 @@ class ServerConfigManager {
             maxChunkSize: CONFIG.CLIENT.VIDEOS.RESUMABLE_UPLOAD.MAX_CHUNK_SIZE
           }
         },
+        browseVideos: {
+          defaultSort: CONFIG.CLIENT.BROWSE_VIDEOS.DEFAULT_SORT,
+          defaultScope: CONFIG.CLIENT.BROWSE_VIDEOS.DEFAULT_SCOPE
+        },
         menu: {
           login: {
             redirectOnSingleExternalAuth: CONFIG.CLIENT.MENU.LOGIN.REDIRECT_ON_SINGLE_EXTERNAL_AUTH
@@ -137,6 +141,7 @@ class ServerConfigManager {
         social: {
           blueskyLink: CONFIG.INSTANCE.SOCIAL.BLUESKY,
           mastodonLink: CONFIG.INSTANCE.SOCIAL.MASTODON_LINK,
+          xLink: CONFIG.INSTANCE.SOCIAL.X_LINK,
           externalLink: CONFIG.INSTANCE.SOCIAL.EXTERNAL_LINK
         },
         customizations: {
@@ -380,7 +385,10 @@ class ServerConfigManager {
       },
 
       storyboards: {
-        enabled: CONFIG.STORYBOARDS.ENABLED
+        enabled: CONFIG.STORYBOARDS.ENABLED,
+        remoteRunners: {
+          enabled: CONFIG.STORYBOARDS.REMOTE_RUNNERS.ENABLED
+        }
       },
 
       webrtc: {

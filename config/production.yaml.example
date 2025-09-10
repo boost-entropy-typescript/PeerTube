@@ -340,6 +340,9 @@ security:
   powered_by_header:
     enabled: true
 
+http_server:
+  request_timeout: '5 minutes'
+
 tracker:
   # If you disable the tracker, you disable the P2P on your PeerTube instance
   enabled: true
@@ -971,6 +974,8 @@ instance:
     mastodon_link: ''
     # Bluesky
     bluesky_link: ''
+    # X
+    x_link: ''
 
   customizations:
     javascript: '' # Directly your JavaScript code (without <script> tags). Will be eval at runtime
@@ -1095,6 +1100,22 @@ client:
       # If null, it will be calculated based on network speed
       max_chunk_size: null
 
+  browse_videos:
+    # Default sort option
+    # Available options:
+    #  '-publishedAt'
+    #  '-originallyPublishedAt'
+    #  'name'
+    #  '-trending' (requires the 'most-viewed' trending videos algorithm to be enabled)
+    #  '-hot' (requires the 'hot' trending videos algorithm to be enabled)
+    #  '-likes' (requires the 'most-liked' trending videos algorithm to be enabled)
+    #  '-views'
+    default_sort: '-publishedAt'
+
+    # Default scope option
+    # Available options: 'local' or 'federated'
+    default_scope: 'federated'
+
   menu:
     login:
       # If you enable only one external auth plugin
@@ -1127,6 +1148,10 @@ client:
 storyboards:
   # Generate storyboards of local videos using ffmpeg so users can see the video preview in the player while scrubbing the video
   enabled: true
+
+  remote_runners:
+    # Use remote runners to generate storyboards instead of processing them locally
+    enabled: false
 
 # Update default PeerTube values
 # Set by API when the field is not provided and put as default value in client

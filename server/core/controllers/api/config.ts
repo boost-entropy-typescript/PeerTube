@@ -326,6 +326,7 @@ function customConfig (): CustomConfig {
       social: {
         blueskyLink: CONFIG.INSTANCE.SOCIAL.BLUESKY,
         mastodonLink: CONFIG.INSTANCE.SOCIAL.MASTODON_LINK,
+        xLink: CONFIG.INSTANCE.SOCIAL.X_LINK,
         externalLink: CONFIG.INSTANCE.SOCIAL.EXTERNAL_LINK
       },
 
@@ -365,6 +366,10 @@ function customConfig (): CustomConfig {
         miniature: {
           preferAuthorDisplayName: CONFIG.CLIENT.VIDEOS.MINIATURE.PREFER_AUTHOR_DISPLAY_NAME
         }
+      },
+      browseVideos: {
+        defaultSort: CONFIG.CLIENT.BROWSE_VIDEOS.DEFAULT_SORT,
+        defaultScope: CONFIG.CLIENT.BROWSE_VIDEOS.DEFAULT_SCOPE
       },
       menu: {
         login: {
@@ -578,7 +583,10 @@ function customConfig (): CustomConfig {
       }
     },
     storyboards: {
-      enabled: CONFIG.STORYBOARDS.ENABLED
+      enabled: CONFIG.STORYBOARDS.ENABLED,
+      remoteRunners: {
+        enabled: CONFIG.STORYBOARDS.REMOTE_RUNNERS.ENABLED
+      }
     },
     defaults: {
       publish: {
