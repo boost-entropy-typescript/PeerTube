@@ -29,12 +29,16 @@ import { SubscribeButtonComponent } from '@app/shared/shared-user-subscription/s
 import { LiveVideoService } from '@app/shared/shared-video-live/live-video.service'
 import { VideoPlaylist } from '@app/shared/shared-video-playlist/video-playlist.model'
 import { VideoPlaylistService } from '@app/shared/shared-video-playlist/video-playlist.service'
+import { PlayerSettingsService } from '@app/shared/shared-video/player-settings.service'
 import { getVideoWatchRSSFeeds, timeToInt } from '@peertube/peertube-core-utils'
 import {
   HTMLServerConfig,
   HttpStatusCode,
   LiveVideo,
   PeerTubeProblemDocument,
+  PlayerMode,
+  PlayerTheme,
+  PlayerVideoSettings,
   ServerErrorCode,
   Storyboard,
   VideoCaption,
@@ -51,8 +55,8 @@ import {
   PeerTubePlayer,
   PeerTubePlayerConstructorOptions,
   PeerTubePlayerLoadOptions,
-  PlayerMode,
-  videojs
+  videojs,
+  VideojsPlayer
 } from '@peertube/player'
 import { logger } from '@root-helpers/logger'
 import { isP2PEnabled, videoRequiresFileToken, videoRequiresUserAuth } from '@root-helpers/video'
@@ -78,6 +82,7 @@ const debugLogger = debug('peertube:watch:VideoWatchComponent')
 
 type URLOptions = {
   playerMode: PlayerMode
+  playerTheme?: PlayerTheme
 
   startTime: number | string
   stopTime: number | string
@@ -137,6 +142,7 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
   private zone = inject(NgZone)
   private videoCaptionService = inject(VideoCaptionService)
   private videoChapterService = inject(VideoChapterService)
+  private playerSettingsService = inject(PlayerSettingsService)
   private hotkeysService = inject(HotkeysService)
   private hooks = inject(HooksService)
   private pluginService = inject(PluginService)
@@ -160,6 +166,7 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
   liveVideo: LiveVideo
   videoPassword: string
   storyboards: Storyboard[] = []
+  playerSettings: PlayerVideoSettings
 
   playlistPosition: number
   playlist: VideoPlaylist = null
@@ -371,9 +378,10 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
       this.videoCaptionService.listCaptions(videoId, videoPassword),
       this.videoChapterService.getChapters({ videoId, videoPassword }),
       this.videoService.getStoryboards(videoId, videoPassword),
+      this.playerSettingsService.getVideoSettings({ videoId, videoPassword, raw: false }),
       this.userService.getAnonymousOrLoggedUser()
     ]).subscribe({
-      next: ([ { video, live, videoFileToken }, captionsResult, chaptersResult, storyboards, loggedInOrAnonymousUser ]) => {
+      next: ([ { video, live, videoFileToken }, captionsResult, chaptersResult, storyboards, playerSettings, loggedInOrAnonymousUser ]) => {
         this.onVideoFetched({
           video,
           live,
@@ -382,6 +390,7 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
           storyboards,
           videoFileToken,
           videoPassword,
+          playerSettings,
           loggedInOrAnonymousUser,
           forceAutoplay
         }).catch(err => {
@@ -488,6 +497,7 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
     storyboards: Storyboard[]
     videoFileToken: string
     videoPassword: string
+    playerSettings: PlayerVideoSettings
 
     loggedInOrAnonymousUser: User
     forceAutoplay: boolean
@@ -500,6 +510,7 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
       storyboards,
       videoFileToken,
       videoPassword,
+      playerSettings,
       loggedInOrAnonymousUser,
       forceAutoplay
     } = options
@@ -513,6 +524,7 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
     this.videoFileToken = videoFileToken
     this.videoPassword = videoPassword
     this.storyboards = storyboards
+    this.playerSettings = playerSettings
 
     // Re init attributes
     this.remoteServerDown = false
@@ -576,6 +588,7 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
       liveVideo: this.liveVideo,
       videoFileToken: this.videoFileToken,
       videoPassword: this.videoPassword,
+      playerSettings: this.playerSettings,
       urlOptions: this.getUrlOptions(),
       loggedInOrAnonymousUser,
       forceAutoplay,
@@ -724,6 +737,7 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
     videoCaptions: VideoCaption[]
     videoChapters: VideoChapter[]
     storyboards: Storyboard[]
+    playerSettings: PlayerVideoSettings
 
     videoFileToken: string
     videoPassword: string
@@ -744,7 +758,8 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
       videoPassword,
       urlOptions,
       loggedInOrAnonymousUser,
-      forceAutoplay
+      forceAutoplay,
+      playerSettings
     } = options
 
     let mode: PlayerMode
@@ -813,6 +828,7 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
 
     return {
       mode,
+      theme: urlOptions.playerTheme || playerSettings.theme as PlayerTheme,
 
       autoplay: this.isAutoplay(video, loggedInOrAnonymousUser),
       forceAutoplay,
@@ -885,7 +901,7 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
           return loggedInOrAnonymousUser?.autoPlayNextVideo
         },
 
-        isSuspended: (player: videojs.Player) => {
+        isSuspended: (player: VideojsPlayer) => {
           return !isXPercentInViewport(player.el() as HTMLElement, 80)
         },
 
@@ -1031,6 +1047,7 @@ export class VideoWatchComponent implements OnInit, OnDestroy {
       subtitle: queryParams.subtitle,
 
       playerMode: queryParams.mode,
+      playerTheme: queryParams.playerTheme,
       playbackRate: queryParams.playbackRate,
 
       controlBar: toBoolean(queryParams.controlBar),
