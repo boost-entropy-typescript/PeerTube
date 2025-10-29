@@ -503,10 +503,13 @@ stats:
     enabled: true
 
 webrtc:
-  # 1 or 2 STUN servers are sufficient
+  # STUN servers used by web browser to discover its public IP address, used by the player to establish P2P connections
+  # You can add or replace these STUN server URLs, or install your own
   stun_servers:
-    - 'stun:stunserver2024.stunprotocol.org'
+    - 'stun:stunserver2025.stunprotocol.org'
     - 'stun:stun.framasoft.org'
+    - 'stun:stun.ekiga.net'
+    - 'stun:stun.freeswitch.org'
 
 nsfw_flags_settings:
   # Allow logged-in/anonymous users to have a more granular control over their NSFW policy
@@ -789,6 +792,9 @@ video_transcription:
   #  * CTranslate2 Whisper model directory path for 'whisper-ctranslate2'
   # If not provided, PeerTube will automatically download the model
   model_path: null
+
+  # Increase this value if you plan to transcribe long videos and if your video doesn't have a GPU
+  timeout: '6 hours'
 
   # Enable remote runners to transcribe videos
   # If enabled, your instance won't transcribe the videos itself
