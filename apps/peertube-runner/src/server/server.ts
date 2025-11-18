@@ -9,7 +9,7 @@ import { ConfigManager } from '../shared/index.js'
 import { IPCServer } from '../shared/ipc/index.js'
 import { logger } from '../shared/logger.js'
 import { JobWithToken, processJob } from './process/index.js'
-import { getSupportedJobsList, isJobSupported } from './shared/index.js'
+import { getSupportedJobsList } from './shared/index.js'
 
 type PeerTubeServer = PeerTubeServerCommand & {
   runnerToken: string
@@ -31,7 +31,7 @@ export class RunnerServer {
 
   private readonly sockets = new Map<PeerTubeServer, Socket>()
 
-  constructor (private readonly enabledJobs?: Set<RunnerJobType>) {
+  constructor (enabledJobs?: Set<RunnerJobType>) {
     this.enabledJobsArray = enabledJobs
       ? Array.from(enabledJobs)
       : getSupportedJobsList()
@@ -280,15 +280,12 @@ export class RunnerServer {
       version: process.env.PACKAGE_VERSION
     })
 
-    // FIXME: remove in PeerTube v8: jobTypes has been introduced in PeerTube v7, so do the filter here too
-    const filtered = availableJobs.filter(j => isJobSupported(j, this.enabledJobs))
-
-    if (filtered.length === 0) {
+    if (availableJobs.length === 0) {
       logger.debug(`No job available on ${server.url} for runner ${server.runnerName}`)
       return undefined
     }
 
-    return filtered[0]
+    return availableJobs[0]
   }
 
   private async tryToExecuteJobAsync (server: PeerTubeServer, jobToAccept: { uuid: string }) {

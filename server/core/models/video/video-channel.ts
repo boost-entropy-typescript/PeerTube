@@ -1,6 +1,7 @@
-import { ActivityPubActor, VideoChannel, VideoChannelSummary, VideoPrivacy } from '@peertube/peertube-models'
+import { ActivityPubActor, ActivityUrlObject, VideoChannel, VideoChannelSummary, VideoPrivacy } from '@peertube/peertube-models'
 import { AttributesOnly } from '@peertube/peertube-typescript-utils'
 import { CONFIG } from '@server/initializers/config.js'
+import { getLocalActorPlayerSettingsActivityPubUrl } from '@server/lib/activitypub/url.js'
 import { InternalEventEmitter } from '@server/lib/internal-event-emitter.js'
 import { MAccountIdHost } from '@server/types/models/index.js'
 import { FindOptions, Includeable, literal, Op, QueryTypes, Transaction } from 'sequelize'
@@ -570,26 +571,25 @@ export class VideoChannelModel extends SequelizeModel<VideoChannelModel> {
     return {
       ...obj,
 
-      // // TODO: Uncomment in v8 for backward compatibility
-      // url: [
-      //   {
-      //     type: 'Link',
-      //     mediaType: 'text/html',
-      //     href: this.getClientUrl(true)
-      //   },
-      //   {
-      //     type: 'Link',
-      //     mediaType: 'text/html',
-      //     href: this.getClientUrl(false)
-      //   },
-      //   {
-      //     type: 'Link',
-      //     mediaType: 'text/html',
-      //     href: this.Actor.url
-      //   }
-      // ] as ActivityUrlObject[],
+      url: [
+        {
+          type: 'Link',
+          mediaType: 'text/html',
+          href: this.getClientUrl(true)
+        },
+        {
+          type: 'Link',
+          mediaType: 'text/html',
+          href: this.getClientUrl(false)
+        },
+        {
+          type: 'Link',
+          mediaType: 'text/html',
+          href: this.Actor.url
+        }
+      ] as ActivityUrlObject[],
 
-      url: this.Actor.url,
+      playerSettings: getLocalActorPlayerSettingsActivityPubUrl(this.Actor),
 
       summary: this.description,
       support: this.support,
