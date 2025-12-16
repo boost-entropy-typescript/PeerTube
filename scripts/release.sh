@@ -144,6 +144,7 @@ find dist/ packages/core-utils/dist/ \
 
       # Release types package
       (
+        npm login
         npm run generate-types-package "$version"
         cd packages/types-generator/dist && npm publish --access public
       )
