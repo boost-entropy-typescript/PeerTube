@@ -1158,6 +1158,10 @@ export const WORKER_THREADS = {
   BUILD_DIGEST: {
     CONCURRENCY: 1,
     MAX_THREADS: 1
+  },
+  CREATE_TORRENT: {
+    CONCURRENCY: 1,
+    MAX_THREADS: 1
   }
 }
 
