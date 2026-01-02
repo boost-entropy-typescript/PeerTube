@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions,@typescript-eslint/require-await */
 
-import { getAllFiles } from '@peertube/peertube-core-utils'
+import { getAllFiles, getHLS } from '@peertube/peertube-core-utils'
 import { HttpStatusCode, VideoDetails } from '@peertube/peertube-models'
 import { areMockObjectStorageTestsDisabled } from '@peertube/peertube-node-utils'
 import {
@@ -161,18 +161,8 @@ function runTestSuite (options: {
   const uuidsToDelete: string[] = []
   let deletedUrls: string[] = []
 
-  before(async function () {
-    this.timeout(240000)
-
-    const port = await mockObjectStorageProxy.initialize()
-    baseMockUrl = useMockBaseUrl
-      ? `http://127.0.0.1:${port}`
-      : undefined
-
-    await objectStorage.createMockBucket(options.playlistBucket)
-    await objectStorage.createMockBucket(options.webVideoBucket)
-
-    const config = {
+  function getConfig () {
+    return {
       object_storage: {
         enabled: true,
         endpoint: 'http://' + ObjectStorageCommand.getMockEndpointHost(),
@@ -201,8 +191,20 @@ function runTestSuite (options: {
         }
       }
     }
+  }
 
-    servers = await createMultipleServers(2, config)
+  before(async function () {
+    this.timeout(240000)
+
+    const port = await mockObjectStorageProxy.initialize()
+    baseMockUrl = useMockBaseUrl
+      ? `http://127.0.0.1:${port}`
+      : undefined
+
+    await objectStorage.createMockBucket(options.playlistBucket)
+    await objectStorage.createMockBucket(options.webVideoBucket)
+
+    servers = await createMultipleServers(2, getConfig())
 
     await setAccessTokensToServers(servers)
     await doubleFollow(servers[0], servers[1])
@@ -249,6 +251,29 @@ function runTestSuite (options: {
       deletedUrls = deletedUrls.concat(files)
     }
   })
+
+  if (options.useMockBaseUrl) {
+    it('Should update streaming playlist infohash if object storage base url changed', async function () {
+      const newBaseMockUrl = `http://example.com`
+
+      await servers[1].kill()
+
+      await servers[1].run(
+        merge(getConfig(), {
+          object_storage: {
+            streaming_playlists: {
+              base_url: `${newBaseMockUrl}/${options.playlistBucket}`
+            }
+          }
+        })
+      )
+
+      const { uuid } = await servers[1].videos.find({ name: 'video 2' })
+      const video = await servers[1].videos.get({ id: uuid })
+
+      await checkPlaylistInfohash({ video, files: getHLS(video).files, sqlCommand: sqlCommands[1] })
+    })
+  }
 
   it('Should fetch correctly all the files', async function () {
     for (const url of deletedUrls.concat(keptUrls)) {
