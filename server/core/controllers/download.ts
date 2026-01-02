@@ -23,6 +23,7 @@ import {
   MVideoFullLight
 } from '@server/types/models/index.js'
 import { MVideoSource } from '@server/types/models/video/video-source.js'
+import contentDisposition from 'content-disposition'
 import cors from 'cors'
 import express from 'express'
 import { DOWNLOAD_PATHS, WEBSERVER } from '../initializers/constants.js'
@@ -264,7 +265,7 @@ async function downloadGeneratedVideoFile (req: express.Request, res: express.Re
   const urlPath = new URL(req.originalUrl, WEBSERVER.URL).pathname
   if (!urlPath.endsWith('.mp4') && !urlPath.endsWith('.m4a')) {
     const downloadFilename = buildDownloadFilename({ video, extname })
-    res.setHeader('Content-disposition', `attachment; filename="${encodeURI(downloadFilename)}`)
+    res.setHeader('Content-disposition', contentDisposition(encodeURI(downloadFilename)))
   }
 
   res.type(extname)
