@@ -1,3 +1,4 @@
+import { sortBy } from '@peertube/peertube-core-utils'
 import {
   BroadcastMessageLevel,
   NSFWPolicyType,
@@ -15,7 +16,6 @@ import { IConfig } from 'config'
 import { createRequire } from 'module'
 import { dirname, join } from 'path'
 import { parseBytes, parseDurationToMs } from '../helpers/core-utils.js'
-import { sortBy } from '@peertube/peertube-core-utils'
 
 const require = createRequire(import.meta.url)
 let config: IConfig = require('config')
@@ -39,6 +39,22 @@ const CONFIG = {
     HOSTNAME: config.get<string>('database.hostname'),
     PORT: config.get<number>('database.port'),
     SSL: config.get<boolean>('database.ssl'),
+    SSL_SETTINGS: {
+      get REJECT_UNAUTHORIZED () {
+        return config.has('database.ssl_settings.reject_unauthorized')
+          ? config.get<boolean>('database.ssl_settings.reject_unauthorized')
+          : false
+      },
+      get CA () {
+        return config.has('database.ssl_settings.ca') ? config.get<string>('database.ssl_settings.ca') : null
+      },
+      get CERT () {
+        return config.has('database.ssl_settings.cert') ? config.get<string>('database.ssl_settings.cert') : null
+      },
+      get KEY () {
+        return config.has('database.ssl_settings.key') ? config.get<string>('database.ssl_settings.key') : null
+      }
+    },
     USERNAME: config.get<string>('database.username'),
     PASSWORD: config.get<string>('database.password'),
     POOL: {
@@ -51,9 +67,40 @@ const CONFIG = {
     SOCKET: config.has('redis.socket') ? config.get<string>('redis.socket') : null,
     AUTH: config.has('redis.auth') ? config.get<string>('redis.auth') : null,
     DB: config.has('redis.db') ? config.get<number>('redis.db') : null,
+    ENABLE_TLS: config.has('redis.enable_tls') ? config.get<boolean>('redis.enable_tls') : false,
+    TLS_SETTINGS: {
+      get REJECT_UNAUTHORIZED () {
+        return config.get<boolean>('redis.tls_settings.reject_unauthorized')
+      },
+      get CA () {
+        return config.get<string>('redis.tls_settings.ca')
+      },
+      get CERT () {
+        return config.get<string>('redis.tls_settings.cert')
+      },
+      get KEY () {
+        return config.get<string>('redis.tls_settings.key')
+      }
+    },
     SENTINEL: {
       ENABLED: config.has('redis.sentinel.enabled') ? config.get<boolean>('redis.sentinel.enabled') : false,
       ENABLE_TLS: config.has('redis.sentinel.enable_tls') ? config.get<boolean>('redis.sentinel.enable_tls') : false,
+      TLS_SETTINGS: {
+        get REJECT_UNAUTHORIZED () {
+          return config.has('redis.sentinel.tls_settings.reject_unauthorized')
+            ? config.get<boolean>('redis.sentinel.tls_settings.reject_unauthorized')
+            : false
+        },
+        get CA () {
+          return config.has('redis.sentinel.tls_settings.ca') ? config.get<string>('redis.sentinel.tls_settings.ca') : null
+        },
+        get CERT () {
+          return config.has('redis.sentinel.tls_settings.cert') ? config.get<string>('redis.sentinel.tls_settings.cert') : null
+        },
+        get KEY () {
+          return config.has('redis.sentinel.tls_settings.key') ? config.get<string>('redis.sentinel.tls_settings.key') : null
+        }
+      },
       SENTINELS: config.has('redis.sentinel.sentinels') ? config.get<{ host: string, port: number }[]>('redis.sentinel.sentinels') : [],
       MASTER_NAME: config.has('redis.sentinel.master_name') ? config.get<string>('redis.sentinel.master_name') : null,
       PASSWORD: config.has('redis.sentinel.password') ? config.get<string>('redis.sentinel.password') : null
