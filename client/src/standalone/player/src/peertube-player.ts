@@ -146,6 +146,8 @@ export class PeerTubePlayer {
   }
 
   setPoster (thumbnails: Thumbnail[]) {
+    console.log('coucou')
+
     // Use HTML video element to display poster
     if (!this.player) {
       const playerEl = this.options.playerElement()
@@ -156,7 +158,7 @@ export class PeerTubePlayer {
 
     // Prefer using player poster API
     if (this.player) {
-      this.player.poster(findAppropriateImage(thumbnails, this.player.currentWidth())?.fileUrl || '')
+      this.player.poster(findAppropriateImage(thumbnails, this.player.el().clientWidth || window.innerWidth)?.fileUrl || '')
     }
 
     this.options.playerElement().poster = ''
@@ -391,8 +393,9 @@ export class PeerTubePlayer {
   }
 
   private getVideojsOptions (): VideojsPlayerOptions {
-    const poster =
-      findAppropriateImage(this.currentLoadOptions.thumbnails, this.options.playerElement().clientWidth || window.innerWidth)?.fileUrl || ''
+    const posterWidth = this.options.playerElement().clientWidth || window.innerWidth
+
+    const poster = findAppropriateImage(this.currentLoadOptions.thumbnails, posterWidth)?.fileUrl || ''
 
     const html5 = {
       preloadTextTracks: false,
