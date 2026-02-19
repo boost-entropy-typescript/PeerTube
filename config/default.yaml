@@ -11,6 +11,7 @@ webserver:
   port: 9000
 
 # Secrets you need to generate the first time you run PeerTube
+# Mainly used to sign JWT tokens and TOTP
 secrets:
   # Generate one using `openssl rand -hex 32`
   peertube: ''
@@ -502,10 +503,28 @@ thumbnails:
     -
       width: 280
       height: 157
+      aspect_ratio: '16:9'
 
     -
       width: 850
       height: 480
+      aspect_ratio: '16:9'
+
+    -
+      width: 1280
+      height: 720
+      aspect_ratio: '16:9'
+
+    -
+      width: 1920
+      height: 1080
+      aspect_ratio: '16:9'
+
+    # For podcast applications
+    -
+      width: 1400
+      height: 1400
+      aspect_ratio: '1:1'
 
 stats:
   # Display registration requests stats (average response time, total requests...)
