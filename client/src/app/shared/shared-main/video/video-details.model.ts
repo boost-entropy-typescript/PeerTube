@@ -12,6 +12,7 @@ import {
   VideoStreamingPlaylistType
 } from '@peertube/peertube-models'
 import { Video } from './video.model'
+import { sortBy } from '@peertube/peertube-core-utils'
 
 export class VideoDetails extends Video implements VideoDetailsServerModel {
   declare channel: VideoChannel
@@ -72,5 +73,19 @@ export class VideoDetails extends Video implements VideoDetailsServerModel {
 
   hasEmbedRestrictions () {
     return this.embedPrivacyPolicy.id !== VideoEmbedPrivacyPolicy.ALL_ALLOWED
+  }
+
+  // Try to find the best video file to download
+  // It builds an array and prioritizes web videos that play on more third-party players.
+  getFilesForDownload () {
+    const store = this.files
+
+    for (const file of (this.getHlsPlaylist()?.files || [])) {
+      if (!store.some(f => f.resolution.id === file.resolution.id && f.fps === file.fps)) {
+        store.push(file)
+      }
+    }
+
+    return sortBy(store, 'resolution', 'id').reverse()
   }
 }
