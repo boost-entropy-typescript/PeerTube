@@ -235,7 +235,7 @@ export function getStoryboardAttributeFromObject (video: MVideoId, videoObject: 
   const storyboard = videoObject.preview.find(p => p.rel.includes('storyboard'))
   if (!storyboard) return undefined
 
-  const url = arrayify(storyboard.url).find(u => u.mediaType === 'image/jpeg')
+  const url = arrayify(storyboard.url).find(u => MIMETYPES.IMAGE.MIMETYPE_EXT[u.mediaType])
 
   return {
     filename: generateImageFilename(extname(url.href)),
@@ -312,6 +312,7 @@ export function getVideoAttributesFromObject (videoChannel: MChannelId, videoObj
 
     updatedAt: new Date(videoObject.updated),
     views: videoObject.views,
+    downloads: videoObject.downloads || 0,
     remote: true,
     privacy
   }
