@@ -1,16 +1,14 @@
 import { Component, OnInit, inject, viewChild } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
 import { ConfirmService, MarkdownService, Notifier, ServerService } from '@app/core'
 import { formatICU } from '@app/helpers'
 import { PTDatePipe } from '@app/shared/shared-main/common/date.pipe'
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap'
 import { ResultList, UserRegistration as UserRegistrationServer, UserRegistrationState } from '@peertube/peertube-models'
 import { switchMap } from 'rxjs'
-import { AdvancedInputFilter, AdvancedInputFilterComponent } from '../../../shared/shared-forms/advanced-input-filter.component'
 import { GlobalIconComponent } from '../../../shared/shared-icons/global-icon.component'
 import { ActionDropdownComponent, DropdownAction } from '../../../shared/shared-main/buttons/action-dropdown.component'
 import { NumberFormatterPipe } from '../../../shared/shared-main/common/number-formatter.pipe'
-import { DataLoaderOptions, TableColumnInfo, TableComponent } from '../../../shared/shared-tables/table.component'
+import { DataLoaderOptionsBase, TableColumnInfo, TableComponent } from '../../../shared/shared-tables/table.component'
 import { UserEmailInfoComponent } from '../../shared/user-email-info.component'
 import { AdminRegistrationService } from './admin-registration.service'
 import { ProcessRegistrationModalComponent } from './process-registration-modal.component'
@@ -25,7 +23,6 @@ type ColumnName = 'account' | 'email' | 'channel' | 'registrationReason' | 'stat
   imports: [
     GlobalIconComponent,
     ActionDropdownComponent,
-    AdvancedInputFilterComponent,
     NgbTooltip,
     UserEmailInfoComponent,
     ProcessRegistrationModalComponent,
@@ -35,8 +32,6 @@ type ColumnName = 'account' | 'email' | 'channel' | 'registrationReason' | 'stat
   ]
 })
 export class RegistrationListComponent implements OnInit {
-  protected route = inject(ActivatedRoute)
-  protected router = inject(Router)
   private server = inject(ServerService)
   private notifier = inject(Notifier)
   private markdownRenderer = inject(MarkdownService)
@@ -44,12 +39,10 @@ export class RegistrationListComponent implements OnInit {
   private adminRegistrationService = inject(AdminRegistrationService)
 
   readonly processRegistrationModal = viewChild<ProcessRegistrationModalComponent>('processRegistrationModal')
-  readonly table = viewChild<TableComponent<UserRegistration, ColumnName>>('table')
+  readonly table = viewChild<TableComponent<UserRegistration, DataLoaderOptionsBase, ColumnName>>('table')
 
   registrationActions: DropdownAction<UserRegistration>[][] = []
-  bulkActions: DropdownAction<UserRegistration[]>[] = []
-
-  inputFilters: AdvancedInputFilter[] = []
+  bulkActions: DropdownAction<UserRegistration[]>[][] = []
 
   requiresEmailVerification: boolean
 
@@ -89,10 +82,24 @@ export class RegistrationListComponent implements OnInit {
     ]
 
     this.bulkActions = [
-      {
-        label: $localize`Delete`,
-        handler: registrations => this.removeRegistrations(registrations)
-      }
+      [
+        {
+          label: $localize`Accept`,
+          handler: registrations => this.openRegistrationRequestProcessModal(registrations, 'accept'),
+          isDisplayed: registrations => registrations.every(registration => registration.state.id === UserRegistrationState.PENDING)
+        },
+        {
+          label: $localize`Reject`,
+          handler: registrations => this.openRegistrationRequestProcessModal(registrations, 'reject'),
+          isDisplayed: registrations => registrations.every(registration => registration.state.id === UserRegistrationState.PENDING)
+        }
+      ],
+      [
+        {
+          label: $localize`Delete`,
+          handler: registrations => this.removeRegistrations(registrations)
+        }
+      ]
     ]
   }
 
@@ -115,7 +122,7 @@ export class RegistrationListComponent implements OnInit {
     this.table().reloadData({ field: 'createdAt', order: -1 })
   }
 
-  private _dataLoader (options: DataLoaderOptions) {
+  private _dataLoader (options: DataLoaderOptionsBase) {
     return this.adminRegistrationService.listRegistrations(options)
       .pipe(
         switchMap(async (resultList: ResultList<UserRegistration>) => {
@@ -129,8 +136,8 @@ export class RegistrationListComponent implements OnInit {
       )
   }
 
-  private openRegistrationRequestProcessModal (registration: UserRegistration, mode: 'accept' | 'reject') {
-    this.processRegistrationModal().openModal(registration, mode)
+  private openRegistrationRequestProcessModal (registrations: UserRegistration | UserRegistration[], mode: 'accept' | 'reject') {
+    this.processRegistrationModal().openModal(registrations, mode)
   }
 
   private async removeRegistrations (registrations: UserRegistration[]) {
