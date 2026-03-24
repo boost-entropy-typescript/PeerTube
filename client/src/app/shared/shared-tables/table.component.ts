@@ -143,6 +143,8 @@ export class TableComponent<
 
   private inputFilterValues: Partial<DataLoaderOptions> = {}
 
+  private loadDataSub: Subscription
+
   @ContentChild('totalTitle', { descendants: false })
   totalTitle: TemplateRef<any>
 
@@ -207,6 +209,10 @@ export class TableComponent<
 
   ngOnDestroy () {
     this.routeSubscription?.unsubscribe()
+
+    if (this.loadDataSub?.closed === false) {
+      this.loadDataSub.unsubscribe()
+    }
   }
 
   ngOnChanges (changes: SimpleChanges) {
@@ -323,7 +329,12 @@ export class TableComponent<
   // ---------------------------------------------------------------------------
 
   saveSelectedColumns () {
-    const enabled = this.columns.filter(c => c.selected !== false).map(c => c.id)
+    const enabled = this.columns.reduce((p, c) => {
+      return {
+        ...p,
+        [c.id as string]: c.selected !== false
+      }
+    }, {} as Record<string, boolean>)
 
     this.peertubeLocalStorage.setItem(this.getColumnLocalStorageKey(), JSON.stringify(enabled))
   }
@@ -332,11 +343,14 @@ export class TableComponent<
     const enabledString = this.peertubeLocalStorage.getItem(this.getColumnLocalStorageKey())
 
     if (!enabledString) return
+
     try {
       const enabled = JSON.parse(enabledString)
 
       for (const column of this.columns) {
-        column.selected = enabled.includes(column.id)
+        if (enabled[column.id] !== undefined) {
+          column.selected = enabled[column.id] === true
+        }
       }
     } catch (err) {
       logger.error('Cannot load selected columns.', err)
@@ -344,7 +358,7 @@ export class TableComponent<
   }
 
   private getColumnLocalStorageKey () {
-    return 'rest-table-columns-' + this.key()
+    return 'rest-table-columns-' + this.key() + '-state'
   }
 
   // ---------------------------------------------------------------------------
@@ -500,12 +514,16 @@ export class TableComponent<
   } = {}) {
     const { skipLoader = false } = options
 
+    if (this.loadDataSub?.closed === false) {
+      this.loadDataSub.unsubscribe()
+    }
+
     if (!skipLoader) this.loading = true
 
     this.selectedRows = []
 
     return new Promise<void>((res, rej) => {
-      this.dataLoader()({
+      this.loadDataSub = this.dataLoader()({
         ...this.inputFilterValues,
 
         pagination: this.pagination,
