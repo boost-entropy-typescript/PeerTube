@@ -516,7 +516,8 @@ export const CONSTRAINTS_FIELDS = {
   },
   VIDEO_STUDIO: {
     TASKS: { min: 1, max: 10 }, // Number of tasks
-    CUT_TIME: { min: 0 } // Value
+    CUT_TIME_START: { min: 0 }, // Value
+    CUT_TIME_END: { min: 1 } // Value
   },
   LOGS: {
     CLIENT_MESSAGE: { min: 1, max: 1000 }, // Length
@@ -933,6 +934,7 @@ export const NSFW_POLICY_TYPES: { [id: string]: NSFWPolicyType } = {
 
 export const USER_EXPORT_MAX_ITEMS = 1000
 export const USER_EXPORT_FILE_PREFIX = 'user-export-'
+export const USER_IMPORT_FILE_PREFIX = 'user-import-'
 
 // ---------------------------------------------------------------------------
 
