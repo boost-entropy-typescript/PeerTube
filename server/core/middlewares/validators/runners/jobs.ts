@@ -1,4 +1,3 @@
-import { arrayify } from '@peertube/peertube-core-utils'
 import {
   HttpStatusCode,
   RunnerJobState,
@@ -7,7 +6,7 @@ import {
   RunnerJobUpdateBody,
   ServerErrorCode
 } from '@peertube/peertube-models'
-import { exists, isUUIDValid } from '@server/helpers/custom-validators/misc.js'
+import { exists, isUUIDValid, toArray } from '@server/helpers/custom-validators/misc.js'
 import {
   isRunnerJobAbortReasonValid,
   isRunnerJobArrayOfStateValid,
@@ -126,12 +125,12 @@ export const listRunnerJobsValidator = [
 
   query('stateOneOf')
     .optional()
-    .customSanitizer(arrayify)
+    .customSanitizer(toArray)
     .custom(isRunnerJobArrayOfStateValid),
 
   query('typeOneOf')
     .optional()
-    .customSanitizer(arrayify)
+    .customSanitizer(toArray)
     .custom(isRunnerJobArrayOfTypeValid),
 
   (req: express.Request, res: express.Response, next: express.NextFunction) => {
