@@ -60,7 +60,7 @@ import { CONFIG, registerConfigChangedHandler } from './config.js'
 
 // ---------------------------------------------------------------------------
 
-export const LAST_MIGRATION_VERSION = 1010
+export const LAST_MIGRATION_VERSION = 1015
 
 // ---------------------------------------------------------------------------
 
@@ -517,7 +517,10 @@ export const CONSTRAINTS_FIELDS = {
   VIDEO_STUDIO: {
     TASKS: { min: 1, max: 10 }, // Number of tasks
     CUT_TIME_START: { min: 0 }, // Value
-    CUT_TIME_END: { min: 1 } // Value
+    CUT_TIME_END: { min: 1 }, // Value
+    REMOVE_SEGMENT_TIME_START: { min: 0 }, // Value
+    REMOVE_SEGMENT_TIME_END: { min: 1 }, // Value
+    REMOVE_SEGMENTS: { min: 1, max: 10 } // Number of segments per remove-segments task
   },
   LOGS: {
     CLIENT_MESSAGE: { min: 1, max: 1000 }, // Length
@@ -738,7 +741,8 @@ export const VIDEO_CHANNEL_ACTIVITY_ACTIONS: { [id in VideoChannelActivityAction
   [VideoChannelActivityAction.SEND_OWNERSHIP_REQUEST]: 'Send ownership request',
   [VideoChannelActivityAction.ACCEPT_OWNERSHIP_REQUEST]: 'Accept ownership request',
   [VideoChannelActivityAction.REFUSE_OWNERSHIP_REQUEST]: 'Refuse ownership request',
-  [VideoChannelActivityAction.UPDATE_EMBED_POLICY]: 'Update embed policy'
+  [VideoChannelActivityAction.UPDATE_EMBED_POLICY]: 'Update embed policy',
+  [VideoChannelActivityAction.DELETE_OWNERSHIP_REQUEST]: 'Delete ownership request'
 }
 
 export const VIDEO_CHANNEL_ACTIVITY_TARGETS: { [id in VideoChannelActivityTargetType]: string } = {
