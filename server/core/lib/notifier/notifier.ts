@@ -8,6 +8,7 @@ import {
   MAbuseMessage,
   MActorFollowFull,
   MApplication,
+  MChangeOwnershipFull,
   MChannelAccountDefault,
   MChannelCollaboratorAccount,
   MChannelDefault,
@@ -15,13 +16,15 @@ import {
   MPlugin,
   MVideoAccountLight,
   MVideoCaptionVideo,
-  MVideoChangeOwnershipFull,
   MVideoFull,
   MVideoWithSchedule
 } from '../../types/models/index.js'
 import { JobQueue } from '../job-queue/index.js'
 import { PeerTubeSocket } from '../peertube-socket.js'
 import { Hooks } from '../plugins/hooks.js'
+import { RequestVideoChangeOwnership } from './shared/change-ownership/request-video-change-ownership.js'
+import { VideoChangeOwnershipAccepted } from './shared/change-ownership/video-change-ownership-accepted.js'
+import { VideoChangeOwnershipRejected } from './shared/change-ownership/video-change-ownership-rejected.js'
 import { AcceptedToCollaborateToChannel } from './shared/channel/accepted-to-collaborate-to-channel.js'
 import { InvitedToCollaborateToChannel } from './shared/channel/invited-to-collaborate-to-channel.js'
 import { RefusedToCollaborateToChannel } from './shared/channel/refused-to-collaborate-to-channel.js'
@@ -29,6 +32,8 @@ import {
   AbstractNotification,
   AbuseStateChangeForReporter,
   AutoFollowForInstance,
+  ChannelChangeOwnershipAccepted,
+  ChannelChangeOwnershipRejected,
   CommentMention,
   DirectRegistrationForModerators,
   FollowForInstance,
@@ -49,13 +54,11 @@ import {
   OwnedPublicationAfterScheduleUpdate,
   OwnedPublicationAfterTranscoding,
   RegistrationRequestForModerators,
+  RequestChannelChangeOwnership,
   StudioEditionFinishedForOwner,
   UnblacklistForOwner,
   VideoTranscriptionGeneratedForOwner
 } from './shared/index.js'
-import { RequestVideoOwnershipChange } from './shared/video-ownership/request-video-ownership-change.js'
-import { VideoOwnershipChangeAccepted } from './shared/video-ownership/video-ownership-change-accepted.js'
-import { VideoOwnershipChangeRejected } from './shared/video-ownership/video-ownership-change-rejected.js'
 
 const lTags = loggerTagsFactory('notifier')
 
@@ -96,9 +99,13 @@ class Notifier {
     channelCollaborationAccepted: [ AcceptedToCollaborateToChannel ],
     channelCollaborationRefused: [ RefusedToCollaborateToChannel ],
 
-    videoOwnershipRequest: [ RequestVideoOwnershipChange ],
-    videoOwnershipAccepted: [ VideoOwnershipChangeAccepted ],
-    videoOwnershipRejected: [ VideoOwnershipChangeRejected ]
+    changeVideoOwnershipRequest: [ RequestVideoChangeOwnership ],
+    changeVideoOwnershipAccepted: [ VideoChangeOwnershipAccepted ],
+    changeVideoOwnershipRejected: [ VideoChangeOwnershipRejected ],
+
+    changeChannelOwnershipRequest: [ RequestChannelChangeOwnership ],
+    changeChannelOwnershipAccepted: [ ChannelChangeOwnershipAccepted ],
+    changeChannelOwnershipRejected: [ ChannelChangeOwnershipRejected ]
   }
 
   private static instance: Notifier
@@ -354,31 +361,68 @@ class Notifier {
   // Video ownership change notifications
   // ---------------------------------------------------------------------------
 
-  notifyOfRequestedVideoOwnershipChange (videoOwnership: MVideoChangeOwnershipFull) {
-    const models = this.notificationModels.videoOwnershipRequest
+  notifyOfRequestedVideoOwnershipChange (changeOwnership: MChangeOwnershipFull) {
+    const models = this.notificationModels.changeVideoOwnershipRequest
 
-    logger.debug('Notify on requested video ownership change', { id: videoOwnership.id, video: videoOwnership.Video.url, ...lTags() })
+    logger.debug('Notify on requested video ownership change', { id: changeOwnership.id, video: changeOwnership.Video.url, ...lTags() })
 
-    this.sendNotifications(models, videoOwnership)
-      .catch(err => logger.error('Cannot notify requested video ownership change %d.', videoOwnership.id, { err }))
+    this.sendNotifications(models, changeOwnership)
+      .catch(err => logger.error('Cannot notify requested video ownership change %d.', changeOwnership.id, { err }))
   }
 
-  notifyOfAcceptedVideoOwnershipChange (videoOwnership: MVideoChangeOwnershipFull) {
-    const models = this.notificationModels.videoOwnershipAccepted
+  notifyOfAcceptedVideoOwnershipChange (changeOwnership: MChangeOwnershipFull) {
+    const models = this.notificationModels.changeVideoOwnershipAccepted
 
-    logger.debug('Notify on accepted video ownership change', { id: videoOwnership.id, video: videoOwnership.Video.url, ...lTags() })
+    logger.debug('Notify on accepted video ownership change', { id: changeOwnership.id, video: changeOwnership.Video.url, ...lTags() })
 
-    this.sendNotifications(models, videoOwnership)
-      .catch(err => logger.error('Cannot notify accepted video ownership change %d.', videoOwnership.id, { err }))
+    this.sendNotifications(models, changeOwnership)
+      .catch(err => logger.error('Cannot notify accepted video ownership change %d.', changeOwnership.id, { err }))
   }
 
-  notifyOfRejectedVideoOwnershipChange (videoOwnership: MVideoChangeOwnershipFull) {
-    const models = this.notificationModels.videoOwnershipRejected
+  notifyOfRejectedVideoOwnershipChange (changeOwnership: MChangeOwnershipFull) {
+    const models = this.notificationModels.changeVideoOwnershipRejected
 
-    logger.debug('Notify on rejected video ownership change', { id: videoOwnership.id, video: videoOwnership.Video.url, ...lTags() })
+    logger.debug('Notify on rejected video ownership change', { id: changeOwnership.id, video: changeOwnership.Video.url, ...lTags() })
 
-    this.sendNotifications(models, videoOwnership)
-      .catch(err => logger.error('Cannot notify rejected video ownership change %d.', videoOwnership.id, { err }))
+    this.sendNotifications(models, changeOwnership)
+      .catch(err => logger.error('Cannot notify rejected video ownership change %d.', changeOwnership.id, { err }))
+  }
+
+  // ---------------------------------------------------------------------------
+  // Channel ownership change notifications
+  // ---------------------------------------------------------------------------
+
+  notifyOfRequestedChannelOwnershipChange (changeOwnership: MChangeOwnershipFull) {
+    const models = this.notificationModels.changeChannelOwnershipRequest
+
+    const channelName = changeOwnership.VideoChannel.Actor.preferredUsername
+
+    logger.debug(`Notify on requested channel ${channelName} ownership change`, { id: changeOwnership.id, channelName, ...lTags() })
+
+    this.sendNotifications(models, changeOwnership)
+      .catch(err => logger.error('Cannot notify requested channel ownership change %d.', changeOwnership.id, { err }))
+  }
+
+  notifyOfAcceptedChannelOwnershipChange (changeOwnership: MChangeOwnershipFull) {
+    const models = this.notificationModels.changeChannelOwnershipAccepted
+
+    const channelName = changeOwnership.VideoChannel.Actor.preferredUsername
+
+    logger.debug(`Notify on accepted channel ${channelName} ownership change`, { id: changeOwnership.id, channelName, ...lTags() })
+
+    this.sendNotifications(models, changeOwnership)
+      .catch(err => logger.error('Cannot notify accepted channel ownership change %d.', changeOwnership.id, { err }))
+  }
+
+  notifyOfRejectedChannelOwnershipChange (changeOwnership: MChangeOwnershipFull) {
+    const models = this.notificationModels.changeChannelOwnershipRejected
+
+    const channelName = changeOwnership.VideoChannel.Actor.preferredUsername
+
+    logger.debug(`Notify on rejected channel ${channelName} ownership change`, { id: changeOwnership.id, channelName, ...lTags() })
+
+    this.sendNotifications(models, changeOwnership)
+      .catch(err => logger.error('Cannot notify rejected channel ownership change %d.', changeOwnership.id, { err }))
   }
 
   // ---------------------------------------------------------------------------
