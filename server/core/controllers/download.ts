@@ -302,8 +302,8 @@ async function downloadGeneratedVideoFile (req: express.Request, res: express.Re
     // muxToMergeVideoFiles has already logged the error
     res.fail({
       status: HttpStatusCode.SERVICE_UNAVAILABLE_503,
-      message: req.t('Cannot process video download at the moment. Please try again later.'),
-      data: err.message
+      title: req.t('Cannot process video download at the moment. Please try again later.'),
+      message: err.message
     })
   }
 }
@@ -416,7 +416,16 @@ async function downloadLocalFileWithOptionalThrottle (options: {
   res.setHeader('Content-Disposition', contentDisposition(encodeURI(downloadFilename)))
   res.setHeader('Content-Type', 'application/octet-stream')
 
-  await pipeline(createReadStream(path), new ThrottleStream({ totalBytesPerSecond, bytesPerIpPerSecond, ip }), res)
+  const readStream = createReadStream(path)
+  readStream.on('error', err => {
+    if (res.headersSent) return
+
+    if ((err as any).code === 'ENOENT') return res.sendStatus(HttpStatusCode.NOT_FOUND_404)
+
+    return res.sendStatus(HttpStatusCode.INTERNAL_SERVER_ERROR_500)
+  })
+
+  await pipeline(readStream, new ThrottleStream({ totalBytesPerSecond, bytesPerIpPerSecond, ip }), res)
 }
 
 async function redirectVideoDownloadToObjectStorage (options: {
