@@ -45,7 +45,7 @@
 ### Features
 
   * :tada: Add ability to transfer a video channel to another user of the same instance :tada:
-  * :tada: Add live DVR [#7396](https://github.com/Chocobozzz/PeerTube/pull/7396) allowing users to seek within and pause the live :tada:
+  * :tada: Add live DVR allowing users to seek within and pause the live [#7396](https://github.com/Chocobozzz/PeerTube/pull/7396) :tada:
   * :tada: Add ability to remove segments of a video in Studio :tada:
   * Support Romanian and Korean languages in web client
   * Improve video ownership change UX:
@@ -58,7 +58,7 @@
     * Add ability to flip the video horizontally [#7478](https://github.com/Chocobozzz/PeerTube/pull/7478)
 	* Redesign loading spinner
   * Support podcast feed for playlists
-  * Add video download stats for video makers
+  * Add video download stats for video makers [#7437](https://github.com/Chocobozzz/PeerTube/pull/7437)
   * Improve global UX:
     * Introduce a new table filter component that is simpler to use
     * Default runner job route is the page that lists runner jobs
