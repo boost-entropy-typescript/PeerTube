@@ -1,5 +1,40 @@
 # Changelog
 
+## v8.2.0-rc.2
+
+### SECURITY
+
+ * Include security fixes from 8.1.6
+
+### Features
+
+ * Add `g p` hotkey to go to my playlists
+ * Add `.m4b` audio file support
+
+### Bug fixes
+
+ * More robust playlist thumbnails updater
+ * Fix concurrency issue when writing live sha segments
+ * Fix concurrency issue when uploading the same torrent filename
+ * Fix column varchar lengths
+
+
+## v8.1.6
+
+### IMPORTANT NOTES
+
+ * Follow v8.1.0 IMPORTANT NOTES if you upgrade from PeerTube <= v8.0.2
+
+### SECURITY
+
+ * Fix SQL injection coming from actor inbox URL when updating actor follow scores. Thanks to **Nagarajan Selvaraj Paulmony** for reporting this vulnerability :pray:
+ * Reject JSON-LD objects with special properties. Thanks to **Mastodon security team** for reporting this vulnerability :pray:
+ * Restricts role assignment to administrators only
+ * Prevent external auth token replay
+ * Prevent SSRF on import and channel sync
+ * Stricter rate limit to ask password reset
+
+
 ## v8.2.0-rc.1
 
 ### IMPORTANT NOTES
