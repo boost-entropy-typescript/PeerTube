@@ -1234,6 +1234,37 @@ paths:
                     items:
                       $ref: '#/components/schemas/Job'
 
+  /api/v1/jobs/{jobType}/{jobId}/cancel:
+    post:
+      summary: Cancel a job
+      description: Abort a running job and its underlying ffmpeg/child process. Only active jobs that support cancellation can be cancelled.
+      operationId: cancelJob
+      security:
+        - OAuth2:
+          - admin
+      tags:
+        - Job
+      parameters:
+        - name: jobType
+          in: path
+          required: true
+          description: The type of the job to cancel
+          schema:
+            $ref: '#/components/schemas/JobType'
+        - name: jobId
+          in: path
+          required: true
+          description: The id of the job to cancel
+          schema:
+            type: string
+      responses:
+        '204':
+          description: successful operation
+        '404':
+          description: job not found
+        '409':
+          description: job cannot be cancelled (not active or not cancellable)
+
   /api/v1/server/followers:
     get:
       tags:
@@ -9664,21 +9695,7 @@ components:
       required: false
       description: job type
       schema:
-        type: string
-        enum:
-          - activitypub-follow
-          - activitypub-http-broadcast
-          - activitypub-http-fetcher
-          - activitypub-http-unicast
-          - email
-          - video-transcoding
-          - video-file-import
-          - video-import
-          - videos-stats
-          - activitypub-refresher
-          - video-redundancy
-          - video-live-ending
-          - video-channel-import
+        $ref: '#/components/schemas/JobType'
     followState:
       name: state
       in: query
@@ -12294,6 +12311,39 @@ components:
         - thumbnails
         - captions
 
+    JobType:
+      type: string
+      enum:
+        - activitypub-cleaner
+        - activitypub-follow
+        - activitypub-http-broadcast
+        - activitypub-http-broadcast-parallel
+        - activitypub-http-fetcher
+        - activitypub-http-unicast
+        - activitypub-refresher
+        - actor-keys
+        - after-video-channel-import
+        - build-automatic-tags
+        - create-user-export
+        - email
+        - federate-video
+        - generate-video-storyboard
+        - import-user-archive
+        - manage-video-torrent
+        - move-to-file-system
+        - move-to-object-storage
+        - notify
+        - transcoding-job-builder
+        - video-channel-import
+        - video-file-import
+        - video-import
+        - video-live-ending
+        - video-redundancy
+        - video-studio-edition
+        - video-transcoding
+        - video-transcription
+        - videos-stats
+
     Job:
       properties:
         id:
@@ -12307,20 +12357,7 @@ components:
             - waiting
             - delayed
         type:
-          type: string
-          enum:
-            - activitypub-http-unicast
-            - activitypub-http-broadcast
-            - activitypub-http-fetcher
-            - activitypub-follow
-            - video-file-import
-            - video-transcoding
-            - email
-            - video-import
-            - videos-stats
-            - activitypub-refresher
-            - video-redundancy
-            - video-channel-import
+          $ref: '#/components/schemas/JobType'
         data:
           type: object
           additionalProperties: true
@@ -12336,6 +12373,9 @@ components:
         processedOn:
           type: string
           format: date-time
+        canCancel:
+          description: Whether this job is currently running and supports cancellation
+          type: boolean
     AddUserResponse:
       properties:
         user:

@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common'
-import { Component, inject, viewChild } from '@angular/core'
+import { Component, inject, viewChild, ChangeDetectionStrategy } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { RouterLink } from '@angular/router'
-import { RestPagination, ServerService } from '@app/core'
+import { ConfirmService, Notifier, RestPagination, ServerService } from '@app/core'
 import { AdvancedFilterDef } from '@app/shared/shared-forms/advanced-input-filter.component'
+import { ButtonComponent } from '@app/shared/shared-main/buttons/button.component'
 import { PeerTubeBadgeService } from '@app/shared/shared-main/common/peertube-badge.service'
 import { Job, JobState, JobType } from '@peertube/peertube-models'
 import { arrayOfAllFactory } from '@peertube/peertube-typescript-utils'
@@ -12,25 +13,29 @@ import { NumberFormatterPipe } from '../../../shared/shared-main/common/number-f
 import { TableColumnInfo, TableComponent } from '../../../shared/shared-tables/table.component'
 import { JobService } from './job.service'
 
-type ColumnName = 'id' | 'type' | 'priority' | 'state' | 'progress' | 'createdAt' | 'processed'
+type ColumnName = 'id' | 'type' | 'priority' | 'state' | 'progress' | 'createdAt' | 'processed' | 'actions'
 type DataLoaderParameter = Parameters<JobsComponent['_dataLoader']>[0]
 
 @Component({
   selector: 'my-jobs',
   templateUrl: './jobs.component.html',
   styleUrls: [ './jobs.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     FormsModule,
     TableComponent,
     NumberFormatterPipe,
-    RouterLink
+    RouterLink,
+    ButtonComponent
   ]
 })
 export class JobsComponent {
   private server = inject(ServerService)
   private jobsService = inject(JobService)
   private peertubeBadgeService = inject(PeerTubeBadgeService)
+  private notifier = inject(Notifier)
+  private confirm = inject(ConfirmService)
 
   readonly table = viewChild<TableComponent<Job, DataLoaderParameter, ColumnName>>('table')
 
@@ -101,7 +106,8 @@ export class JobsComponent {
     { id: 'state', class: 'job-state', label: $localize`State`, sortable: false },
     { id: 'progress', class: 'job-progress', label: $localize`Progress`, isDisplayed: () => this.displayGlobalProgress, sortable: false },
     { id: 'createdAt', class: 'job-date', label: $localize`Created`, sortable: true },
-    { id: 'processed', label: $localize`Processed/Finished`, sortable: false }
+    { id: 'processed', label: $localize`Processed/Finished`, sortable: false },
+    { id: 'actions', label: $localize`Actions`, sortable: false }
   ]
   dataLoader: typeof this._dataLoader
 
@@ -164,6 +170,26 @@ export class JobsComponent {
 
   isRunnerEnabled () {
     return this.server.isRemoteRunnersEnabled()
+  }
+
+  async cancelJob (job: Job) {
+    if (!job.canCancel) return
+
+    const res = await this.confirm.confirm($localize`Are you sure you want to cancel job ${job.id}?`, $localize`Cancel job`, {
+      confirmButtonText: $localize`Cancel job`,
+      cancelButtonText: $localize`Keep job`
+    })
+
+    if (!res) return
+
+    this.jobsService.cancelJob({ jobId: job.id, jobType: job.type })
+      .subscribe({
+        next: () => {
+          this.notifier.success($localize`Job ${job.id} cancellation requested`)
+          this.table()?.loadData()
+        },
+        error: err => this.notifier.error(err.message, $localize`Cannot cancel job ${job.id}`)
+      })
   }
 
   private _dataLoader (options: {
