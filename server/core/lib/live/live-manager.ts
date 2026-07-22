@@ -73,11 +73,12 @@ class LiveManager {
   init () {
     const events = this.getContext().nodeEvent
     events.on('postPublish', (sessionId: string, streamPath: string) => {
-      logger.debug('RTMP received stream', { id: sessionId, streamPath, ...lTags(sessionId) })
+      // Don't log streamPath: it contains the stream key, which is a long lived secret
+      logger.debug('RTMP received stream', { id: sessionId, ...lTags(sessionId) })
 
       const splittedPath = streamPath.split('/')
       if (splittedPath.length !== 3 || splittedPath[1] !== VIDEO_LIVE.RTMP.BASE_PATH) {
-        logger.warn('Live path is incorrect.', { streamPath, ...lTags(sessionId) })
+        logger.warn('Live path is incorrect.', { ...lTags(sessionId) })
         return this.abortSession(sessionId)
       }
 
@@ -258,25 +259,26 @@ class LiveManager {
 
     const videoLive = await VideoLiveModel.loadByStreamKey(streamKey)
     if (!videoLive) {
-      logger.warn('Unknown live video with stream key %s.', streamKey, lTags(sessionId))
+      // Don't log the stream key, which is a long lived secret
+      logger.warn('Unknown live video stream key.', lTags(sessionId))
       return this.abortSession(sessionId)
     }
 
     const video = videoLive.Video
     if (video.isBlacklisted()) {
-      logger.warn('Video is blacklisted. Refusing stream %s.', streamKey, lTags(sessionId, video.uuid))
+      logger.warn('Video is blacklisted. Refusing stream of video %s.', video.uuid, lTags(sessionId, video.uuid))
       return this.abortSession(sessionId)
     }
 
     const user = await UserModel.loadByLiveId(videoLive.id)
     if (user.blocked) {
-      logger.warn('User is blocked. Refusing stream %s.', streamKey, lTags(sessionId, video.uuid))
+      logger.warn('User is blocked. Refusing stream of video %s.', video.uuid, lTags(sessionId, video.uuid))
       return this.abortSession(sessionId)
     }
 
     if (this.videoSessions.has(video.uuid)) {
       logger.warn(
-        `Video ${video.uuid} has already a live session ${this.videoSessions.get(video.uuid)}. Refusing stream ${streamKey}.`,
+        `Video ${video.uuid} has already a live session ${this.videoSessions.get(video.uuid)}. Refusing stream.`,
         lTags(sessionId, video.uuid)
       )
       return this.abortSession(sessionId)
@@ -286,7 +288,7 @@ class LiveManager {
 
     try {
       if (videoLive.saveReplay && await isUserQuotaValid({ channelUserId: user.id, uploadSize: 1000 }) !== true) {
-        logger.warn('User quota exceeded. Refusing stream %s.', streamKey, lTags(sessionId, video.uuid))
+        logger.warn('User quota exceeded. Refusing stream of video %s.', video.uuid, lTags(sessionId, video.uuid))
 
         try {
           await this.saveEndingSession({ videoUUID: video.uuid, error: LiveVideoError.QUOTA_EXCEEDED })
@@ -429,7 +431,15 @@ class LiveManager {
 
     const audioOnlyOutput = allResolutions.every(r => r === VideoResolution.H_NOVIDEO)
 
-    const liveSession = await this.saveStartingSession(videoLive)
+    let liveSession: VideoLiveSessionModel
+    try {
+      liveSession = await this.saveStartingSession(videoLive)
+    } catch (err) {
+      logger.error('Cannot save starting live session.', { err, ...localLTags })
+
+      this.videoSessions.delete(videoUUID)
+      return this.abortSession(sessionId)
+    }
 
     LiveQuotaStore.Instance.addNewLive(user.id, sessionId)
 
@@ -509,6 +519,9 @@ class LiveManager {
         logger.error('Cannot run muxing.', { err, ...localLTags })
 
         this.muxingSessions.delete(sessionId)
+
+        LiveQuotaStore.Instance.removeLive(user.id, sessionId)
+
         muxingSession.destroy()
 
         this.stopSessionOfVideo({
