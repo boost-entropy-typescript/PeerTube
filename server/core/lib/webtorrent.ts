@@ -16,10 +16,12 @@ import parseTorrent from 'parse-torrent'
 import { dirname, join } from 'path'
 import { pipeline } from 'stream'
 import type { Instance, TorrentFile } from 'webtorrent'
-import { logger } from '../helpers/logger.js'
+import { createLogger } from '../helpers/logger.js'
 import { generateVideoImportTmpPath } from '../helpers/utils.js'
 import { extractVideo } from '../helpers/video.js'
 import { CONFIG } from '../initializers/config.js'
+
+const logger = createLogger()
 
 export async function downloadWebTorrentVideo (target: { uri: string, torrentPath: string | null }, timeout: number) {
   const torrentId = target.uri || target.torrentPath
@@ -146,8 +148,7 @@ export async function createTorrentForFileFromPath (
     await remove(join(CONFIG.STORAGE.TORRENTS_DIR, videoFile.torrentFilename))
   }
 
-  // FIXME: typings: parseTorrent now returns an async result
-  const parsedTorrent = await (parseTorrent(torrentContent) as unknown as Promise<parseTorrent.Instance>)
+  const parsedTorrent = await parseTorrent(torrentContent)
 
   return {
     infoHash: parsedTorrent.infoHash,
