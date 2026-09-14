@@ -6,7 +6,7 @@
         <source>Close</source>
         <target state="translated">Κλείσιμο</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/alert/alert.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/alert/alert.ts</context>
           <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
@@ -15,7 +15,7 @@
         <target state="translated">Διαφάνεια <x id="INTERPOLATION" equiv-text="get wrap("/> από <x id="INTERPOLATION_1" equiv-text=".value; }"/> </target>
         <note priority="1" from="description">Currently selected slide number read by screen reader</note>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/carousel/carousel.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/carousel/carousel.ts</context>
           <context context-type="linenumber">129</context>
         </context-group>
       </trans-unit>
@@ -23,7 +23,7 @@
         <source>Previous</source>
         <target state="translated">Προηγούμενο</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/carousel/carousel.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/carousel/carousel.ts</context>
           <context context-type="linenumber">146</context>
         </context-group>
       </trans-unit>
@@ -31,7 +31,7 @@
         <source>Next</source>
         <target state="translated">Επόμενο</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/carousel/carousel.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/carousel/carousel.ts</context>
           <context context-type="linenumber">179</context>
         </context-group>
       </trans-unit>
@@ -39,11 +39,11 @@
         <source>Select month</source>
         <target state="translated">Επιλογή μήνα</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/datepicker/datepicker-navigation-select.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/datepicker/datepicker-navigation-select.ts</context>
           <context context-type="linenumber">89</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/datepicker/datepicker-navigation-select.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/datepicker/datepicker-navigation-select.ts</context>
           <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
@@ -51,11 +51,11 @@
         <source>Select year</source>
         <target state="translated">Επιλογή έτους</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/datepicker/datepicker-navigation-select.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/datepicker/datepicker-navigation-select.ts</context>
           <context context-type="linenumber">89</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/datepicker/datepicker-navigation-select.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/datepicker/datepicker-navigation-select.ts</context>
           <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
@@ -63,11 +63,11 @@
         <source>Previous month</source>
         <target state="translated">Προηγούμενος μήνας</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/datepicker/datepicker-navigation.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/datepicker/datepicker-navigation.ts</context>
           <context context-type="linenumber">74</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/datepicker/datepicker-navigation.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/datepicker/datepicker-navigation.ts</context>
           <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
@@ -75,11 +75,11 @@
         <source>Next month</source>
         <target state="translated">Επόμενος μήνας</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/datepicker/datepicker-navigation.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/datepicker/datepicker-navigation.ts</context>
           <context context-type="linenumber">103</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/datepicker/datepicker-navigation.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/datepicker/datepicker-navigation.ts</context>
           <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
@@ -87,7 +87,7 @@
         <source>««</source>
         <target state="translated">««</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/pagination/pagination.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/pagination/pagination.ts</context>
           <context context-type="linenumber">292</context>
         </context-group>
       </trans-unit>
@@ -95,7 +95,7 @@
         <source>«</source>
         <target state="translated">«</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/pagination/pagination.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/pagination/pagination.ts</context>
           <context context-type="linenumber">321</context>
         </context-group>
       </trans-unit>
@@ -103,48 +103,48 @@
         <source>»</source>
         <target state="translated">»</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/pagination/pagination.ts</context>
-          <context context-type="linenumber">347</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/pagination/pagination.ts</context>
+          <context context-type="linenumber">350</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.pagination.last" datatype="html">
         <source>»»</source>
         <target state="translated">»»</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/pagination/pagination.ts</context>
-          <context context-type="linenumber">383</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/pagination/pagination.ts</context>
+          <context context-type="linenumber">386</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.pagination.first-aria" datatype="html">
         <source>First</source>
         <target state="translated">Πρώτο</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/pagination/pagination.ts</context>
-          <context context-type="linenumber">408</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/pagination/pagination.ts</context>
+          <context context-type="linenumber">409</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.pagination.previous-aria" datatype="html">
         <source>Previous</source>
         <target state="translated">Προηγούμενο</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/pagination/pagination.ts</context>
-          <context context-type="linenumber">431</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/pagination/pagination.ts</context>
+          <context context-type="linenumber">434</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.pagination.next-aria" datatype="html">
         <source>Next</source>
         <target state="translated">Επόμενο</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/pagination/pagination.ts</context>
-          <context context-type="linenumber">457</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/pagination/pagination.ts</context>
+          <context context-type="linenumber">463</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.pagination.last-aria" datatype="html">
         <source>Last</source>
         <target state="translated">Τελευταίο</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/pagination/pagination.ts</context>
-          <context context-type="linenumber">488</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/pagination/pagination.ts</context>
+          <context context-type="linenumber">493</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.progressbar.value" datatype="html">
@@ -155,7 +155,7 @@
           <x id="INTERPOLATION" equiv-text="κλπ.    *"/>
         </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/progressbar/progressbar.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/progressbar/progressbar.ts</context>
           <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
@@ -163,15 +163,15 @@
         <source>HH</source>
         <target state="translated">ΩΩ</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/timepicker/timepicker.ts</context>
-          <context context-type="linenumber">252</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/timepicker/timepicker.ts</context>
+          <context context-type="linenumber">256</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.hours" datatype="html">
         <source>Hours</source>
         <target state="translated">Ώρες</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/timepicker/timepicker.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">290</context>
         </context-group>
       </trans-unit>
@@ -179,39 +179,39 @@
         <source>MM</source>
         <target state="translated">ΛΛ</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/timepicker/timepicker.ts</context>
-          <context context-type="linenumber">311</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/timepicker/timepicker.ts</context>
+          <context context-type="linenumber">312</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.minutes" datatype="html">
         <source>Minutes</source>
         <target state="translated">Λεπτά</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/timepicker/timepicker.ts</context>
-          <context context-type="linenumber">349</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/timepicker/timepicker.ts</context>
+          <context context-type="linenumber">351</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.increment-hours" datatype="html">
         <source>Increment hours</source>
         <target state="translated">Αύξηση ωρών</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/timepicker/timepicker.ts</context>
-          <context context-type="linenumber">380</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/timepicker/timepicker.ts</context>
+          <context context-type="linenumber">385</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.decrement-hours" datatype="html">
         <source>Decrement hours</source>
         <target state="translated">Μείωση ωρών</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/timepicker/timepicker.ts</context>
-          <context context-type="linenumber">422</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/timepicker/timepicker.ts</context>
+          <context context-type="linenumber">423</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.increment-minutes" datatype="html">
         <source>Increment minutes</source>
         <target state="translated">Αύξηση λεπτών</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/timepicker/timepicker.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">442</context>
         </context-group>
       </trans-unit>
@@ -219,7 +219,7 @@
         <source>Decrement minutes</source>
         <target state="translated">Μείωση λεπτών</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/timepicker/timepicker.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">442</context>
         </context-group>
       </trans-unit>
@@ -227,7 +227,7 @@
         <source>SS</source>
         <target state="translated">ΔΔ</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/timepicker/timepicker.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">442</context>
         </context-group>
       </trans-unit>
@@ -235,7 +235,7 @@
         <source>Seconds</source>
         <target state="translated">Δευτερόλεπτα</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/timepicker/timepicker.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">442</context>
         </context-group>
       </trans-unit>
@@ -243,7 +243,7 @@
         <source>Increment seconds</source>
         <target state="translated">Αύξηση δευτερολέπτων</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/timepicker/timepicker.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">442</context>
         </context-group>
       </trans-unit>
@@ -251,7 +251,7 @@
         <source>Decrement seconds</source>
         <target state="translated">Μείωση δευτερολέπτων</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/timepicker/timepicker.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">442</context>
         </context-group>
       </trans-unit>
@@ -263,7 +263,7 @@
           <x id="INTERPOLATION"/>
         </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/timepicker/timepicker.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/timepicker/timepicker.ts</context>
           <context context-type="linenumber">442</context>
         </context-group>
       </trans-unit>
@@ -271,7 +271,7 @@
         <source>Close</source>
         <target state="translated">Κλείσιμο</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.1_@angular+core@22.1.1_@angular+_79d32a43fdb7b600b5af9c521bcfd6bf/node_modules/src/toast/toast.ts</context>
+          <context context-type="sourcefile">../node_modules/.pnpm/@ng-bootstrap+ng-bootstrap@21.0.0_@angular+common@22.1.6_@angular+core@22.1.6_@angular+_1f2e0161be4876350e10a7c9757d6b88/node_modules/src/toast/toast.ts</context>
           <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
@@ -6624,13 +6624,19 @@ The link will expire within 1 hour.</source>
       <trans-unit id="1061834486939635373" datatype="html" xml:space="preserve">
         <source>Are you sure you want to delete your video "<x id="PH" equiv-text="video.name"/>?</source>
         <target state="translated">Σίγουρα θέλετε να διαγράψετε το βίντεό σας «<x id="PH" equiv-text="video.name"/>»;</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/+videos-publish-manage/shared-manage/main-info/video-main-info.component.ts</context><context context-type="linenumber">508</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/+videos-publish-manage/shared-manage/main-info/video-main-info.component.ts</context>
+          <context context-type="linenumber">508</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="2321566121166630784" datatype="html" xml:space="preserve">
         <source>"<x id="PH" equiv-text="video.name"/>" deleted</source>
         <target state="translated">"<x id="PH" equiv-text="video.name"/>" διαγράφηκε</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/+videos-publish-manage/shared-manage/main-info/video-main-info.component.ts</context><context context-type="linenumber">516</context></context-group></trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/+videos-publish-manage/shared-manage/main-info/video-main-info.component.ts</context>
+          <context context-type="linenumber">516</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="2656361303537881434" datatype="html" xml:space="preserve">
         <source><x id="PH" equiv-text="caption.language.label"/> (auto-generated)</source>
         <target state="translated"><x id="PH" equiv-text="caption.language.label"/> (αυτόματη δημιουργία)</target>
@@ -9966,25 +9972,25 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3749773804330190688" datatype="html">
+      <trans-unit id="3749773804330190688" datatype="html" xml:space="preserve">
         <source>Open muted servers filtered by this subscription</source>
-        <target state="new">Open muted servers filtered by this subscription</target>
+        <target state="translated">Άνοιγμα διακομιστών σε σίγαση που έχουν φιλτραριστεί βάσει αυτής της συνδρομής</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/moderation/instance-blocklist/instance-blocklist-subscriptions.component.html</context>
           <context context-type="linenumber">46,47</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8187072229527761312" datatype="html">
+      <trans-unit id="8187072229527761312" datatype="html" xml:space="preserve">
         <source>Open muted accounts filtered by this subscription</source>
-        <target state="new">Open muted accounts filtered by this subscription</target>
+        <target state="translated">Άνοιγμα λογαριασμών σε σίγαση, φιλτραρισμένων βάσει αυτής της συνδρομής</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/moderation/instance-blocklist/instance-blocklist-subscriptions.component.html</context>
           <context context-type="linenumber">55,56</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="188289424231773769" datatype="html">
+      <trans-unit id="188289424231773769" datatype="html" xml:space="preserve">
         <source>No subscription found matching current filters.</source>
-        <target state="new">No subscription found matching current filters.</target>
+        <target state="translated">Δεν βρέθηκε καμία συνδρομή που να ανταποκρίνεται στα τρέχοντα κριτήρια φιλτραρίσματος.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/moderation/instance-blocklist/instance-blocklist-subscriptions.component.html</context>
           <context context-type="linenumber">68</context>
@@ -9994,9 +10000,9 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8321738754107271611" datatype="html">
+      <trans-unit id="8321738754107271611" datatype="html" xml:space="preserve">
         <source>No subscription found.</source>
-        <target state="new">No subscription found.</target>
+        <target state="translated">Δεν βρέθηκε καμία συνδρομή.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/moderation/instance-blocklist/instance-blocklist-subscriptions.component.html</context>
           <context context-type="linenumber">70</context>
@@ -10006,25 +10012,25 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8601280736273162004" datatype="html">
+      <trans-unit id="8601280736273162004" datatype="html" xml:space="preserve">
         <source>Add a blocklist subscription</source>
-        <target state="new">Add a blocklist subscription</target>
+        <target state="translated">Προσθήκη συνδρομής στη λίστα αποκλεισμένων</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/moderation/instance-blocklist/instance-blocklist-subscriptions.component.html</context>
           <context context-type="linenumber">78,80</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7423116442791683693" datatype="html">
+      <trans-unit id="7423116442791683693" datatype="html" xml:space="preserve">
         <source>Your instance doesn't mirror any video.</source>
-        <target state="new">Your instance doesn't mirror any video.</target>
+        <target state="translated">Η οντότητα σας δεν κατοπτρίζει κανένα βίντεο.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/follows/video-redundancies-list/video-redundancies-list.component.html</context>
           <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1944582937285351613" datatype="html">
+      <trans-unit id="1944582937285351613" datatype="html" xml:space="preserve">
         <source>Your instance has no mirrored videos.</source>
-        <target state="new">Your instance has no mirrored videos.</target>
+        <target state="translated">Η οντότητα σας δεν διαθέτει κατοπτρισμένα βίντεο.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/follows/video-redundancies-list/video-redundancies-list.component.html</context>
           <context context-type="linenumber">64</context>
@@ -10038,9 +10044,9 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3279255412517973441" datatype="html">
+      <trans-unit id="3279255412517973441" datatype="html" xml:space="preserve">
         <source>No redundancy strategy is enabled on your instance.</source>
-        <target state="new">No redundancy strategy is enabled on your instance.</target>
+        <target state="translated">Δεν έχει ενεργοποιηθεί καμία στρατηγική εφεδρείας στην οντότητά σας.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/follows/video-redundancies-list/video-redundancies-list.component.html</context>
           <context context-type="linenumber">74,75</context>
@@ -10062,9 +10068,9 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="9214278301049416708" datatype="html">
+      <trans-unit id="9214278301049416708" datatype="html" xml:space="preserve">
         <source>Redundancy strategy "<x id="PH" equiv-text="stats.strategy"/>". </source>
-        <target state="new">Redundancy strategy "<x id="PH" equiv-text="stats.strategy"/>". </target>
+        <target state="translated">Στρατηγική εφεδρείας «<x id="PH" equiv-text="stats.strategy"/>». </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/follows/video-redundancies-list/video-redundancies-list.component.ts</context>
           <context context-type="linenumber">133</context>
@@ -10110,9 +10116,9 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">195</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8692634109890521682" datatype="html">
+      <trans-unit id="8692634109890521682" datatype="html" xml:space="preserve">
         <source>No results found.</source>
-        <target state="new">No results found.</target>
+        <target state="translated">Δεν βρέθηκαν αποτελέσματα.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-tables/table.component.html</context>
           <context context-type="linenumber">231</context>
@@ -10174,41 +10180,41 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4691552465058437520" datatype="html">
+      <trans-unit id="4691552465058437520" datatype="html" xml:space="preserve">
         <source>Commented video</source>
-        <target state="new">Commented video</target>
+        <target state="translated">Βίντεο με σχόλια</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-video-comment/video-comment-list-admin-owner.component.ts</context>
           <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8660971461116016304" datatype="html">
+      <trans-unit id="8660971461116016304" datatype="html" xml:space="preserve">
         <source>Go to account page</source>
-        <target state="new">Go to account page</target>
+        <target state="translated">Μετάβαση στη σελίδα λογαριασμού</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-video-comment/video-comment-list-admin-owner.component.ts</context>
           <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1764978878891351511" datatype="html">
+      <trans-unit id="1764978878891351511" datatype="html" xml:space="preserve">
         <source>{count, plural, =1 {Delete comment} other {Delete comments}}</source>
-        <target state="new">{count, plural, =1 {Delete comment} other {Delete comments}}</target>
+        <target state="translated">{count, plural, =1 {Διαγραφή σχολίου} other {Διαγραφή σχολίων}}</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-video-comment/video-comment-list-admin-owner.component.ts</context>
           <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8098332505860203521" datatype="html">
+      <trans-unit id="8098332505860203521" datatype="html" xml:space="preserve">
         <source>Only display comments with this tag</source>
-        <target state="new">Only display comments with this tag</target>
+        <target state="translated">Να εμφανίζονται μόνο τα σχόλια με αυτήν την ετικέτα</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-video-comment/video-comment-list-admin-owner.component.html</context>
           <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7266085473379376028" datatype="html">
+      <trans-unit id="7266085473379376028" datatype="html" xml:space="preserve">
         <source>No comments found matching current filters.</source>
-        <target state="new">No comments found matching current filters.</target>
+        <target state="translated">Δεν βρέθηκαν σχόλια που να ανταποκρίνονται στα τρέχοντα φίλτρα.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-video-comment/video-comment-list-admin-owner.component.html</context>
           <context context-type="linenumber">104</context>
@@ -10230,73 +10236,73 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">266</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3290271898086890437" datatype="html">
+      <trans-unit id="3290271898086890437" datatype="html" xml:space="preserve">
         <source>Awaiting your approval</source>
-        <target state="new">Awaiting your approval</target>
+        <target state="translated">Σε αναμονή της έγκρισής σας</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-video-comment/video-comment-list-admin-owner.component.ts</context>
           <context context-type="linenumber">281</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2809214788981572216" datatype="html">
+      <trans-unit id="2809214788981572216" datatype="html" xml:space="preserve">
         <source>Search by account</source>
-        <target state="new">Search by account</target>
+        <target state="translated">Αναζήτηση ανά λογαριασμό</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-video-comment/video-comment-list-admin-owner.component.ts</context>
           <context context-type="linenumber">292</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8734098809889838614" datatype="html">
+      <trans-unit id="8734098809889838614" datatype="html" xml:space="preserve">
         <source>Search by video</source>
-        <target state="new">Search by video</target>
+        <target state="translated">Αναζήτηση ανά βίντεο</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-video-comment/video-comment-list-admin-owner.component.ts</context>
           <context context-type="linenumber">297</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6323447324147435284" datatype="html">
+      <trans-unit id="6323447324147435284" datatype="html" xml:space="preserve">
         <source>Search by auto tag</source>
-        <target state="new">Search by auto tag</target>
+        <target state="translated">Αναζήτηση ανά αυτόματη ετικέτα</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-video-comment/video-comment-list-admin-owner.component.ts</context>
           <context context-type="linenumber">302</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5810973984628060415" datatype="html">
+      <trans-unit id="5810973984628060415" datatype="html" xml:space="preserve">
         <source>{count, plural, =1 {Comment approved.} other {<x id="count"/> comments approved.}}</source>
-        <target state="new">{count, plural, =1 {Comment approved.} other {<x id="count"/> comments approved.}}</target>
+        <target state="translated">{count, plural, =1 {Σχόλιο εγκρίθηκε.} other {<x id="count"/> σχόλια εγκρίθηκαν.}}</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-video-comment/video-comment-list-admin-owner.component.ts</context>
           <context context-type="linenumber">369</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="341804802839774363" datatype="html">
+      <trans-unit id="341804802839774363" datatype="html" xml:space="preserve">
         <source>Do you really want to remove {count, plural, =1 {this comment} other {<x id="count"/> comments}}?</source>
-        <target state="new">Do you really want to remove {count, plural, =1 {this comment} other {<x id="count"/> comments}}?</target>
+        <target state="translated">Θέλετε πραγματικά να διαγράψετε {count, plural, =1 {αυτό το σχόλιο} και άλλα {<x id="count"/> σχόλια}};</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-video-comment/video-comment-list-admin-owner.component.ts</context>
           <context context-type="linenumber">383</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1420624050293070194" datatype="html">
+      <trans-unit id="1420624050293070194" datatype="html" xml:space="preserve">
         <source>No abuses found matching current filters.</source>
-        <target state="new">No abuses found matching current filters.</target>
+        <target state="translated">Δεν εντοπίστηκαν παραβάσεις που να ανταποκρίνονται στα τρέχοντα κριτήρια φιλτραρίσματος.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-abuse-list/abuse-list-table.component.html</context>
           <context context-type="linenumber">149</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="639328713281980021" datatype="html">
+      <trans-unit id="639328713281980021" datatype="html" xml:space="preserve">
         <source>No abuses found.</source>
-        <target state="new">No abuses found.</target>
+        <target state="translated">Δεν εντοπίστηκαν καταχρήσεις.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-abuse-list/abuse-list-table.component.html</context>
           <context context-type="linenumber">151</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="138297155330177958" datatype="html">
+      <trans-unit id="138297155330177958" datatype="html" xml:space="preserve">
         <source>Report state</source>
-        <target state="new">Report state</target>
+        <target state="translated">Κατάσταση αναφοράς</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-abuse-list/abuse-list-table.component.ts</context>
           <context context-type="linenumber">83</context>
@@ -10326,65 +10332,65 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4769770370449106304" datatype="html">
+      <trans-unit id="4769770370449106304" datatype="html" xml:space="preserve">
         <source>Video status</source>
-        <target state="new">Video status</target>
+        <target state="translated">Κατάσταση βίντεο</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-abuse-list/abuse-list-table.component.ts</context>
           <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1911600186993073145" datatype="html">
+      <trans-unit id="1911600186993073145" datatype="html" xml:space="preserve">
         <source>With blocked videos</source>
-        <target state="new">With blocked videos</target>
+        <target state="translated">Με αποκλεισμένα βίντεο</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-abuse-list/abuse-list-table.component.ts</context>
           <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="186777532768877290" datatype="html">
+      <trans-unit id="186777532768877290" datatype="html" xml:space="preserve">
         <source>With deleted videos</source>
-        <target state="new">With deleted videos</target>
+        <target state="translated">Με διεγραμμένα βίντεο</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-abuse-list/abuse-list-table.component.ts</context>
           <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1755997049473545568" datatype="html">
+      <trans-unit id="1755997049473545568" datatype="html" xml:space="preserve">
         <source>Predefined reason</source>
-        <target state="new">Predefined reason</target>
+        <target state="translated">Προκαθορισμένος λόγος</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-abuse-list/abuse-list-table.component.ts</context>
           <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8497432602979613054" datatype="html">
+      <trans-unit id="8497432602979613054" datatype="html" xml:space="preserve">
         <source>Search by reporter name...</source>
-        <target state="new">Search by reporter name...</target>
+        <target state="translated">Αναζήτηση ανά όνομα αναφορέα...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-abuse-list/abuse-list-table.component.ts</context>
           <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1418185572945708372" datatype="html">
+      <trans-unit id="1418185572945708372" datatype="html" xml:space="preserve">
         <source>Search by reportee name...</source>
-        <target state="new">Search by reportee name...</target>
+        <target state="translated">Αναζήτηση με βάση το όνομα του αναφερόμενου...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-abuse-list/abuse-list-table.component.ts</context>
           <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3466717080499226256" datatype="html">
+      <trans-unit id="3466717080499226256" datatype="html" xml:space="preserve">
         <source>Report ID</source>
-        <target state="new">Report ID</target>
+        <target state="translated">ID αναφοράς</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-abuse-list/abuse-list-table.component.ts</context>
           <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4169196457820894934" datatype="html">
+      <trans-unit id="4169196457820894934" datatype="html" xml:space="preserve">
         <source>Search by report ID...</source>
-        <target state="new">Search by report ID...</target>
+        <target state="translated">Αναζήτηση με βάση το ID αναφοράς...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-abuse-list/abuse-list-table.component.ts</context>
           <context context-type="linenumber">125</context>
@@ -10398,41 +10404,41 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1972768943630632790" datatype="html">
+      <trans-unit id="1972768943630632790" datatype="html" xml:space="preserve">
         <source>Internal note:</source>
-        <target state="new">Internal note:</target>
+        <target state="translated">Εσωτερική σημείωση:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/moderation/video-block-list/video-block-list.component.html</context>
           <context context-type="linenumber">79,80</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8390860433951751429" datatype="html">
+      <trans-unit id="8390860433951751429" datatype="html" xml:space="preserve">
         <source>No blocked video found matching current filters.</source>
-        <target state="new">No blocked video found matching current filters.</target>
+        <target state="translated">Δεν βρέθηκε κανένα αποκλεισμένο βίντεο που να ταιριάζει με τα τρέχοντα φίλτρα.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/moderation/video-block-list/video-block-list.component.html</context>
           <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5030329587275248535" datatype="html">
+      <trans-unit id="5030329587275248535" datatype="html" xml:space="preserve">
         <source>No blocked video found.</source>
-        <target state="new">No blocked video found.</target>
+        <target state="translated">Δεν βρέθηκε κανένα αποκλεισμένο βίντεο.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/moderation/video-block-list/video-block-list.component.html</context>
           <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="844463430866816074" datatype="html">
+      <trans-unit id="844463430866816074" datatype="html" xml:space="preserve">
         <source>Block type</source>
-        <target state="new">Block type</target>
+        <target state="translated">Τύπος αποκλεισμού</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/moderation/video-block-list/video-block-list.component.ts</context>
           <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1616102757855967475" datatype="html">
+      <trans-unit id="1616102757855967475" datatype="html" xml:space="preserve">
         <source>All</source>
-        <target state="new">All</target>
+        <target state="translated">Όλα</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/moderation/video-block-list/video-block-list.component.ts</context>
           <context context-type="linenumber">74</context>
@@ -10486,9 +10492,9 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">243</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4757338945782004083" datatype="html">
+      <trans-unit id="4757338945782004083" datatype="html" xml:space="preserve">
         <source>Auto-block by instance policy</source>
-        <target state="new">Auto-block by instance policy</target>
+        <target state="translated">Αυτόματος αποκλεισμός βάσει πολιτικής οντότητας</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+admin/moderation/video-block-list/video-block-list.component.ts</context>
           <context context-type="linenumber">75</context>
@@ -10590,9 +10596,9 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2655875876987395619" datatype="html">
+      <trans-unit id="2655875876987395619" datatype="html" xml:space="preserve">
         <source>Deleted video</source>
-        <target state="new">Deleted video</target>
+        <target state="translated">Διαγραμμένο βίντεο</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-abuse-list/abuse-list-table.component.html</context>
           <context context-type="linenumber">46</context>
@@ -10662,25 +10668,25 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1467799882239453584" datatype="html">
+      <trans-unit id="1467799882239453584" datatype="html" xml:space="preserve">
         <source>No playlists found matching your filters.</source>
-        <target state="new">No playlists found matching your filters.</target>
+        <target state="translated">Δεν βρέθηκαν λίστες αναπαραγωγής που να ταιριάζουν με τα κριτήριά σας.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+my-library/my-video-playlists/my-video-playlists.component.ts</context>
           <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4716659591966501716" datatype="html">
+      <trans-unit id="4716659591966501716" datatype="html" xml:space="preserve">
         <source>No playlists found in selected channels.</source>
-        <target state="new">No playlists found in selected channels.</target>
+        <target state="translated">Δεν βρέθηκαν λίστες αναπαραγωγής στα επιλεγμένα κανάλια.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+my-library/my-video-playlists/my-video-playlists.component.ts</context>
           <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1626580694556116973" datatype="html">
+      <trans-unit id="1626580694556116973" datatype="html" xml:space="preserve">
         <source>You don't have any playlists published yet.</source>
-        <target state="new">You don't have any playlists published yet.</target>
+        <target state="translated">Δεν έχεις δημοσιεύσει ακόμα καμία λίστα αναπαραγωγής.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/+my-library/my-video-playlists/my-video-playlists.component.ts</context>
           <context context-type="linenumber">134</context>
@@ -10714,9 +10720,9 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6728985502447585050" datatype="html">
+      <trans-unit id="6728985502447585050" datatype="html" xml:space="preserve">
         <source>No server found matching current filters.</source>
-        <target state="new">No server found matching current filters.</target>
+        <target state="translated">Δεν βρέθηκε διακομιστής που να ταιριάζει στα τρέχοντα κριτήρια φιλτραρίσματος.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-moderation/generic-server-blocklist.component.html</context>
           <context context-type="linenumber">55</context>
@@ -10730,9 +10736,9 @@ The link will expire within 1 hour.</source>
           <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2188854519574316630" datatype="html">
+      <trans-unit id="2188854519574316630" datatype="html" xml:space="preserve">
         <source>Server</source>
-        <target state="new">Server</target>
+        <target state="translated">Διακομιστής</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/shared-moderation/generic-server-blocklist.component.ts</context>
           <context context-type="linenumber">52</context>
